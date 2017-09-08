@@ -8,6 +8,7 @@
           <element id="module-output" name="QACommunity" />
         </element>
       </element>
+      <element id="dir-copy" path="$PROJECT_DIR$/web" />
     </root>
   </artifact>
 </component>
