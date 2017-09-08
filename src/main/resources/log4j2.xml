@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration status="WARN">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Root level="trace">
+            <AppenderRef ref="Console"/>
+        </Root>
+        <logger name="org.springframework" level="debug" additivity="false">
+            <AppenderRef ref="Console"/>
+        </logger>
+        <logger name="org.mybatis" level="debug" additivity="false">
+            <AppenderRef ref="Console"/>
+        </logger>
+        <logger name="org.apache.ibatis" level="debug" additivity="false">
+            <AppenderRef ref="Console"/>
+        </logger>
+    </Loggers>
+</Configuration>
