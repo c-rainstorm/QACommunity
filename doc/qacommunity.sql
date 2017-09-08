@@ -3,13 +3,24 @@
 /* Created on:     2017/9/7 13:19:10                            */
 /*==============================================================*/
 
+grant select, insert, update, delete
+  on qac.*
+  to 'qac'@'localhost' identified by 'qac';
+flush privileges;
+
+drop database if exists qac;
+create database qac
+      character set utf8mb4
+      collate utf8mb4_unicode_ci;
+
+use qac;
 
 /*==============================================================*/
 /* Table: admin                                                 */
 /*==============================================================*/
 create table admin
 (
-   id                   int not null  comment '',
+   id                   int not null AUTO_INCREMENT  comment '',
    password             varchar(64) not null  comment '',
    name                 varchar(32) comment '',
    primary key (id)
@@ -20,7 +31,7 @@ create table admin
 /*==============================================================*/
 create table answer
 (
-   id                   int not null  comment '',
+   id                   int not null AUTO_INCREMENT comment '',
    question_id          int not null  comment '',
    author_id            int not null  comment '',
    content              varchar(10000) not null  comment '',
@@ -48,7 +59,7 @@ create table answer_collect
 /*==============================================================*/
 create table answer_comment
 (
-   id                   int not null  comment '',
+   id                   int not null AUTO_INCREMENT comment '',
    user_id              int not null  comment '',
    answer_id            int not null  comment '',
    content              varchar(100) not null  comment '',
@@ -56,7 +67,8 @@ create table answer_comment
    up                   int default 0  comment '',
    down                 int default 0  comment '',
    reply_comment_id     int  comment '',
-   primary key (user_id, answer_id)
+   primary key (user_id, answer_id),
+   INDEX (id)
 );
 
 /*==============================================================*/
@@ -70,7 +82,7 @@ create table answer_report
    remarks              varchar(100)  comment '',
    status               bool default false  comment '',
    datetime             datetime not null  comment '',
-   primary key (user_id, article_id)
+   primary key (user_id, answer_id)
 );
 
 /*==============================================================*/
@@ -81,8 +93,7 @@ create table answer_up_down
    user_id              int not null  comment '',
    answer_id            int not null  comment '',
    datetime             datetime not null  comment '',
-   up                   int default 0 comment '',
-   down                 int default 0 comment '',
+   is_up                   int default 0 comment '',
    primary key (user_id, answer_id)
 );
 
@@ -91,7 +102,7 @@ create table answer_up_down
 /*==============================================================*/
 create table article
 (
-   id                   int not null  comment '',
+   id                   int not null AUTO_INCREMENT  comment '',
    author_id            int not null  comment '',
    title                varchar(32) not null  comment '',
    content              varchar(10000) not null  comment '',
@@ -110,9 +121,9 @@ create table article
 create table article_collect
 (
    user_id              int not null  comment '',
-   answer_id            int not null  comment '',
+   article_id            int not null  comment '',
    datetime             datetime not null  comment '',
-   primary key (user_id, answer_id)
+   primary key (user_id, article_id)
 );
 
 /*==============================================================*/
@@ -120,7 +131,7 @@ create table article_collect
 /*==============================================================*/
 create table article_comment
 (
-   id                   int not null  comment '',
+   id                   int not null AUTO_INCREMENT  comment '',
    user_id              int not null  comment '',
    answer_id            int not null  comment '',
    content              varchar(100) not null  comment '',
@@ -163,17 +174,16 @@ create table article_up_down
    user_id              int not null  comment '',
    article_id            int not null  comment '',
    datetime             datetime not null  comment '',
-   up                   int default 0 comment '',
-   down                 int default 0 comment '',
-   primary key (user_id, answer_id)
+   is_up                   int default 0 comment '',
+   primary key (user_id, article_id)
 );
 
 /*==============================================================*/
 /* Table: "label"                                               */
 /*==============================================================*/
-create table "label"
+create table `label`
 (
-   id                   int not null  comment '',
+   id                   int not null AUTO_INCREMENT  comment '',
    title                varchar(16) not null  comment '',
    primary key (id)
 );
@@ -183,7 +193,7 @@ create table "label"
 /*==============================================================*/
 create table notice
 (
-   id                   int not null  comment '',
+   id                   int not null AUTO_INCREMENT comment '',
    user_id              int not null  comment '',
    content              varchar(100) not null  comment '',
    datetime             datetime not null  comment '',
@@ -195,7 +205,7 @@ create table notice
 /*==============================================================*/
 create table question
 (
-   id                   int not null  comment '',
+   id                   int not null AUTO_INCREMENT  comment '',
    author_id            int not null  comment '',
    title                varchar(32) not null  comment '',
    content              varchar(1000) not null  comment '',
@@ -225,9 +235,9 @@ create table question_follow
 /*==============================================================*/
 create table question_label
 (
-   article_id           int not null  comment '',
+   question_id           int not null  comment '',
    label_id             int not null  comment '',
-   primary key (article_id, label_id)
+   primary key (question_id, label_id)
 );
 
 /*==============================================================*/
@@ -236,12 +246,12 @@ create table question_label
 create table question_report
 (
    user_id              int not null  comment '',
-   article_id           int not null  comment '',
+   question_id           int not null  comment '',
    report_reason_id     int not null  comment '',
    remarks              varchar(100)  comment '',
    status               bool default false  comment '',
    datetime             datetime not null  comment '',
-   primary key (user_id, article_id)
+   primary key (user_id, question_id)
 );
 
 /*==============================================================*/
@@ -252,9 +262,8 @@ create table question_up_down
    user_id              int not null  comment '',
    question_id          int not null  comment '',
    datetime             datetime not null  comment '',
-   up                   int default 0 comment '',
-   down                 int default 0 comment '',
-   primary key (user_id, answer_id)
+   is_up                   int default 0 comment '',
+   primary key (user_id, question_id)
 );
 
 /*==============================================================*/
@@ -262,7 +271,7 @@ create table question_up_down
 /*==============================================================*/
 create table report_reason
 (
-   id                   int not null  comment '',
+   id                   int not null AUTO_INCREMENT  comment '',
    title                varchar(16) not null  comment '',
    content              varchar(32)  comment '',
    primary key (id)
@@ -273,7 +282,7 @@ create table report_reason
 /*==============================================================*/
 create table user
 (
-   id                   int not null  comment '',
+   id                   int not null AUTO_INCREMENT comment '',
    name                 varchar(32) not null  comment '',
    email                varchar(32) not null  comment '',
    password             varchar(64) not null  comment '',
