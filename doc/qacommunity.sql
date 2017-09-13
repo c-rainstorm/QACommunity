@@ -45,7 +45,7 @@ create table user
    name                 varchar(32) not null  comment '姓名',
    email                varchar(32) not null  comment '邮箱',
    password             varchar(64) not null  comment '密码',
-   create_date          DATETIME not null  comment '创建时间,自动获取',
+   create_date          TIMESTAMP not null DEFAULT current_timestamp  comment '创建时间,自动获取',
    sex                  bool  comment '性别',
    short_intro          varchar(32)  comment '个人签名',
    intro                varchar(128)  comment '个人介绍',
@@ -78,7 +78,7 @@ create table article
    author_id            int not null  comment '作者编号',
    title                varchar(32) not null  comment '标题',
    content              varchar(10000) not null  comment '内容',
-   datetime             datetime not null  comment '创建时间',
+   datetime             TIMESTAMP not null DEFAULT current_timestamp   comment '创建时间',
    browse_num           int default 0  comment '被浏览数',
    up                   int default 0  comment '被赞数',
    down                 int default 0  comment '被踩数',
@@ -97,7 +97,7 @@ create table question
    author_id            int not null  comment '作者编号',
    title                varchar(32) not null  comment '文章标题',
    content              varchar(1000) not null  comment '文章内容',
-   datetime             datetime not null  comment '发表时间',
+   datetime             TIMESTAMP not null DEFAULT current_timestamp  comment '发表时间',
    browse_num           int default 0  comment '被浏览数',
    up                   int default 0  comment '被赞数',
    down                 int default 0  comment '被踩数',
@@ -116,7 +116,7 @@ create table answer
    question_id          int not null  comment '问题编号',
    author_id            int not null  comment '作者编号',
    content              varchar(10000) not null  comment '答案内容',
-   datetime             datetime not null  comment '发表时间',
+   datetime             TIMESTAMP not null DEFAULT current_timestamp  comment '发表时间',
    up                   int default 0  comment '被赞数',
    down                 int default 0  comment '被踩数',
    status               smallint default 0  comment '状态',
@@ -133,7 +133,7 @@ create table answer_collect
 (
    user_id              int not null  comment '用户编号',
    answer_id            int not null  comment '答案编号',
-   datetime             datetime not null  comment '收藏时间',
+   datetime             TIMESTAMP not null DEFAULT current_timestamp  comment '收藏时间',
    primary key (user_id, answer_id),
    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE,
    FOREIGN KEY (answer_id) REFERENCES answer(id)ON DELETE CASCADE ON UPDATE CASCADE
@@ -148,7 +148,7 @@ create table answer_comment
    user_id              int not null  comment '用户编号',
    answer_id            int not null  comment '答案编号',
    content              varchar(100) not null  comment '内容',
-   datetime             datetime not null  comment '发表时间',
+   datetime             TIMESTAMP not null DEFAULT current_timestamp   comment '发表时间',
    up                   int default 0  comment '被赞数',
    down                 int default 0  comment '被踩数',
    reply_comment_id     int  comment '回复评论编号',
@@ -169,7 +169,7 @@ create table answer_report
    report_reason_id     int not null  comment '举报原因编号',
    remarks              varchar(100)  comment '内容',
    status               bool default false  comment '状态',
-   datetime             datetime not null  comment '举报时间',
+   datetime             TIMESTAMP not null DEFAULT current_timestamp  comment '举报时间',
    primary key (user_id, answer_id),
    FOREIGN KEY (user_id) REFERENCES user(id)ON DELETE CASCADE ON UPDATE CASCADE,
    FOREIGN KEY (answer_id) REFERENCES answer(id)ON DELETE CASCADE ON UPDATE CASCADE,
@@ -183,7 +183,7 @@ create table answer_up_down
 (
    user_id              int not null  comment '用户编号',
    answer_id            int not null  comment '答案编号',
-   datetime             datetime not null  comment '发表时间',
+   datetime             TIMESTAMP not null DEFAULT current_timestamp  comment '发表时间',
    is_up                int default 0 comment '是否被赞或被踩-1为踩，0为默认，1为赞',
    PRIMARY KEY (user_id, answer_id),
    FOREIGN KEY (user_id) REFERENCES user (id)ON DELETE CASCADE ON UPDATE CASCADE,
@@ -199,7 +199,7 @@ create table article_collect
 (
    user_id              int not null  comment '用户编号',
    article_id            int not null  comment '文章编号',
-   datetime             datetime not null  comment '发表时间',
+   datetime              TIMESTAMP not null DEFAULT current_timestamp   comment '发表时间',
    primary key (user_id, article_id),
    FOREIGN KEY (user_id) REFERENCES user(id)ON DELETE CASCADE ON UPDATE CASCADE,
    FOREIGN KEY (article_id)REFERENCES article(id)ON DELETE CASCADE ON UPDATE CASCADE
@@ -214,7 +214,7 @@ create table article_comment
    user_id              int not null  comment '用户编号',
    answer_id            int not null  comment '答案编号',
    content              varchar(100) not null  comment '评论内容',
-   datetime             datetime not null  comment '发表时间',
+   datetime             TIMESTAMP not null DEFAULT current_timestamp  comment '发表时间',
    up                   int default 0  comment '被赞数',
    down                 int default 0  comment '被踩数',
    reply_comment_id     int  comment '回复编号',
@@ -246,7 +246,7 @@ create table article_report
    report_reason_id     int not null  comment '举报原因编号',
    remarks              varchar(100)  comment '补充内容',
    status               bool default false  comment '状态',
-   datetime             datetime not null  comment '发表时间',
+   datetime             TIMESTAMP not null DEFAULT current_timestamp   comment '发表时间',
    primary key (user_id, article_id),
    FOREIGN KEY (user_id)REFERENCES user(id)ON DELETE CASCADE ON UPDATE CASCADE,
    FOREIGN KEY (article_id)REFERENCES article(id)ON DELETE CASCADE ON UPDATE CASCADE,
@@ -259,9 +259,9 @@ create table article_report
 create table article_up_down
 (
    user_id              int not null  comment '用户编号',
-   article_id            int not null  comment '文章编号',
-   datetime             datetime not null  comment '发表时间',
-   is_up                   int default 0 comment '是否被赞或被踩-1为踩，0为默认，1为赞',
+   article_id           int not null  comment '文章编号',
+   datetime             TIMESTAMP not null DEFAULT current_timestamp   comment '发表时间',
+   is_up                int default 0 comment '是否被赞或被踩-1为踩，0为默认，1为赞',
    primary key (user_id, article_id),
    FOREIGN KEY (user_id)REFERENCES user(id)ON DELETE CASCADE ON UPDATE CASCADE,
    FOREIGN KEY (article_id)REFERENCES article(id)ON DELETE CASCADE ON UPDATE CASCADE
@@ -276,7 +276,7 @@ create table notice
    id                   int not null AUTO_INCREMENT comment '通知编号',
    user_id              int not null  comment '用户编号',
    content              varchar(100) not null  comment '内容',
-   datetime             datetime not null  comment '发表时间',
+   datetime             TIMESTAMP not null DEFAULT current_timestamp  comment '发表时间',
    primary key (id),
    FOREIGN KEY (user_id)REFERENCES user(id)ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -288,7 +288,7 @@ create table question_follow
 (
    user_id              int not null  comment '用户编号',
    question_id          int not null  comment '问题编号',
-   datetime             datetime not null  comment '发表时间',
+   datetime             TIMESTAMP not null DEFAULT current_timestamp   comment '发表时间',
    primary key (user_id, question_id),
    FOREIGN KEY (user_id)REFERENCES user(id)ON DELETE CASCADE ON UPDATE CASCADE,
    FOREIGN KEY (question_id)REFERENCES question(id)ON DELETE CASCADE ON UPDATE CASCADE
@@ -316,7 +316,7 @@ create table question_report
    report_reason_id     int not null  comment '举报原因编号',
    remarks              varchar(100)  comment '',
    status               bool default false  comment '状态',
-   datetime             datetime not null  comment '发表时间',
+   datetime             TIMESTAMP not null DEFAULT current_timestamp  comment '发表时间',
    primary key (user_id, question_id),
    FOREIGN KEY (user_id)REFERENCES user(id)ON DELETE CASCADE ON UPDATE CASCADE,
    FOREIGN KEY (question_id)REFERENCES question(id)ON DELETE CASCADE ON UPDATE CASCADE,
@@ -330,7 +330,7 @@ create table question_up_down
 (
    user_id              int not null  comment '用户编号',
    question_id          int not null  comment '问题编号',
-   datetime             datetime not null  comment '发表时间',
+   datetime             TIMESTAMP not null DEFAULT current_timestamp   comment '发表时间',
    is_up                int default 0 comment '是否被赞或被踩-1为踩，0为默认，1为赞',
    primary key (user_id, question_id),
    FOREIGN KEY (user_id)REFERENCES user(id)ON DELETE CASCADE ON UPDATE CASCADE,
@@ -345,7 +345,7 @@ create table user_follow
 (
    user_id              int not null  comment '用户编号',
    follow_id            int not null  comment '被关注用户编号',
-   datetime             datetime not null  comment '发表时间',
+   datetime              TIMESTAMP not null DEFAULT current_timestamp  comment '发表时间',
    primary key (user_id, follow_id),
    FOREIGN KEY (user_id)REFERENCES user(id)ON DELETE CASCADE ON UPDATE CASCADE,
    FOREIGN KEY (follow_id)REFERENCES user(id)ON DELETE CASCADE ON UPDATE CASCADE
