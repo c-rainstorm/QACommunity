@@ -152,7 +152,7 @@ create table answer_comment
    up                   int default 0  comment '被赞数',
    down                 int default 0  comment '被踩数',
    reply_comment_id     int  comment '回复评论编号',
-   primary key (user_id, answer_id),
+   primary key (id),
    INDEX (id),
    FOREIGN KEY (user_id)REFERENCES user(id)ON DELETE CASCADE ON UPDATE CASCADE,
    FOREIGN KEY (answer_id)REFERENCES answer(id)ON DELETE CASCADE ON UPDATE CASCADE,
