@@ -152,6 +152,7 @@ create table answer_comment
    up                   int default 0  comment '被赞数',
    down                 int default 0  comment '被踩数',
    reply_comment_id     int  comment '回复评论编号',
+   status               int DEFAULT 0 COMMENT '评论状态，默认为0，-1为删除',
    primary key (id),
    INDEX (id),
    FOREIGN KEY (user_id)REFERENCES user(id)ON DELETE CASCADE ON UPDATE CASCADE,
@@ -212,15 +213,16 @@ create table article_comment
 (
    id                   int not null AUTO_INCREMENT  comment '文章评论编号',
    user_id              int not null  comment '用户编号',
-   answer_id            int not null  comment '答案编号',
+   article_id            int not null  comment '答案编号',
    content              varchar(100) not null  comment '评论内容',
    datetime             TIMESTAMP not null DEFAULT current_timestamp  comment '发表时间',
    up                   int default 0  comment '被赞数',
    down                 int default 0  comment '被踩数',
    reply_comment_id     int  comment '回复编号',
+   status               int DEFAULT 0 COMMENT '评论状态，默认为0，-1为删除',
    primary key (id),
    FOREIGN KEY (user_id)REFERENCES user(id)ON DELETE CASCADE ON UPDATE CASCADE,
-   FOREIGN KEY (answer_id)REFERENCES answer(id)ON DELETE CASCADE ON UPDATE CASCADE,
+   FOREIGN KEY (article_id)REFERENCES article(id)ON DELETE CASCADE ON UPDATE CASCADE,
    FOREIGN KEY (reply_comment_id)REFERENCES article_comment(id) on DELETE CASCADE
 );
 
