@@ -1,7 +1,7 @@
 package com.github.crainstorm.qac.admin.service;
 
 import com.github.crainstorm.qac.pub.entity.ArticleReport;
-import com.github.crainstorm.qac.admin.dao.ArticleManageDao;
+import com.github.crainstorm.qac.admin.dao.AdminArticleManageDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -13,10 +13,10 @@ import java.util.ArrayList;
  */
 @EnableTransactionManagement
 @Service
-public class ArticleManageService {
+public class AdminArticleManageService {
 
     @Autowired
-    private ArticleManageDao dao;
+    private AdminArticleManageDao dao;
 
     public ArrayList<ArticleReport> getArticleReportList() {
         return dao.getArticleReportList();

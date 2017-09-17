@@ -33,7 +33,7 @@
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <!--须扫描的基本包以分号或逗号分割，扫描器无法处理通配符-->
-        <property name="basePackage" value="com.github.crainstorm.qac.user.dao"/>
+        <property name="basePackage" value="com.github.crainstorm.qac.user.dao;com.github.crainstorm.qac.admin.dao"/>
 
         <!--绑定 sqlSessionFactory-->
         <!--注意是 value，不是 ref-->
@@ -48,4 +48,6 @@
         <property name="dataSource" ref="dataSource"></property>
     </bean>
 
+    <bean id="string" class="java.lang.String">
+    </bean>
 </beans>

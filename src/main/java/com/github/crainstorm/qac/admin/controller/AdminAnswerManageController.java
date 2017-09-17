@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * Created by chen on 9/17/17.
  */
 @Controller
-public class AnswerManageController {
+public class AdminAnswerManageController {
     
     @Autowired
     private AdminAnswerManageService service;
@@ -36,7 +36,7 @@ public class AnswerManageController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "deleteAnswer.action", method = RequestMethod.GET)
+    @RequestMapping(value = "adminDeleteAnswer.action", method = RequestMethod.GET)
     public Result deleteAnswer(int answer_id) {
         if (service.deleteAnswer(answer_id)) {
             return Result.TREU;

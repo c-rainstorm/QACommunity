@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * Created by chen on 9/17/17.
  */
 @Controller
-public class QuestionManageController {
+public class AdminQuestionManageController {
 
     @Autowired
     private AdminQuestionManageService service;

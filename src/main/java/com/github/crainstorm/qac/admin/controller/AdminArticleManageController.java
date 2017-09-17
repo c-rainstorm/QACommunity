@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * Created by chen on 9/17/17.
  */
 @Controller
-public class ArticleManageController {
+public class AdminArticleManageController {
     
     @Autowired
     private AdminArticleManageService service;
@@ -36,7 +36,7 @@ public class ArticleManageController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "deleteArticle.action", method = RequestMethod.GET)
+    @RequestMapping(value = "adminDeleteArticle.action", method = RequestMethod.GET)
     public Result deleteArticle(int article_id) {
         if (service.deleteArticle(article_id)) {
             return Result.TREU;

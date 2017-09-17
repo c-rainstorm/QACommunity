@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 
 @Repository
-public interface QuestionManageDao {
+public interface AdminQuestionManageDao {
     ArrayList<QuestionReport> getQuestionReportList();
 
     boolean shutdownQuestion(int question_id);

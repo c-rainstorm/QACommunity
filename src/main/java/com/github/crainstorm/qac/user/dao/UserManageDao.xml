@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.github.crainstorm.qac.user.dao.LoginDao">
+<mapper namespace="com.github.crainstorm.qac.user.dao.UserManageDao">
 
     <select id="checkUserLogin" parameterType="com.github.crainstorm.qac.pub.entity.UserLogin" resultType="int">
         SELECT COUNT(*)
@@ -10,17 +10,19 @@
         WHERE email = #{email} AND password = #{password};
     </select>
 
-    <select id="getUserBriefInfo" parameterType="com.github.crainstorm.qac.pub.entity.UserLogin" resultType="com.github.crainstorm.qac.pub.entity.User">
+    <select id="checkUserEmail" resultType="int">
+        SELECT COUNT(*)
+        FROM user
+        WHERE email = #{email};
+    </select>
+
+    <select id="getUserBriefInfo" parameterType="com.github.crainstorm.qac.pub.entity.UserLogin"
+            resultType="com.github.crainstorm.qac.pub.entity.User">
         SELECT id, name, avatar
         FROM user
         WHERE email = #{email} AND password = #{password};
     </select>
 
-    <select id="checkUserEmail" parameterType="java.lang.String" resultType="int">
-        SELECT COUNT(*)
-        FROM user
-        WHERE email = #{email};
-    </select>
 
     <insert id="addUser" parameterType="com.github.crainstorm.qac.pub.entity.User">
         INSERT INTO `user` (name, email, password, create_date)

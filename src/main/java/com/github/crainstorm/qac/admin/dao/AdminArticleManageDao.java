@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * Created by chen on 9/17/17.
  */
 @Repository
-public interface ArticleManageDao {
+public interface AdminArticleManageDao {
     ArrayList<ArticleReport> getArticleReportList();
 
     int shutdownArticle(int article_id);
