@@ -4,12 +4,16 @@ import com.github.crainstorm.qac.pub.entity.Article;
 import com.github.crainstorm.qac.pub.entity.ArticleReport;
 import com.github.crainstorm.qac.user.dao.ArticleManageDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.util.ArrayList;
 
 /**
  * Created by chen on 9/17/17.
  */
+@EnableTransactionManagement
+@Service
 public class ArticleManageService {
 
     @Autowired
