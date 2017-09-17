@@ -10,9 +10,20 @@
         WHERE email = #{email} AND password = #{password};
     </select>
 
-    <select id="getBriefInfo" parameterType="com.github.crainstorm.qac.pub.entity.UserLogin" resultType="com.github.crainstorm.qac.pub.entity.User">
+    <select id="getUserBriefInfo" parameterType="com.github.crainstorm.qac.pub.entity.UserLogin" resultType="com.github.crainstorm.qac.pub.entity.User">
         SELECT id, name, avatar
         FROM user
         WHERE email = #{email} AND password = #{password};
     </select>
+
+    <select id="checkUserEmail" parameterType="java.lang.String" resultType="int">
+        SELECT COUNT(*)
+        FROM user
+        WHERE email = #{email};
+    </select>
+
+    <insert id="addUser" parameterType="com.github.crainstorm.qac.pub.entity.User">
+        INSERT INTO `user` (name, email, password, create_date)
+        VALUES (#{name},#{email},#{password},curdate());
+    </insert>
 </mapper>

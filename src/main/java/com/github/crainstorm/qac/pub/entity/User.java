@@ -20,7 +20,8 @@ public class User extends UserLogin{
     public int browse_num;
     public int status;
     public Timestamp unban_datetime;
-
+    public int follow_num;
+    public int be_follow_num;
 
     public int getId() {
         return id;
