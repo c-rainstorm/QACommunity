@@ -1,6 +1,6 @@
 package com.github.crainstorm.qac.admin.controller;
 
-import com.github.crainstorm.qac.admin.service.AnswerManageService;
+import com.github.crainstorm.qac.admin.service.AdminAnswerManageService;
 import com.github.crainstorm.qac.pub.entity.AnswerReport;
 import com.github.crainstorm.qac.pub.entity.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class AnswerManageController {
     
     @Autowired
-    private AnswerManageService service;
+    private AdminAnswerManageService service;
 
     @ResponseBody
     @RequestMapping(value = "getAnswerReportList.action", method = RequestMethod.GET)
