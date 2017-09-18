@@ -3,10 +3,42 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.crainstorm.qac.user.dao.CommentManageDao">
+
+    <!-- ***************** Answer ****************** -->
     <select id="getAnswerComments" parameterType="int" resultType="com.github.crainstorm.qac.pub.entity.AnswerComment">
         SELECT id,user_id,answer_id,content,datetime,up,down,reply_comment_id
         FROM answer_comment
         WHERE answer_id = #{answer_id}
         ORDER by datetime ASC ;
     </select>
+    <insert id="addAnswerComment" parameterType="com.github.crainstorm.qac.pub.entity.AnswerComment">
+        INSERT INTO answer_comment(user_id, answer_id, content, reply_comment_id, datetime)
+        VALUES (#{user_id},#{answer_id},#{content},#{reply_comment_id}, now());
+    </insert>
+
+    <delete id="deleteAnswerComment">
+        UPDATE answer_comment
+        SET status = -1
+        WHERE id =  #{id};
+    </delete>
+
+    <!-- *********************** Article ************************ -->
+
+    <select id="getArticleComments" parameterType="com.github.crainstorm.qac.pub.entity.ArticleComment">
+        SELECT id,user_id,article_id,content,datetime,up,down,reply_comment_id
+        FROM article_comment
+        WHERE article_id = #{article_id}
+        ORDER by datetime ASC ;
+    </select>
+
+    <insert id="addArticleComment" parameterType="com.github.crainstorm.qac.pub.entity.ArticleComment">
+        INSERT INTO article_comment(user_id, article_id, content, reply_comment_id, datetime)
+        VALUES (#{user_id},#{article_id},#{content},#{reply_comment_id}, now());
+    </insert>
+
+    <update id="deleteArticleComment">
+        UPDATE article_comment
+        SET status = -1
+        WHERE id =  #{id};
+    </update>
 </mapper>

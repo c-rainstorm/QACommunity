@@ -1,6 +1,6 @@
 package com.github.crainstorm.qac.admin.service;
 
-import com.github.crainstorm.qac.admin.dao.LabelManageDao;
+import com.github.crainstorm.qac.admin.dao.AdminLabelManageDao;
 import com.github.crainstorm.qac.pub.entity.Label;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,10 +13,10 @@ import java.util.ArrayList;
  */
 @EnableTransactionManagement
 @Service
-public class LabelManageService {
+public class AdminLabelManageService {
 
     @Autowired
-    private LabelManageDao dao;
+    private AdminLabelManageDao dao;
 
     public ArrayList<Label> getLabels() {
         return dao.getLabels();

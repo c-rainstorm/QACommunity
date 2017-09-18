@@ -37,7 +37,7 @@ public class ProblemManageService {
         return dao.getQuestion(id);
     }
 
-    // todo lables
+    // todo labels
     public boolean addQuestion(Question newQuestion) {
         return dao.addQuestion(newQuestion) == 1;
     }

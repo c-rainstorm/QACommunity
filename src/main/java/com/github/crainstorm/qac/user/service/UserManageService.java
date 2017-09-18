@@ -1,5 +1,6 @@
 package com.github.crainstorm.qac.user.service;
 
+import com.github.crainstorm.qac.pub.entity.Label;
 import com.github.crainstorm.qac.pub.entity.Notice;
 import com.github.crainstorm.qac.pub.entity.User;
 import com.github.crainstorm.qac.pub.entity.UserLogin;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 
 /**
  * Created by chen on 9/17/17.
@@ -73,4 +75,5 @@ public class UserManageService {
     public Notice getNotice(int user_id) {
         return dao.getNotice(user_id);
     }
+
 }

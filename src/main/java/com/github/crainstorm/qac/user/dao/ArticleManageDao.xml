@@ -3,5 +3,146 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.crainstorm.qac.user.dao.ArticleManageDao">
+    <select id="getArticlesByKeyword" resultType="com.github.crainstorm.qac.pub.entity.Article">
+        select A.id, A.author_id, A.content, A.datetime, A.up, A.down, collect_num, comment_num
+        from article as A join ( select article_id, count(*) as collect_num
+                                  from article_collect
+                                  group by article_id ) as CollNum
+                          on A.id = CollNum.article_id
+                          join (  select article_id, count(*) as comment_num
+                                  from article_comment
+                                  group by article_id )
+                                  as CommNum
+                          on A.id = CommNum.article_id
+        where A.content like #{keyword} or A.title like #{keyword}
+        limit #{offset}, #{maxNumInOnePage};
+    </select>
+    <select id="getArticlesByLabel" resultType="com.github.crainstorm.qac.pub.entity.Article">
+        select A.id, A.author_id, A.content, A.datetime, A.up, A.down, collect_num, comment_num
+        from article as A join ( article_label as AL join label L on AL.label_id = L.id )
+                            on A.id = AL.article_id
+                          join ( select article_id, count(user_id) as collect_num
+                                 from article_collect
+                                 group by article_id )
+                                 as CollNum
+                            on A.id = CollNum.article_id
+                          join ( select article_id, count(id) as comment_num
+                                from article_comment
+                                group by article_id )
+                                as CommNum
+                            on A.id = CommNum.article_id
+        where L.title = #{label}
+        limit #{offset}, #{maxNumInOnePage}
+        ;
+    </select>
+    <select id="getArticlesByUserId" resultType="com.github.crainstorm.qac.pub.entity.Article">
+        select A.id, A.author_id, A.content, A.datetime, A.up, A.down, collect_num, comment_num
+        from article as A join ( select article_id, count(user_id) as collect_num
+                                 from article_collect
+                                 group by article_id )
+                                 as CollNum
+                            on A.id = CollNum.article_id
+                          join ( select article_id, count(id) as comment_num
+                                from article_comment
+                                group by article_id )
+                                as CommNum
+                            on A.id = CommNum.article_id
+        where A.author_id = #{author_id}
+        limit #{offset}, #{maxNumInOnePage}
+;
+    </select>
+    <select id="getArticle" resultType="com.github.crainstorm.qac.pub.entity.Article">
+        select A.id, A.author_id, A.content, A.datetime, A.up, A.down, collect_num, comment_num
+        from article as A join ( article_label as AL join label L on AL.label_id = L.id )
+                            on A.id = AL.article_id
+                          join ( select article_id, count(user_id) as collect_num
+                                 from article_collect
+                                 group by article_id )
+                                 as CollNum
+                            on A.id = CollNum.article_id
+                          join ( select article_id, count(id) as comment_num
+                                from article_comment
+                                group by article_id )
+                                as CommNum
+                            on A.id = CommNum.article_id
+        where A.id = #{id}
+        ;
+
+
+    </select>
+    <select id="getArticleLabel" resultType="com.github.crainstorm.qac.pub.entity.Label">
+        select L.title as labels
+        from article_label as AL join label as L on AL.label_id = L.id
+        where AL.article_id = #{id}
+        ;
+    </select>
+
+    <!-- ***************************************** -->
+
+    <!-- todo -->
+    <insert id="addArticle" parameterType="com.github.crainstorm.qac.pub.entity.Article">
+        insert into article(author_id, title, content)
+        values(#{author_id}, #{title}, #{content})
+        ;
+    </insert>
+
+    <!--*******************************************-->
+    <!-- todo -->
+    <delete id="deleteArticleLabel" >
+        delete from article_label
+        where article_id = #{id}
+        ;
+    </delete>
+    <insert id="addArticleLabel" parameterType="com.github.crainstorm.qac.pub.entity.Article">
+        insert into article_label
+        values
+        <foreach collection ="labels" item="label" index= "index" separator =",">
+            ( #{id}, ( select title
+                     from label as L
+                     where L.id = #{label.id} )
+            )
+        </foreach>
+        ;
+    </insert>
+    <update id="updateArticle" parameterType="com.github.crainstorm.qac.pub.entity.Article">
+        update article
+        set content = #{content}
+        where id = #{id}
+        ;
+    </update>
+    <!--*****************************************-->
+
+    <update id="upDownArticle">
+        insert into article_up_down( user_id, article_id, is_up )
+        values ( #{user_id}, #{article_id}, #{up_down} )
+    </update>
+
+    <update id="upArticle">
+        update article
+        set up = up + 1
+        where id = #{article_id}
+        ;
+    </update>
+    <update id="downArticle">
+        update article
+        set down = down + 1
+        where id = #{article_id}
+        ;
+    </update>
+    <!-- ****************************** -->
+
+    <insert id="collectArticle">
+        insert into article_collect
+        values( #{user_id}, #{article_id} )
+        ;
+    </insert>
+
+    <!-- ****************************** -->
+
+    <insert id="reportArticle" parameterType="com.github.crainstorm.qac.pub.entity.ArticleReport">
+        insert into article_report
+        values( #{user_id}, #{article_id}, #{report_reason_id}, #{remarks} )
+        ;
+    </insert>
 
 </mapper>

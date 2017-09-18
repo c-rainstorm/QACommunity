@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.crainstorm.qac.user.dao.LabelManageDao">
+    <select id="getAllLabel" resultType="com.github.crainstorm.qac.pub.entity.Label">
+        SELECT * FROM label;
+    </select>
+
+    <select id="getLabelsOfArticle" resultType="com.github.crainstorm.qac.pub.entity.Label">
+        SELECT * FROM article_label WHERE article_id = #{article_id}
+        INNER JOIN label ON label.id
+    </select>
+
+</mapper>

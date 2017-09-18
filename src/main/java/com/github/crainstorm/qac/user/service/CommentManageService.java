@@ -3,18 +3,22 @@ package com.github.crainstorm.qac.user.service;
 import com.github.crainstorm.qac.pub.entity.AnswerComment;
 import com.github.crainstorm.qac.pub.entity.ArticleComment;
 import com.github.crainstorm.qac.user.dao.CommentManageDao;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 
 /**
  * Created by chen on 9/17/17.
  */
-@EnableTransactionManagement
+@Transactional
 @Service
 public class CommentManageService {
+
+    private static Logger logger = LogManager.getLogger(CommentManageService.class);
 
     @Autowired
     private CommentManageDao dao;

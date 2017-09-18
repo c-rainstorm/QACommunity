@@ -1,9 +1,6 @@
 package com.github.crainstorm.qac.user.controller;
 
-import com.github.crainstorm.qac.pub.entity.Notice;
-import com.github.crainstorm.qac.pub.entity.Result;
-import com.github.crainstorm.qac.pub.entity.User;
-import com.github.crainstorm.qac.pub.entity.UserLogin;
+import com.github.crainstorm.qac.pub.entity.*;
 import com.github.crainstorm.qac.user.service.UserManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 
 /**
  * Created by chen on 9/17/17.
@@ -106,4 +104,6 @@ public class UserManageController {
     public Notice getNotice(int user_id){
         return service.getNotice(user_id);
     }
+
+
 }

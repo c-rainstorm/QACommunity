@@ -28,4 +28,9 @@
         INSERT INTO `user` (name, email, password, create_date)
         VALUES (#{name},#{email},#{password},curdate());
     </insert>
+
+    <select id="getNotice" resultType="com.github.crainstorm.qac.pub.entity.Notice">
+        SELECT id,user_id,content,datetime
+        FROM notice WHERE id = #{id};
+    </select>
 </mapper>

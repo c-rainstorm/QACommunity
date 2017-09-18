@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * Created by chen on 9/17/17.
  */
 @Repository
-public interface LabelManageDao {
+public interface AdminLabelManageDao {
 
     ArrayList<Label> getLabels();
 

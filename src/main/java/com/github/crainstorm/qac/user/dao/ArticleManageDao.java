@@ -2,6 +2,8 @@ package com.github.crainstorm.qac.user.dao;
 
 import com.github.crainstorm.qac.pub.entity.Article;
 import com.github.crainstorm.qac.pub.entity.ArticleReport;
+import com.github.crainstorm.qac.pub.entity.Label;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -11,21 +13,32 @@ import java.util.ArrayList;
  */
 @Repository
 public interface ArticleManageDao {
-    ArrayList<Article> getArticlesByKeyword(String keyword, int maxNumInOnePage, int pageNum);
+    ArrayList<Article> getArticlesByKeyword(@Param("keyword") String keyword, @Param("offset") int offset, @Param("maxNumInOnePage") int maxNumInOnePage);
 
-    int collectArticle(int user_id, int article_id);
+    ArrayList<Article> getArticlesByLabel(@Param("label") String label, @Param("offset") int offset, @Param("maxNumInOnePage") int maxNumInOnePage);
 
-    int reportArticle(ArticleReport report);
-
-    ArrayList<Article> getArticlesByLabel(String label, int maxNumInOnePage, int pageNum);
-
-    ArrayList<Article> getArticlesByUserId(int author_id, int maxNumInOnePage, int pageNum);
+    ArrayList<Article> getArticlesByUserId(@Param("author_id") int author_id, @Param("offset") int offset, @Param("maxNumInOnePage") int maxNumInOnePage);
 
     Article getArticle(int id);
 
+    ArrayList<Label> getArticleLabel(int id);
+
     int addArticle(Article newArticle);
+
+    int collectArticle(@Param("user_id") int user_id, @Param("article_id") int article_id);
+
+    int reportArticle(ArticleReport report);
+
+    void deleteArticleLabel(int id);
+
+    void addArticleLabel(Article article);
 
     int updateArticle(Article article);
 
-    int upDownArticle(int article_id, int user_id, boolean up_down);
+
+    int upDownArticle(@Param("article_id") int article_id, @Param("user_id") int user_id, @Param("up_down") int up_down);
+
+    void upArticle(int article_id);
+
+    void downArticle(int article_id);
 }

@@ -1,6 +1,6 @@
 package com.github.crainstorm.qac.admin.controller;
 
-import com.github.crainstorm.qac.admin.service.LabelManageService;
+import com.github.crainstorm.qac.admin.service.AdminLabelManageService;
 import com.github.crainstorm.qac.pub.entity.Label;
 import com.github.crainstorm.qac.pub.entity.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +15,10 @@ import java.util.ArrayList;
  * Created by chen on 9/17/17.
  */
 @Controller
-public class LabelManageController {
+public class AdminLabelManageController {
 
     @Autowired
-    private LabelManageService service;
+    private AdminLabelManageService service;
 
     @ResponseBody
     @RequestMapping(value = "getLabels.action", method = RequestMethod.GET)
