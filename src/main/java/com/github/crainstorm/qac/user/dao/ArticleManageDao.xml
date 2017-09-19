@@ -70,40 +70,22 @@
 
 
     </select>
-    <select id="getArticleLabel" resultType="com.github.crainstorm.qac.pub.entity.Label">
-        select L.title as labels
-        from article_label as AL join label as L on AL.label_id = L.id
-        where AL.article_id = #{id}
-        ;
-    </select>
 
     <!-- ***************************************** -->
 
-    <!-- todo -->
     <insert id="addArticle" parameterType="com.github.crainstorm.qac.pub.entity.Article">
         insert into article(author_id, title, content)
         values(#{author_id}, #{title}, #{content})
         ;
     </insert>
 
-    <!--*******************************************-->
-    <!-- todo -->
-    <delete id="deleteArticleLabel" >
-        delete from article_label
-        where article_id = #{id}
-        ;
-    </delete>
-    <insert id="addArticleLabel" parameterType="com.github.crainstorm.qac.pub.entity.Article">
-        insert into article_label
-        values
-        <foreach collection ="labels" item="label" index= "index" separator =",">
-            ( #{id}, ( select title
-                     from label as L
-                     where L.id = #{label.id} )
-            )
-        </foreach>
-        ;
-    </insert>
+    <select id="getNewestArticleId" resultType="int">
+        SELECT id FROM article
+        WHERE author_id = #{author_id}
+        ORDER BY datetime DESC
+        LIMIT 0,1;
+    </select>
+
     <update id="updateArticle" parameterType="com.github.crainstorm.qac.pub.entity.Article">
         update article
         set content = #{content}

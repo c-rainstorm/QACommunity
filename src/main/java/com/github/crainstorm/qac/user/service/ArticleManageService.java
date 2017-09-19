@@ -3,6 +3,7 @@ package com.github.crainstorm.qac.user.service;
 import com.github.crainstorm.qac.pub.entity.Article;
 import com.github.crainstorm.qac.pub.entity.ArticleReport;
 import com.github.crainstorm.qac.user.dao.ArticleManageDao;
+import com.github.crainstorm.qac.user.dao.LabelManageDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,7 @@ public class ArticleManageService {
 
     @Autowired
     private ArticleManageDao dao;
+    private LabelManageDao labelManageDao;
 
     public ArrayList<Article> getArticlesByKeyword(String keyword, int maxNumInOnePage, int pageNum) {
         return dao.getArticlesByKeyword("%" + keyword + "%", maxNumInOnePage * (pageNum - 1), maxNumInOnePage);
@@ -32,17 +34,16 @@ public class ArticleManageService {
     }
 
     public Article getArticle(int id) {
-        Article article = dao.getArticle(id);
-        if (article != null) {
-            article.labels = dao.getArticleLabel(id);
-        }
-        return article;
+        return dao.getArticle(id);
     }
 
     public boolean addArticle(Article newArticle) {
-        dao.deleteArticleLabel(newArticle.id);
-        dao.addArticleLabel(newArticle);
-        return dao.addArticle(newArticle) == 1;
+        dao.addArticle(newArticle);
+        int article_id = dao.getNewestArticleId(newArticle.author_id);
+        for (int i = 0; i < newArticle.labels.size(); ++i) {
+            labelManageDao.addLabelToArticle(article_id, newArticle.labels.get(i).id);
+        }
+        return true;
     }
 
     public boolean updateArticle(Article article) {
@@ -51,9 +52,9 @@ public class ArticleManageService {
 
     public boolean upDownArticle(int article_id, int user_id, boolean up_down) {
         int upDown = up_down ? 1 : -1;
-        if(up_down){
+        if (up_down) {
             dao.upArticle(article_id);
-        }else {
+        } else {
             dao.downArticle(article_id);
         }
         return dao.upDownArticle(article_id, user_id, upDown) == 1;

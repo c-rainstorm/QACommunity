@@ -8,8 +8,8 @@
     </select>
 
     <select id="getLabelsOfArticle" resultType="com.github.crainstorm.qac.pub.entity.Label">
-        SELECT * FROM article_label WHERE article_id = #{article_id}
-        INNER JOIN label ON label.id
+--         SELECT * FROM article_label WHERE article_id = #{article_id}
+--         INNER JOIN label ON label.id
     </select>
 
 </mapper>

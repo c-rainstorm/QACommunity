@@ -2,7 +2,6 @@ package com.github.crainstorm.qac.user.dao;
 
 import com.github.crainstorm.qac.pub.entity.Article;
 import com.github.crainstorm.qac.pub.entity.ArticleReport;
-import com.github.crainstorm.qac.pub.entity.Label;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -21,17 +20,12 @@ public interface ArticleManageDao {
 
     Article getArticle(int id);
 
-    ArrayList<Label> getArticleLabel(int id);
-
     int addArticle(Article newArticle);
 
     int collectArticle(@Param("user_id") int user_id, @Param("article_id") int article_id);
 
     int reportArticle(ArticleReport report);
 
-    void deleteArticleLabel(int id);
-
-    void addArticleLabel(Article article);
 
     int updateArticle(Article article);
 
@@ -41,4 +35,6 @@ public interface ArticleManageDao {
     void upArticle(int article_id);
 
     void downArticle(int article_id);
+
+    int getNewestArticleId(int author_id);
 }
