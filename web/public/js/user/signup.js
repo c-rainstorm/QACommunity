@@ -1,6 +1,6 @@
 let app = angular.module("app", []);
 
-app.controller("appCtrl", function ($scope, $http) {
+app.controller("appCtrl", function ($scope, $http, $window) {
 
     console.log("app ctronller loaded.");
 
@@ -15,61 +15,124 @@ app.controller("appCtrl", function ($scope, $http) {
         passwordHelp: ""
     }
     $scope.signup = function () {
+        $scope.userAlert = {
+            nameHelp: "",
+            emailHelp: "",
+            passwordHelp: ""
+        }
 
-        console.log($scope.user);
+        console.log(angular.copy($scope.user));
 
-        // 检查用户名
+        // TODO check name, email, password
+        let result = checkUser(angular.copy($scope.user));
+        if(result.status == false){
+            console.log(result.alert);
+            $scope.userAlert = angular.copy(result.alert);
+            return;
+        }
+
         $http({
-            url: "../checkUserName.action",
-            method: "get",
-            param: {
-                name: angular.copy($scope.user.name)
+            url : "../addUser.action",
+            method : "post",
+            data : angular.copy($scope.user)
+        }).then(function(resp){
+            console.log(resp);
+            let data = resp.data;
+            if(data.result == "true"){
+                console.log("singup successed.");
+                $window.location.href = "./home.html";
+            }else{
+                console.log("something wrong on server. signup failed.");
+                $window.location.href = "./signup.html";
             }
-        }).then(function (resp) {
-            if (resp.result == false) {
-                $scope.userAlert.nameHelp = "user name invalid";
-            } else {
-
-                // 检查邮箱
-                $http({
-                    url: "../checkUserEmail.action",
-                    method: "get",
-                    param: {
-                        email: angular.copy($scope.user.email)
-                    }
-                }).then(function (resp) {
-                    if (resp.result == false) {
-                        $scope.userAlert.emailHelp = "user email invalid";
-                    } else {
-
-                        // 检查密码
-                        $http({
-                            url: "../checkUserPassword.action",
-                            method: "get",
-                            param: {
-                                password: angular.copy($scope.user.password)
-                            }
-                        }).then(function (resp) {
-                            if (resp.result == false) {
-                                $scope.userAlert.passwordHelp = "user password invalid";
-                            } else {
-
-                                // 检查完成，注册用户
-
-                            }
-                        }, function (resp) {
-                            httpErr(resp);
-                        });
-
-                    }
-                }, function (resp) {
-                    httpErr(resp);
-                });
-
-            }
-        }, function (resp) {
+        }, function(resp){
             httpErr(resp);
         });
+
+        // $http({
+        //     url : "../checkUserEmail.action",
+        //     method : "get",
+        //     params : {
+        //         email : angular.copy($scope.user.email)
+        //     }
+        // }).then(function(resp){
+        //     // console.log(resp);
+
+        //     let data = resp.data;
+        //     console.log(data);
+            
+        //     if(data.result == "true"){
+        //         console.log("email checked.");
+
+        //         $http({
+        //             url : "../addUser.action",
+        //             method : "get",
+        //             params : angular.copy($scope.user)
+        //         }).then(function(resp){
+        //             console.log(resp);
+        //         }, function(resp){
+        //             httpErr(resp);
+        //         });
+        //     }else{
+        //         console.log("email invalid");
+        //     }
+
+        // }, function(resp){
+        //     httpErr(resp);
+        // });
+
+        // 检查用户名
+        // $http({
+        //     url: "../checkUserName.action",
+        //     method: "get",
+        //     param: {
+        //         name: angular.copy($scope.user.name)
+        //     }
+        // }).then(function (resp) {
+        //     if (resp.result == false) {
+        //         $scope.userAlert.nameHelp = "user name invalid";
+        //     } else {
+
+        //         // 检查邮箱
+        //         $http({
+        //             url: "../checkUserEmail.action",
+        //             method: "get",
+        //             param: {
+        //                 email: angular.copy($scope.user.email)
+        //             }
+        //         }).then(function (resp) {
+        //             if (resp.result == false) {
+        //                 $scope.userAlert.emailHelp = "user email invalid";
+        //             } else {
+
+        //                 // 检查密码
+        //                 $http({
+        //                     url: "../checkUserPassword.action",
+        //                     method: "get",
+        //                     param: {
+        //                         password: angular.copy($scope.user.password)
+        //                     }
+        //                 }).then(function (resp) {
+        //                     if (resp.result == false) {
+        //                         $scope.userAlert.passwordHelp = "user password invalid";
+        //                     } else {
+
+        //                         // 检查完成，注册用户
+
+        //                     }
+        //                 }, function (resp) {
+        //                     httpErr(resp);
+        //                 });
+
+        //             }
+        //         }, function (resp) {
+        //             httpErr(resp);
+        //         });
+
+        //     }
+        // }, function (resp) {
+        //     httpErr(resp);
+        // });
 
     }
 
@@ -78,4 +141,37 @@ app.controller("appCtrl", function ($scope, $http) {
 function httpErr(msg) {
     console.log("http status : " + msg.status);
     console.log("http statusText : " + msg.statusText);
+}
+
+function checkUser(user){
+    result = {
+        status : false,
+        alert : {
+            nameHelp : "",
+            emailHelp : "",
+            passwordHelp : ""
+        }
+    };
+    // check name
+    if(user.name.length < 3 || user.name.length > 16){
+        result.alert.nameHelp = "名字长度在3~16之间";
+        return result;
+    }
+
+    // check email
+    let emailExgex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    // console.log(emailExgex.test(user.email));
+    if(!emailExgex.test(user.email)){
+        result.alert.emailHelp = "email格式错误";
+        return result;
+    }
+
+    // check password
+    if(user.password.length < 3 || user.password.length > 16){
+        result.alert.passwordHelp = "密码长度在3~16之间";
+        return result;
+    }
+
+    result.status = true;
+    return result;
 }

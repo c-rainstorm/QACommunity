@@ -4,10 +4,7 @@ import com.github.crainstorm.qac.pub.entity.*;
 import com.github.crainstorm.qac.user.service.UserManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -63,13 +60,14 @@ public class UserManageController {
         return Result.FALSE;
     }
 
-    @RequestMapping(value = "/addUser.action", method = RequestMethod.GET)
-    public String addUser(User user, HttpServletRequest request) {
+    @ResponseBody
+    @RequestMapping(value = "/addUser.action", method = RequestMethod.POST)
+    public Result addUser(@RequestBody User user, HttpServletRequest request) {
         if (service.addUser(user, request)) {
-            return "redirect:/";
+            return Result.TREU;
         } else {
             // todo 登陆页
-            return "";
+            return Result.FALSE;
         }
     }
 
