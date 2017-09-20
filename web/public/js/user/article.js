@@ -29,6 +29,21 @@ app.controller("appCtrl", function ($scope, $http, $location){
 
         $("#article_content").get(0).innerHTML = markdown.toHTML(resp.data.content);
 
+        // 获取作者简略信息
+        $http({
+            url : "../getUserBriefInfo.action" ,
+            method : "get" ,
+            params : {
+                id : angular.copy($scope.article.author_id)
+            } ,
+        }).then(function(resp){
+            console.log(resp);
+
+            $scope.article.author = resp.data;
+        }, function(resp){
+            httpErr(resp);
+        });
+
     }, function(resp){
         httpErr(resp);
     });
