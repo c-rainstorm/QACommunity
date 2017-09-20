@@ -407,7 +407,7 @@
 
                             <!-- button -->
                             <div class="text-right mt-1">
-                                <button class="btn btn-outline-success mr-2" style="padding: .3rem .75rem;">Submit</button>
+                                <button class="btn btn-outline-success mr-2" style="padding: .3rem .75rem;" ng-click="answerSubmit()">Submit</button>
                             </div>
                         </div>
                     </div>
@@ -433,7 +433,6 @@
 
             var simplemde = new SimpleMDE({ element: $("#answer01").get(0) });
 
-            var new_answer_mde = new SimpleMDE({ element: $("#new_answer").get(0) });
 
         });
     </script>

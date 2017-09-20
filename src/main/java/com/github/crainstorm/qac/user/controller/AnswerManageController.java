@@ -6,6 +6,7 @@ import com.github.crainstorm.qac.pub.entity.Result;
 import com.github.crainstorm.qac.user.service.AnswerManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -40,8 +41,8 @@ public class AnswerManageController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "addAnswer.action", method = RequestMethod.GET)
-    public Result addAnswer(Answer newAnswer) {
+    @RequestMapping(value = "addAnswer.action", method = RequestMethod.POST)
+    public Result addAnswer(@RequestBody  Answer newAnswer) {
         if (service.addAnswer(newAnswer)) {
             return Result.TREU;
         }
