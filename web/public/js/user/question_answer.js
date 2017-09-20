@@ -1,11 +1,11 @@
-let app = angular.module("app", []).config(function($locationProvider) {
+let app = angular.module("app", ['ngSanitize']).config(function($locationProvider) {
     $locationProvider.html5Mode({
       enabled: true,
       requireBase: false
     });
 });
 
-app.controller("appCtrl", function ($scope, $http, $location){
+app.controller("appCtrl", function ($scope, $http, $location, $window){
 
     console.log("app controller loaded.");
 
@@ -53,6 +53,24 @@ app.controller("appCtrl", function ($scope, $http, $location){
         });
 
 
+        // 获取答案by question_id
+        $http({
+            url : "../getAnswer.action" ,
+            method : "get" ,
+            params : {
+                id : answer_id
+            } ,
+        }).then(function(resp){
+            console.log("answer : ");
+            console.log(resp);
+
+            $scope.answer = resp.data;
+            $scope.answer.content = markdown.toHTML($scope.answer.content);
+        }, function(resp){
+            httpErr(resp);
+        });
+
+
         // 提交答案
         $scope.answerSubmit = function(){
 
@@ -80,6 +98,9 @@ app.controller("appCtrl", function ($scope, $http, $location){
             }).then(function(resp){
                 console.log(resp);
 
+                if(resp.data.result == "true"){
+                    $window.location.href = "./home.html"
+                }
             }, function(resp){
                 httpErr(resp);
             });

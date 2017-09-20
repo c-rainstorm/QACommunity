@@ -19,6 +19,7 @@
     <script src="../public/js/markdown.js"></script>
 
     <script src="../public/js/angular.min.js"></script>
+    <script src="../public/js/angular-sanitize.min.js"></script>    
 
     <script src="../public/js/user/question_answer.js"></script>
 
@@ -214,17 +215,15 @@
                             <!-- avatar & short info -->
                             <div class="">
                                 <div class="d-inline-block align-middle">
-                                    <img src="../public/img/avatars/31.png" alt="" style="height: 40px; width: 40px; border-radius: 2px;">
+                                    <img ng-src="../public/img/avatars/{{answer.author_avatar}}" alt="" style="height: 40px; width: 40px; border-radius: 2px;">
                                 </div>
                                 <div class="d-inline-block ml-2 align-middle">
-                                    <div>Elizabeth</div>
-                                    <div class="text-muted" style="font-size: 95%;">This is my short intro.</div>
+                                    <div>{{answer.author_name}}</div>
+                                    <div class="text-muted" style="font-size: 95%;">{{answer.author_short_intro}}</div>
                                 </div>
                             </div>
                             <!-- answer content -->
-                            <div class="mt-3">
-                                <textarea name="" id="answer01" cols="30" rows="10"></textarea>
-                            </div>
+                            <div class="mt-2 mb-3" ng-bind-html="answer.content"></div>
 
                             <!-- operations -->
                             <div class="cus-operations">
@@ -430,8 +429,6 @@
 
     <script>
         $(document).ready(function () {
-
-            var simplemde = new SimpleMDE({ element: $("#answer01").get(0) });
 
 
         });

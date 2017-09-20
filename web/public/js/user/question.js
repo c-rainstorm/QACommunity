@@ -5,7 +5,7 @@ let app = angular.module("app", ['ngSanitize']).config(function($locationProvide
     });
 });
 
-app.controller("appCtrl", function ($scope, $http, $location){
+app.controller("appCtrl", function ($scope, $http, $location, $window){
 
     console.log("app controller loaded.");
 
@@ -102,6 +102,9 @@ app.controller("appCtrl", function ($scope, $http, $location){
             }).then(function(resp){
                 console.log(resp);
 
+                if(resp.data.result == "true"){
+                    $window.location.href = "./home.html"
+                }
             }, function(resp){
                 httpErr(resp);
             });

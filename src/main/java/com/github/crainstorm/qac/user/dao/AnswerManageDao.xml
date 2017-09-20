@@ -52,11 +52,15 @@
             answer.datetime,
             answer.up,
             answer.down,
-            COUNT(answer_collect.user_id),
-            COUNT(answer_comment.id)
+            user.name as author_name,
+            user.avatar as author_avatar,
+            user.short_intro as author_short_intro
+--             COUNT(answer_collect.user_id),
+--             COUNT(answer_comment.id)
         FROM answer
-        INNER JOIN answer_collect ON answer_collect.answer_id = answer.id
-        INNER JOIN answer_comment ON answer_comment.answer_id = answer.id
+        INNER JOIN user ON user.id = answer.author_id
+--         INNER JOIN answer_collect ON answer_collect.answer_id = answer.id
+--         INNER JOIN answer_comment ON answer_comment.answer_id = answer.id
         WHERE answer.id = #{id};
     </select>
 
