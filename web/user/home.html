@@ -370,7 +370,14 @@
                             </div> -->
                             <div class="cus-question-excerpt-card" ng-repeat="(key, item) in questionList">
                                 <!-- question title -->
-                                <h5>{{item.title}}</h5>
+                                <h5>
+                                    <a class="text-dark" 
+                                       style="text-decoration-line: none;" 
+                                       target="_blank" 
+                                       ng-href="./question.html?id={{item.id}}">
+                                       {{item.title}}
+                                    </a>
+                                </h5>
                                 <!-- question content -->
                                 <p class="mb-1 cus-p-line-3">
                                     {{item.content}}
