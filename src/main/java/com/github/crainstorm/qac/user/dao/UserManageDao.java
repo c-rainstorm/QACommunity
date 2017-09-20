@@ -3,6 +3,7 @@ package com.github.crainstorm.qac.user.dao;
 import com.github.crainstorm.qac.pub.entity.Notice;
 import com.github.crainstorm.qac.pub.entity.User;
 import com.github.crainstorm.qac.pub.entity.UserLogin;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -22,7 +23,11 @@ public interface UserManageDao {
 
     User getUserDetails(int id);
 
-    int followUser(int user_id, int follow_id);
+    int followUser(@Param("user_id") int user_id, @Param("follow_id") int follow_id);
 
     Notice getNotice(int user_id);
+
+    int getUserFollowNum(int id);
+
+    int getUserFollowerNum(int id);
 }

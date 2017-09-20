@@ -61,6 +61,11 @@ public class UserManageService {
     }
 
     public User getUserDetails(int id) {
+        User user = dao.getUserDetails(id);
+        if(user != null){
+            user.follow_num = dao.getUserFollowNum(id);
+            user.be_follow_num = dao.getUserFollowerNum(id);
+        }
         return dao.getUserDetails(id);
     }
 
