@@ -3,5 +3,122 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.crainstorm.qac.user.dao.ProblemManageDao">
+    <select id="getQuestionsByKeyword" resultType="com.github.crainstorm.qac.pub.entity.Question">
+        SELECT
+            question.id,
+            question.content,
+            question.title,
+            question.datetime,
+            question.up,
+            question.down
+        FROM question
+        WHERE title like #{keyword} or content like #{keyword}
+        ORDER BY question.datetime ASC
+        LIMIT #{offset}, #{maxNumInOnePage};
+    </select>
+    <select id="getQuestionsByLabel" resultType="com.github.crainstorm.qac.pub.entity.Question">
+        SELECT
+            question.id,
+            question.content,
+            question.title,
+            question.datetime,
+            question.up,
+            question.down
+        FROM question
+        WHERE question.id in (select question_label.question_id from question_label where question_label.label_id = #{label_id})
+        ORDER BY question.datetime ASC
+        LIMIT #{offset}, #{maxNumInOnePage};
+    </select>
 
+    <select id="getQuestionsByUserId" resultType="com.github.crainstorm.qac.pub.entity.Question">
+        SELECT
+            question.id,
+            question.content,
+            question.title,
+            question.datetime,
+            question.up,
+            question.down
+        FROM question
+        WHERE question.author_id = #{author_id}
+        ORDER BY question.datetime ASC
+        LIMIT #{offset},{maxNumInOnePage};
+    </select>
+
+    <!-- ************************ getQuestion ****************** -->
+    <select id="getQuestion" resultType="com.github.crainstorm.qac.pub.entity.Question">
+        SELECT
+            question.id,
+            question.content,
+            question.title,
+            question.datetime,
+            question.up,
+            question.down,
+        FROM question
+        where question.id = #{id};
+    </select>
+
+    <select id="getQuestionFollowNum" resultType="int">
+        SELECT count(*)
+        FROM question_follow
+        where question_follow.question_id = #{id};
+    </select>
+
+    <select id="getQuestionAnswerNum" resultType="int">
+        SELECT count(*)
+        FROM answer
+        where answer.question_id = id;
+    </select>
+
+    <!-- *********************** END *************************** -->
+
+    <!-- *********************** addQuestion ******************* -->
+
+    <insert id="addQuestion">
+        insert into question(author_id, title, content)
+        values(#{author_id}, #{title}, #{content});
+    </insert>
+
+    <select id="getNewestQuestionId" resultType="int">
+        SELECT id FROM question
+        WHERE author_id = #{author_id}
+        ORDER BY datetime DESC
+        LIMIT 0,1;
+    </select>
+
+    <!-- *********************** END ****************************-->
+    <update id="updateQuestion" parameterType="com.github.crainstorm.qac.pub.entity.Question">
+        update question
+        set title = #{title}, content = #{content}
+        where id = #{id};
+    </update>
+
+    <!-- ******************************************************* -->
+    <update id="upDownQuestion">
+        insert into question_up_down( user_id, question_id, is_up )
+        values ( #{user_id}, #{question_id}, #{up_down} )
+    </update>
+
+    <update id="upQuestion">
+        update question
+        set up = up + 1
+        where id = #{question_id}
+        ;
+    </update>
+    <update id="downQuestion">
+        update question
+        set down = down + 1
+        where id = #{question_id}
+        ;
+    </update>
+    <!-- ****************************** -->
+
+    <insert id="followQuestion">
+        insert into question_follow(user_id, question_id)
+        values(#{user_id}, #{question_id});
+    </insert>
+
+    <insert id="reportQuestion">
+        insert into question_report(user_id, question_id, report_reason_id, remarks)
+        values(#{user_id}, #{question_id}, #{report_reason_id}, #{remarks});
+    </insert>
 </mapper>

@@ -3,5 +3,112 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.crainstorm.qac.user.dao.AnswerManageDao">
+    <select id="getAnswersByQuestionId" resultType="com.github.crainstorm.qac.pub.entity.Answer">
+        SELECT
+            answer.id,
+            answer.question_id,
+            answer.author_id,
+            answer.content,
+            answer.datetime,
+            answer.up,
+            answer.down,
+            COUNT(answer_collect.user_id),
+            COUNT(answer_comment.id)
+        FROM answer
+        INNER JOIN answer_collect ON answer_collect.answer_id = answer.id
+        INNER JOIN answer_comment ON answer_comment.answer_id = answer.id
+        WHERE answer.question_id = #{question_id}
+        limit #{offset}, #{maxNumInOnePage};
+    </select>
+    <select id="getAnswersByUserId" resultType="com.github.crainstorm.qac.pub.entity.Answer">
+        SELECT
+            answer.id,
+            answer.question_id,
+            answer.author_id,
+            answer.content,
+            answer.datetime,
+            answer.up,
+            answer.down,
+            COUNT(answer_collect.user_id),
+            COUNT(answer_comment.id)
+        FROM answer
+        INNER JOIN answer_collect ON answer_collect.answer_id = answer.id
+        INNER JOIN answer_comment ON answer_comment.answer_id = answer.id
+        WHERE answer.author_id = #{author_id}
+        limit #{offset}, #{maxNumInOnePage};
+    </select>
+    <select id="getAnswer" resultType="com.github.crainstorm.qac.pub.entity.Answer">
+        SELECT
+            answer.id,
+            answer.question_id,
+            answer.author_id,
+            answer.content,
+            answer.datetime,
+            answer.up,
+            answer.down,
+            COUNT(answer_collect.user_id),
+            COUNT(answer_comment.id)
+        FROM answer
+        INNER JOIN answer_collect ON answer_collect.answer_id = answer.id
+        INNER JOIN answer_comment ON answer_comment.answer_id = answer.id
+        WHERE answer.id = #{id};
+    </select>
+
+    <insert id="addAnswer" parameterType="com.github.crainstorm.qac.pub.entity.Answer">
+        INSERT INTO answer (answer.question_id, answer.author_id, answer.content)
+        VALUES (#{question_id}, #{author_id}, #{content});
+    </insert>
+
+    <update id="updateAnswer" parameterType="com.github.crainstorm.qac.pub.entity.Answer">
+        UPDATE answer
+        SET answer.content = #{content}
+        WHERE answer.author_id = #{author_id};
+    </update>
+
+    <update id="deleteAnswer">
+        DELETE FROM answer
+        WHERE answer.id = #{id};
+    </update>
+
+    <update id="upDownAnswer">
+        INSERT INTO answer_up_down (
+            answer_up_down.answer_id,
+            answer_up_down.user_id,
+            answer_up_down.is_up
+        )
+        VALUES (#{answer_id}, #{user_id}, #{up_down});
+    </update>
+
+    <update id="upAnswer">
+        update answer
+        set up = up + 1
+        where id = #{answer_id}
+        ;
+    </update>
+
+    <update id="downAnswer">
+        update answer
+        set down = down + 1
+        where id = #{answer_id}
+        ;
+    </update>
+
+    <insert id="collectAnswer">
+        INSERT INTO answer_collect (
+            answer_collect.user_id,
+            answer_collect.answer_id
+        )
+        VALUES (#{user_id}, #{answer_id});
+    </insert>
+
+    <insert id="reportAnswer" parameterType="com.github.crainstorm.qac.pub.entity.AnswerReport">
+        INSERT INTO answer_report (
+            answer_report.user_id,
+            answer_report.answer_id,
+            answer_report.report_reason_id,
+            answer_report.remarks
+        )
+        VALUES (#{user_id}, #{answer_id}, #{report_reason_id}, #{remarks});
+    </insert>
 
 </mapper>

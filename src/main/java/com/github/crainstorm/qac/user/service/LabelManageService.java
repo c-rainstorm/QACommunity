@@ -31,10 +31,6 @@ public class LabelManageService {
         return dao.getLabelsOfQuestion(question_id);
     }
 
-    public ArrayList<Label> getLabelsOfAnswer(int answer_id) {
-        return dao.getLabelsOfAnswer(answer_id);
-    }
-
     public boolean addLabelToArticle(int article_id, int label_id) {
         return dao.addLabelToArticle(article_id, label_id) == 1;
     }
