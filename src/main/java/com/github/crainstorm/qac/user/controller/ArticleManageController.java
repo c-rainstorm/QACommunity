@@ -35,7 +35,7 @@ public class ArticleManageController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "getArticlesByUserID.action", method = RequestMethod.GET)
+    @RequestMapping(value = "getArticlesByUserId.action", method = RequestMethod.GET)
     public ArrayList<Article> getArticlesByUserId(int author_id, int maxNumInOnePage, int pageNum) {
         return service.getArticlesByUserId(author_id, maxNumInOnePage, pageNum);
     }

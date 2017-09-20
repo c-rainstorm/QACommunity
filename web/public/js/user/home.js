@@ -26,7 +26,7 @@ app.controller("appCtrl", function ($scope, $http) {
         $scope.user = angular.copy(resp.data);
 
 
-        // 获取提过的问题列表by user_id
+        // 获取问题列表by user_id
         $http({
             url : "../getQuestionsByUserId.action" ,
             method : "get" ,
@@ -39,6 +39,23 @@ app.controller("appCtrl", function ($scope, $http) {
             console.log(resp);
 
             $scope.questionList = resp.data;
+        }, function(resp){
+            httpErr(resp);
+        });
+
+        // 获取文章列表by user_id
+        $http({
+            url : "../getArticlesByUserId.action" ,
+            method : "get" ,
+            params : {
+                author_id : angular.copy($scope.user.id),
+                maxNumInOnePage : 5,
+                pageNum : 1
+            } ,
+        }).then(function(resp){
+            console.log(resp);
+
+            $scope.articleList = resp.data;
         }, function(resp){
             httpErr(resp);
         });

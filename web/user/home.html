@@ -22,8 +22,8 @@
     <!-- custom js: tabs -->
     <script src="../public/js/cus-style-js/cus-style.js"></script>
 
-    <script src="../public/js/angular.min.js"></script> 
-    
+    <script src="../public/js/angular.min.js"></script>
+
     <script src="../public/js/user/home.js"></script>
 
     <style>
@@ -169,8 +169,8 @@
             margin-right: .5rem;
             font-size: 90%;
         }
-
         /* 控制行数 */
+
         .cus-p-line-3 {
             display: -webkit-box;
             -webkit-box-orient: vertical;
@@ -463,17 +463,17 @@
                             <!-- <div class="content__wrapper">
                                 <h2 class="text-color">Articles</h2>
                             </div> -->
-                            <div class="cus-article-excerpt-card">
+                            <div class="cus-article-excerpt-card" ng-repeat="(key, item) in articleList">
                                 <!-- Article title -->
-                                <h5>Article title</h5>
+                                <h5><a ng-href="../article.html?id={{item.id}}" class="text-dark" style="text-decoration-line: none;">{{item.title}}</a></h5>
                                 <!-- avatar info -->
                                 <div>
                                     <div class="d-inline-block align-middle">
-                                        <img src="../public/img/avatars/khalil.png" alt="" style="height: 40px; width: 40px; border-radius: 2px;">
+                                        <img ng-src="../public/img/avatars/{{user.avatar}}" alt="" style="height: 40px; width: 40px; border-radius: 2px;">
                                     </div>
                                     <div class="d-inline-block ml-2 align-middle">
-                                        <div>Hugo Hoo</div>
-                                        <div style="color: #555; font-size: 95%;">This is my short intro.</div>
+                                        <div>{{user.name}}</div>
+                                        <div style="color: #555; font-size: 95%;">{{user.short_intro}}</div>
                                     </div>
                                 </div>
                                 <!-- another info -->
@@ -482,14 +482,11 @@
                                 </div>
                                 <!-- answer excerpt -->
                                 <p class="mb-1">
-                                    Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. 
-                                    Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-                                    Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. 
-                                    Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+                                    {{item.content}}
                                 </p>
                                 <!-- datetime -->
                                 <div class="cus-split-short-info">
-                                    <span class="cus-split-item">2017-9-11</span>
+                                    <span class="cus-split-item">{{item.datetime}}</span>
                                 </div>
                             </div>
                         </li>
