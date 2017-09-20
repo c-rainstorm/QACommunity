@@ -2,6 +2,14 @@ let app = angular.module("app", []);
 
 app.controller("appCtrl", function ($scope, $http) {
 
+    $scope.color = [
+        'border-left-blue',
+        'border-left-red',
+        'border-left-grey',
+        'border-left-green',
+        'border-left-yellow'
+    ];
+    
     console.log("app controller loaded.");
 
     $scope.session = {
@@ -36,6 +44,7 @@ app.controller("appCtrl", function ($scope, $http) {
                 pageNum : 1
             } ,
         }).then(function(resp){
+            console.log("question list : ");            
             console.log(resp);
 
             $scope.questionList = resp.data;
@@ -53,6 +62,7 @@ app.controller("appCtrl", function ($scope, $http) {
                 pageNum : 1
             } ,
         }).then(function(resp){
+            console.log("article list : ");            
             console.log(resp);
 
             $scope.articleList = resp.data;
@@ -60,6 +70,27 @@ app.controller("appCtrl", function ($scope, $http) {
             httpErr(resp);
         });
 
+        // 获取答案列表by user_id
+        $http({
+            url : "../getAnswersByUserId.action" ,
+            method : "get" ,
+            params : {
+                author_id : angular.copy($scope.user.id),
+                maxNumInOnePage : 5,
+                pageNum : 1
+            } ,
+        }).then(function(resp){
+            console.log("answer list : ");
+            console.log(resp);
+
+            $scope.answerList = resp.data;
+
+            for(var i = 0; i < $scope.answerList.length; i++){
+                $scope.answerList[i].border_color = angular.copy($scope.color[i % 5]);
+            }
+        }, function(resp){
+            httpErr(resp);
+        });
 
     }, function(resp){
         httpErr(resp);

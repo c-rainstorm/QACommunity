@@ -177,6 +177,22 @@
             -webkit-line-clamp: 3;
             overflow: hidden;
         }
+
+        .border-left-blue {
+            border-left: 2px solid #29B6F6;
+        }
+        .border-left-red {
+            border-left: 2px solid #F06292;
+        }
+        .border-left-grey {
+            border-left: 2px solid #9E9E9E;
+        }
+        .border-left-green {
+            border-left: 2px solid #00C853;
+        }
+        .border-left-yellow {
+            border-left: 2px solid #FFAB00;
+        }
     </style>
 
 </head>
@@ -318,17 +334,19 @@
                                 <h2 class="text-color">Answers</h2>
                             </div> -->
                             <!-- answer card -->
-                            <div class="cus-answer-excerpt-card">
+                            <div class="cus-answer-excerpt-card" ng-repeat="(key, item) in answerList">
                                 <!-- question title -->
-                                <h5 class="cus-px">Question title</h5>
+                                <h5 class="cus-px">
+                                    <a class="text-dark" style="text-decoration-line: none;" target="_blank" ng-href="./question_answer.html?question_id={{item.question_id}}&answer_id={{item.id}}">{{item.question_title}}</a>
+                                </h5>
                                 <!-- avatar info -->
-                                <div class="cus-px" style="border-left: 2px solid #29B6F6;">
+                                <div class="cus-px" ng-class="item.border_color">
                                     <div class="d-inline-block align-middle">
                                         <img src="../public/img/avatars/khalil.png" alt="" style="height: 40px; width: 40px; border-radius: 2px;">
                                     </div>
                                     <div class="d-inline-block ml-2 align-middle">
-                                        <div>Hugo Hoo</div>
-                                        <div style="color: #555; font-size: 95%;">This is my short intro.</div>
+                                        <div>{{user.name}}</div>
+                                        <div style="color: #555; font-size: 95%;">{{user.short_intro}}</div>
                                     </div>
                                 </div>
                                 <!-- agree number -->
@@ -337,104 +355,12 @@
                                 </div>
                                 <!-- answer excerpt -->
                                 <p class="mb-1 cus-px">
-                                    Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Vivamus sagittis lacus vel augue laoreet rutrum faucibus
+                                    {{item.content}}
                                 </p>
                                 <!-- datetime -->
                                 <div class="cus-split-short-info cus-px">
-                                    <span class="cus-split-item">2017-9-4</span>
+                                    <span class="cus-split-item">{{item.datetime}}</span>
                                 </div>
-                            </div>
-                            <!-- answer card -->
-                            <div class="cus-answer-excerpt-card">
-                                <!-- question title -->
-                                <h5 class="cus-px">Question title</h5>
-                                <!-- avatar info -->
-                                <div class="cus-px" style="border-left: 2px solid #F06292;">
-                                    <div class="d-inline-block align-middle">
-                                        <img src="../public/img/avatars/khalil.png" alt="" style="height: 40px; width: 40px; border-radius: 2px;">
-                                    </div>
-                                    <div class="d-inline-block ml-2 align-middle">
-                                        <div>Hugo Hoo</div>
-                                        <div style="color: #555; font-size: 95%;">This is my short intro.</div>
-                                    </div>
-                                </div>
-                                <!-- agree number -->
-                                <div class="cus-split-short-info cus-px">
-                                    <span class="cus-split-item">23 Agree with this answer</span>
-                                </div>
-                                <!-- answer excerpt -->
-                                <p class="mb-1 cus-px">
-                                    Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Vivamus sagittis lacus vel augue laoreet rutrum faucibus
-                                </p>
-                            </div>
-                            <!-- answer card -->
-                            <div class="cus-answer-excerpt-card">
-                                <!-- question title -->
-                                <h5 class="cus-px">Question title</h5>
-                                <!-- avatar info -->
-                                <div class="cus-px" style="border-left: 2px solid #9E9E9E;">
-                                    <div class="d-inline-block align-middle">
-                                        <img src="../public/img/avatars/khalil.png" alt="" style="height: 40px; width: 40px; border-radius: 2px;">
-                                    </div>
-                                    <div class="d-inline-block ml-2 align-middle">
-                                        <div>Hugo Hoo</div>
-                                        <div style="color: #555; font-size: 95%;">This is my short intro.</div>
-                                    </div>
-                                </div>
-                                <!-- agree number -->
-                                <div class="cus-split-short-info cus-px">
-                                    <span class="cus-split-item">23 Agree with this answer</span>
-                                </div>
-                                <!-- answer excerpt -->
-                                <p class="mb-1 cus-px">
-                                    Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Vivamus sagittis lacus vel augue laoreet rutrum faucibus
-                                </p>
-                            </div>
-                            <!-- answer card -->
-                            <div class="cus-answer-excerpt-card">
-                                <!-- question title -->
-                                <h5 class="cus-px">Question title</h5>
-                                <!-- avatar info -->
-                                <div class="cus-px" style="border-left: 2px solid #00C853;">
-                                    <div class="d-inline-block align-middle">
-                                        <img src="../public/img/avatars/khalil.png" alt="" style="height: 40px; width: 40px; border-radius: 2px;">
-                                    </div>
-                                    <div class="d-inline-block ml-2 align-middle">
-                                        <div>Hugo Hoo</div>
-                                        <div style="color: #555; font-size: 95%;">This is my short intro.</div>
-                                    </div>
-                                </div>
-                                <!-- agree number -->
-                                <div class="cus-split-short-info cus-px">
-                                    <span class="cus-split-item">23 Agree with this answer</span>
-                                </div>
-                                <!-- answer excerpt -->
-                                <p class="mb-1 cus-px">
-                                    Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Vivamus sagittis lacus vel augue laoreet rutrum faucibus
-                                </p>
-                            </div>
-                            <!-- answer card -->
-                            <div class="cus-answer-excerpt-card">
-                                <!-- question title -->
-                                <h5 class="cus-px">Question title</h5>
-                                <!-- avatar info -->
-                                <div class="cus-px" style="border-left: 2px solid #FFAB00;">
-                                    <div class="d-inline-block align-middle">
-                                        <img src="../public/img/avatars/khalil.png" alt="" style="height: 40px; width: 40px; border-radius: 2px;">
-                                    </div>
-                                    <div class="d-inline-block ml-2 align-middle">
-                                        <div>Hugo Hoo</div>
-                                        <div style="color: #555; font-size: 95%;">This is my short intro.</div>
-                                    </div>
-                                </div>
-                                <!-- agree number -->
-                                <div class="cus-split-short-info cus-px">
-                                    <span class="cus-split-item">23 Agree with this answer</span>
-                                </div>
-                                <!-- answer excerpt -->
-                                <p class="mb-1 cus-px">
-                                    Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Vivamus sagittis lacus vel augue laoreet rutrum faucibus
-                                </p>
                             </div>
                         </li>
                         <!-- question list -->

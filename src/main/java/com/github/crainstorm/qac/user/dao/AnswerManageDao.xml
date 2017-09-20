@@ -23,17 +23,19 @@
     <select id="getAnswersByUserId" resultType="com.github.crainstorm.qac.pub.entity.Answer">
         SELECT
             answer.id,
+            question.title as question_title,
             answer.question_id,
             answer.author_id,
             answer.content,
             answer.datetime,
             answer.up,
-            answer.down,
-            COUNT(answer_collect.user_id),
-            COUNT(answer_comment.id)
+            answer.down
+--             COUNT(answer_collect.user_id),
+--             COUNT(answer_comment.id)
         FROM answer
-        INNER JOIN answer_collect ON answer_collect.answer_id = answer.id
-        INNER JOIN answer_comment ON answer_comment.answer_id = answer.id
+        INNER JOIN question ON question.id = answer.question_id
+--         INNER JOIN answer_collect ON answer_collect.answer_id = answer.id
+--         INNER JOIN answer_comment ON answer_comment.answer_id = answer.id
         WHERE answer.author_id = #{author_id}
         limit #{offset}, #{maxNumInOnePage};
     </select>

@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 public class Answer {
     public int id;
     public int question_id;
+    public String question_title;
     public int author_id;
     public String content;
     public Timestamp datetime;
@@ -25,6 +26,10 @@ public class Answer {
     public void setId(int id) {
         this.id = id;
     }
+
+    public String getQuestion_title() { return question_title; }
+
+    public void setQuestion_title(String question_title) { this.question_title = question_title; }
 
     public int getQuestion_id() {
         return question_id;
