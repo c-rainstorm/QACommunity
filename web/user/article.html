@@ -15,6 +15,12 @@
     <script src="../public/js/bootstrap.min.js"></script>
     <!-- <script src="../public/js/simplemde.min.js"></script> -->
 
+    <script src="../public/js/markdown.js"></script>
+
+    <script src="../public/js/angular.min.js"></script>
+    
+    <script src="../public/js/user/article.js"></script>
+
     <style>
         /* body {
             background-color: #f3f3f3;
@@ -81,7 +87,7 @@
     </style>
 
 </head>
-<body>
+<body ng-app="app" ng-controller="appCtrl">
     
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-white cus-border-bottom-shadow">
@@ -144,7 +150,7 @@
                                 <span class="badge badge-pill badge-dark">Dark</span>
                             </div>
                             <!-- Article title -->
-                            <h3>Article title</h3>
+                            <h3>{{article.title}}</h3>
 
                             <!-- author info -->
                             <!-- avatar & short info -->
@@ -159,50 +165,8 @@
                             </div>
 
                             <!-- Article content -->
-                            <p class="lead">
-                                Vivamus sagittis lacus vel augue laoreet rutrum faucibus 
-                                dolor auctor. Duis mollis, est non commodo luctus.
-                                Vivamus sagittis lacus vel augue laoreet rutrum faucibus 
-                                dolor auctor. Duis mollis, est non commodo luctus.
-                                Vivamus sagittis lacus vel augue laoreet rutrum faucibus 
-                                dolor auctor. Duis mollis, est non commodo luctus.
-                            </p>
-                                
-                            <p class="lead">
-                                Vivamus sagittis lacus vel augue laoreet rutrum faucibus 
-                                dolor auctor. Duis mollis, est non commodo luctus.
-                                Vivamus sagittis lacus vel augue laoreet rutrum faucibus 
-                                dolor auctor. Duis mollis, est non commodo luctus.
-                                Vivamus sagittis lacus vel augue laoreet rutrum faucibus 
-                                dolor auctor. Duis mollis, est non commodo luctus.
-                                Vivamus sagittis lacus vel augue laoreet rutrum faucibus 
-                                dolor auctor. Duis mollis, est non commodo luctus.
-                                Vivamus sagittis lacus vel augue laoreet rutrum faucibus 
-                                dolor auctor. Duis mollis, est non commodo luctus.
-                                Vivamus sagittis lacus vel augue laoreet rutrum faucibus 
-                                dolor auctor. Duis mollis, est non commodo luctus.
-                                Vivamus sagittis lacus vel augue laoreet rutrum faucibus 
-                                dolor auctor. Duis mollis, est non commodo luctus.
-                                Vivamus sagittis lacus vel augue laoreet rutrum faucibus 
-                                dolor auctor. Duis mollis, est non commodo luctus.
-                                Vivamus sagittis lacus vel augue laoreet rutrum faucibus 
-                                dolor auctor. Duis mollis, est non commodo luctus.
-                                Vivamus sagittis lacus vel augue laoreet rutrum faucibus 
-                                dolor auctor. Duis mollis, est non commodo luctus.
-                                Vivamus sagittis lacus vel augue laoreet rutrum faucibus 
-                                dolor auctor. Duis mollis, est non commodo luctus.
-                                Vivamus sagittis lacus vel augue laoreet rutrum faucibus 
-                                dolor auctor. Duis mollis, est non commodo luctus.
-                            </p>
-
-                            <p class="lead">
-                                Vivamus sagittis lacus vel augue laoreet rutrum faucibus 
-                                dolor auctor. Duis mollis, est non commodo luctus.
-                                Vivamus sagittis lacus vel augue laoreet rutrum faucibus 
-                                dolor auctor. Duis mollis, est non commodo luctus.
-                                Vivamus sagittis lacus vel augue laoreet rutrum faucibus 
-                                dolor auctor. Duis mollis, est non commodo luctus.
-                            </p>
+                            <div id="article_content">
+                            </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="mt-4 mb-3">
