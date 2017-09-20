@@ -232,9 +232,9 @@
                     <div class="cus-info-card bg-white cus-border-bottom-shadow" style="border-radius: 5px;">
                         <!-- avatar -->
                         <div class="text-center pt-5 pb-3">
-                            <img src="../public/img/avatars/khalil.png" class="img-fluid" alt="" style="height: 110px; width: 110px; border-radius: 100px;">
-                            <div class="lead mt-2" style="font-weight: normal;">Hugo Hoo</div>
-                            <div class="text-muted">Intergrated delay cancer</div>
+                            <img ng-src="../public/img/avatars/{{user.avatar}}" class="img-fluid" alt="" style="height: 110px; width: 110px; border-radius: 100px;">
+                            <div class="lead mt-2" style="font-weight: normal;">{{user.name}}</div>
+                            <div class="text-muted">{{user.short_intro}}</div>
                         </div>
 
                         <div class="text-center">
@@ -246,19 +246,15 @@
                         <div class="text-left px-4 pt-3 pb-2">
                             <div class="mb-2">
                                 <span class="text-muted">College</span><br/>
-                                <span>Zheng Zhou Univercity</span>
+                                <span>{{user.college}}</span>
                             </div>
                             <div class="mb-2">
                                 <span class="text-muted">Major</span><br/>
-                                <span>Software engineering</span>
+                                <span>{{user.major}}</span>
                             </div>
                             <div class="mb-2">
                                 <span class="text-muted">Intro</span><br/>
-                                <span>
-                                            Vivamus sagittis lacus vel augue laoreet rutrum 
-                                            faucibus dolor auctor. Duis mollis, est non commodo luctus.
-                                            Vivamus sagittis lacus vel augue laoreet rutrum.
-                                        </span>
+                                <span>{{user.intro}}</span>
                             </div>
                         </div>
 

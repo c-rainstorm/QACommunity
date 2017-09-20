@@ -16,11 +16,18 @@
         WHERE email = #{email};
     </select>
 
+    <select id="getUserDetails" parameterType="com.github.crainstorm.qac.pub.entity.UserLogin"
+            resultType="com.github.crainstorm.qac.pub.entity.User">
+        SELECT id, name, email, create_date, sex, short_intro, intro, college, major, avatar, prestige, browse_num, status
+        FROM user
+        WHERE id = #{id};
+    </select>
+
     <select id="getUserBriefInfo" parameterType="com.github.crainstorm.qac.pub.entity.UserLogin"
             resultType="com.github.crainstorm.qac.pub.entity.User">
         SELECT id, name, avatar
         FROM user
-        WHERE email = #{email} AND password = #{password};
+        WHERE id = #{id};
     </select>
 
 
