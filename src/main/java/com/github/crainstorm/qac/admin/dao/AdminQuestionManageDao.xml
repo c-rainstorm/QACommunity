@@ -3,5 +3,19 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.crainstorm.qac.admin.dao.AdminQuestionManageDao">
+    <select id="getQuestionReportList" resultType="com.github.crainstorm.qac.pub.entity.QuestionReport">
+--         todo
+        SELECT * FROM question_report
+    </select>
 
+    <update id="shutdownQuestion">
+        UPDATE question_report
+        SET question_report.`status` = 1
+        WHERE question_report.question_id = #{question_id}
+    </update>
+
+    <delete id="deleteQuestion">
+        DELETE FROM question
+        WHERE question.id = #{question_id};
+    </delete>
 </mapper>

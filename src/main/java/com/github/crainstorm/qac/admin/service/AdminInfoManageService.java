@@ -2,6 +2,7 @@ package com.github.crainstorm.qac.admin.service;
 
 import com.github.crainstorm.qac.admin.dao.AdminInfoManageDao;
 import com.github.crainstorm.qac.pub.entity.Admin;
+import com.github.crainstorm.qac.pub.entity.Notice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -36,5 +37,9 @@ public class AdminInfoManageService {
 
     public boolean updateAdminInfo(Admin admin) {
         return dao.updateAdminInfo(admin) == 1;
+    }
+
+    public boolean addNotice(Notice notice) {
+        return dao.addNotice(notice) == 1;
     }
 }

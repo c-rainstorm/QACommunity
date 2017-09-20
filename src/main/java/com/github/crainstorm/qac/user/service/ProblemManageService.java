@@ -2,10 +2,10 @@ package com.github.crainstorm.qac.user.service;
 
 import com.github.crainstorm.qac.pub.entity.Question;
 import com.github.crainstorm.qac.pub.entity.QuestionReport;
+import com.github.crainstorm.qac.user.dao.LabelManageDao;
 import com.github.crainstorm.qac.user.dao.ProblemManageDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -13,20 +13,21 @@ import java.util.ArrayList;
 /**
  * Created by chen on 9/16/17.
  */
-@EnableTransactionManagement
 @Transactional
 @Service
 public class ProblemManageService {
 
     @Autowired
     private ProblemManageDao dao;
+    @Autowired
+    private LabelManageDao labelManageDao;
 
     public ArrayList<Question> getQuestionsByKeyword(String keyword, int maxNumInOnePage, int pageNum) {
-        return dao.getQuestionsByKeyword(keyword, maxNumInOnePage, pageNum);
+        return dao.getQuestionsByKeyword("%" + keyword + "%", maxNumInOnePage, pageNum);
     }
 
-    public ArrayList<Question> getQuestionsByLabel(String label, int maxNumInOnePage, int pageNum) {
-        return dao.getQuestionsByLable(label, maxNumInOnePage, pageNum);
+    public ArrayList<Question> getQuestionsByLabel(int label_id, int maxNumInOnePage, int pageNum) {
+        return dao.getQuestionsByLabel(label_id, maxNumInOnePage, pageNum);
     }
 
     public ArrayList<Question> getQuestionsByUserId(int author_id, int maxNumInOnePage, int pageNum) {
@@ -34,12 +35,22 @@ public class ProblemManageService {
     }
 
     public Question getQuestion(int id) {
+        Question question = dao.getQuestion(id);
+        if (question != null) {
+            question.follow_num = dao.getQuestionFollowNum(id);
+            question.answer_num = dao.getQuestionAnswerNum(id);
+            question.labels.addAll(labelManageDao.getLabelsOfQuestion(id));
+        }
         return dao.getQuestion(id);
     }
 
-    // todo labels
     public boolean addQuestion(Question newQuestion) {
-        return dao.addQuestion(newQuestion) == 1;
+        dao.addQuestion(newQuestion);
+        int question_id = dao.getNewestQuestionId(newQuestion.author_id);
+        for (int i = 0; i < newQuestion.labels.size(); ++i) {
+            labelManageDao.addLabelToQuestion(question_id, newQuestion.labels.get(i).id);
+        }
+        return true;
     }
 
     public boolean updateQuestion(Question question) {
@@ -47,6 +58,11 @@ public class ProblemManageService {
     }
 
     public boolean upDownQuestion(int question_id, int user_id, boolean up_down) {
+        if(up_down){
+            dao.upQuestion(question_id);
+        }else {
+            dao.downQuestion(question_id);
+        }
         return dao.upDownQuestion(question_id, user_id, up_down) == 1;
     }
 

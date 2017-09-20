@@ -16,6 +16,31 @@
         WHERE email = #{email};
     </select>
 
+    <select id="getUserDetails" resultType="com.github.crainstorm.qac.pub.entity.User">
+        SELECT *
+        FROM `user`
+        WHERE `user`.id = #{id};
+    </select>
+
+    <select id="getUserFollowNum" resultType="int">
+        SELECT count(*)
+        FROM user_follow
+        WHERE user_id = #{user_id}
+    </select>
+    <select id="getUserFollowerNum" resultType="int">
+        SELECT count(*)
+        FROM user_follow
+        WHERE follow_id = #{user_id}
+    </select>
+
+    <insert id="followUser">
+        INSERT INTO user_follow (
+            user_follow.user_id,
+            user_follow.follow_id
+        )
+        VALUES (#{user_id}, #{follow_id});
+    </insert>
+
     <select id="getUserBriefInfo" parameterType="com.github.crainstorm.qac.pub.entity.UserLogin"
             resultType="com.github.crainstorm.qac.pub.entity.User">
         SELECT id, name, avatar

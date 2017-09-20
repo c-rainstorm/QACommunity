@@ -22,11 +22,11 @@ public class AnswerManageService {
     private AnswerManageDao dao;
 
     public ArrayList<Answer> getAnswersByQuestionId(int question_id, int maxNumInOnePage, int pageNum) {
-        return dao.getAnswersByQuestionId(question_id, maxNumInOnePage, pageNum);
+        return dao.getAnswersByQuestionId(question_id, maxNumInOnePage * (pageNum - 1), maxNumInOnePage);
     }
 
     public ArrayList<Answer> getAnswersByUserId(int author_id, int maxNumInOnePage, int pageNum) {
-        return dao.getAnswersByUserId(author_id, maxNumInOnePage, pageNum);
+        return dao.getAnswersByUserId(author_id, maxNumInOnePage * (pageNum - 1), maxNumInOnePage);
     }
 
     public Answer getAnswer(int id) {
@@ -42,7 +42,13 @@ public class AnswerManageService {
     }
 
     public boolean upDownAnswer(int answer_id, int user_id, boolean up_down) {
-        return dao.upDownAnswer(answer_id, user_id, up_down) == 1;
+        int updown = up_down ? 1 : 0;
+        if (up_down) {
+            dao.upAnswer(answer_id);
+        } else {
+            dao.downAnswer(answer_id);
+        }
+        return dao.upDownAnswer(answer_id, user_id, updown) == 1;
     }
 
     public boolean collectAnswer(int user_id, int answer_id) {
@@ -51,5 +57,9 @@ public class AnswerManageService {
 
     public boolean reportAnswer(AnswerReport report) {
         return dao.reportAnswer(report) == 1;
+    }
+
+    public boolean updateAnswer(Answer answer) {
+        return dao.updateAnswer(answer) == 1;
     }
 }

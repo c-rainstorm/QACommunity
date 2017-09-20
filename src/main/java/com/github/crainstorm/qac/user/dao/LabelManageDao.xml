@@ -8,8 +8,40 @@
     </select>
 
     <select id="getLabelsOfArticle" resultType="com.github.crainstorm.qac.pub.entity.Label">
---         SELECT * FROM article_label WHERE article_id = #{article_id}
---         INNER JOIN label ON label.id
+        SELECT label.id, label.title
+        FROM label
+        where label.id in (
+            select article_label.label_id
+            from article_label
+            where article_label.article_id = #{id});
     </select>
 
+    <insert id="addLabelToArticle">
+        insert into article_label
+        values(#{article_id},#{label_id});
+    </insert>
+    <delete id="deleteLabelFromArticle">
+        DELETE FROM article_label
+        WHERE article_id = #{article_id} AND label_id= #{label_id}
+    </delete>
+
+    <!-- ********************************************* -->
+
+    <select id="getLabelsOfQuestion" resultType="com.github.crainstorm.qac.pub.entity.Label">
+        SELECT label.id, label.title
+        FROM label
+        where label.id in (
+            select question_label.label_id
+            from question_label
+            where question_label.question_id = #{id});
+    </select>
+
+    <insert id="addLabelToQuestion">
+        insert into question_label
+        values(#{question_id},#{label_id});
+    </insert>
+    <delete id="deleteLabelFromQuestion">
+        DELETE FROM question_label
+        WHERE question_id = #{question_id} AND label_id= #{label_id}
+    </delete>
 </mapper>

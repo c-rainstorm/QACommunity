@@ -3,5 +3,24 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.crainstorm.qac.admin.dao.AdminInfoManageDao">
+    <select id="checkAdminLogin" parameterType="com.github.crainstorm.qac.pub.entity.Admin">
+        SELECT COUNT (*)
+        FROM admin
+        WHERE id = #{id} AND password = #{password};
+    </select>
+    <select id="getAdminInfo" parameterType="com.github.crainstorm.qac.pub.entity.Admin" resultType="com.github.crainstorm.qac.pub.entity.Admin">
+        SELECT id, name
+        FROM admin
+        WHERE id = #{id} AND password = #{password};
+    </select>
+    <update id="updateAdminInfo" parameterType="com.github.crainstorm.qac.pub.entity.Admin" >
+        UPDATE admin
+        SET admin.`password` = #{password}, set name = #{name}
+        WHERE id = #{id};
+    </update>
 
+    <insert id="addNotice" parameterType="com.github.crainstorm.qac.pub.entity.Notice">
+        INSERT INTO notice(user_id, content)
+        VALUES (#{user_id}, #{content});
+    </insert>
 </mapper>

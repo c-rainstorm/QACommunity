@@ -58,6 +58,16 @@ public class AnswerManageController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "updateAnswer.action", method = RequestMethod.GET)
+    public Result updateAnswer(Answer answer) {
+        if (service.updateAnswer(answer)) {
+            return Result.TREU;
+        }
+
+        return Result.FALSE;
+    }
+
+    @ResponseBody
     @RequestMapping(value = "up_downAnswer.action", method = RequestMethod.GET)
     public Result upDownAnswer(int answer_id, int user_id, boolean up_down) {
         if (service.upDownAnswer(answer_id, user_id, up_down)) {

@@ -3,5 +3,23 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.crainstorm.qac.admin.dao.AdminLabelManageDao">
+    <select id="getLabels" resultType="com.github.crainstorm.qac.pub.entity.Label">
+        SELECT * FROM label;
+    </select>
 
+    <insert id="addLabel" parameterType="com.github.crainstorm.qac.pub.entity.Label">
+        INSERT INTO label(title)
+        VALUES (#{title});
+    </insert>
+
+    <update id="updateLabel" parameterType="com.github.crainstorm.qac.pub.entity.Label">
+        UPDATE label
+        SET label.title = #{title}
+        WHERE label.id = #{id};
+    </update>
+
+    <delete id="deleteLabel" parameterType="com.github.crainstorm.qac.pub.entity.Label">
+        DELETE FROM label
+        WHERE label.id = #{id};
+    </delete>
 </mapper>

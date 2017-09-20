@@ -2,6 +2,7 @@ package com.github.crainstorm.qac.user.dao;
 
 import com.github.crainstorm.qac.pub.entity.Answer;
 import com.github.crainstorm.qac.pub.entity.AnswerReport;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -11,9 +12,9 @@ import java.util.ArrayList;
  */
 @Repository
 public interface AnswerManageDao {
-    ArrayList<Answer> getAnswersByQuestionId(int question_id, int maxNumInOnePage, int pageNum);
+    ArrayList<Answer> getAnswersByQuestionId(@Param("question_id") int question_id, @Param("offset") int offset, @Param("maxNumInOnePage") int maxNumInOnePage);
 
-    ArrayList<Answer> getAnswersByUserId(int author_id, int maxNumInOnePage, int pageNum);
+    ArrayList<Answer> getAnswersByUserId(@Param("author_id") int author_id, @Param("offset") int offset, @Param("maxNumInOnePage") int maxNumInOnePage);
 
     Answer getAnswer(int id);
 
@@ -21,9 +22,17 @@ public interface AnswerManageDao {
 
     int deleteAnswer(int id);
 
-    int upDownAnswer(int answer_id, int user_id, boolean up_down);
+    int upDownAnswer(@Param("answer_id") int answer_id, @Param("user_id") int user_id, @Param("up_down") int up_down);
 
-    int collectAnswer(int user_id, int answer_id);
+    void upAnswer(int answer_id);
+
+    void downAnswer(int answer_id);
+
+    int collectAnswer(@Param("user_id") int user_id, @Param("answer_id") int answer_id);
 
     int reportAnswer(AnswerReport report);
+
+    int updateAnswer(Answer answer);
+
+
 }

@@ -2,6 +2,7 @@ package com.github.crainstorm.qac.admin.controller;
 
 import com.github.crainstorm.qac.admin.service.AdminInfoManageService;
 import com.github.crainstorm.qac.pub.entity.Admin;
+import com.github.crainstorm.qac.pub.entity.Notice;
 import com.github.crainstorm.qac.pub.entity.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,6 +37,15 @@ public class AdminInfoManageControler {
             return Result.TREU;
         }
 
+        return Result.FALSE;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "addNotice.action", method = RequestMethod.GET)
+    public Result addNotice(Notice notice) {
+        if (service.addNotice(notice)) {
+            return Result.TREU;
+        }
         return Result.FALSE;
     }
 }

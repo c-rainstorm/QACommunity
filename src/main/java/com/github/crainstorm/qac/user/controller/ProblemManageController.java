@@ -26,19 +26,19 @@ public class ProblemManageController {
     // todo method need modify
     @RequestMapping(value = "getQuestionsByKeyword.action", method = RequestMethod.GET)
     public ArrayList<Question> getQuestionsByKeyword(String keyword, int maxNumInOnePage, int pageNum) {
-        return service.getQuestionsByKeyword(keyword, maxNumInOnePage, pageNum);
+        return service.getQuestionsByKeyword(keyword, maxNumInOnePage * (pageNum - 1), maxNumInOnePage);
     }
 
     @ResponseBody
     @RequestMapping(value = "getQuestionsByLabel.action", method = RequestMethod.GET)
-    public ArrayList<Question> getQuestionsByLabel(String label, int maxNumInOnePage, int pageNum) {
-        return service.getQuestionsByLabel(label, maxNumInOnePage, pageNum);
+    public ArrayList<Question> getQuestionsByLabel(int label_id, int maxNumInOnePage, int pageNum) {
+        return service.getQuestionsByLabel(label_id, maxNumInOnePage * (pageNum - 1), maxNumInOnePage);
     }
 
     @ResponseBody
     @RequestMapping(value = "getQuestionsByUserID.action", method = RequestMethod.GET)
     public ArrayList<Question> getQuestionsByUserId(int author_id, int maxNumInOnePage, int pageNum) {
-        return service.getQuestionsByUserId(author_id, maxNumInOnePage, pageNum);
+        return service.getQuestionsByUserId(author_id, maxNumInOnePage * (pageNum - 1), maxNumInOnePage);
     }
 
     @ResponseBody
