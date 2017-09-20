@@ -1,6 +1,6 @@
 let app = angular.module("app", []);
 
-app.controller("appCtrl", function ($scope, $http) {
+app.controller("appCtrl", function ($scope, $http, $window) {
 
     var content_mde = new SimpleMDE({ element: $("#content").get(0) });
 
@@ -64,6 +64,12 @@ app.controller("appCtrl", function ($scope, $http) {
                 data: angular.copy($scope.question)
             }).then(function (resp) {
                 console.log(resp);
+
+                if(resp.data.result == "true"){
+                    $window.location.href = "./home.html";
+                }else{
+                    $window.location.href = "./add_question.html";
+                }
             }, function (resp) {
                 httpErr(resp);
             });
