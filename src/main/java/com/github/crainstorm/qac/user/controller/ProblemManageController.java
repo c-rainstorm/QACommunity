@@ -37,7 +37,7 @@ public class ProblemManageController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "getQuestionsByUserID.action", method = RequestMethod.GET)
+    @RequestMapping(value = "getQuestionsByUserId.action", method = RequestMethod.GET)
     public ArrayList<Question> getQuestionsByUserId(int author_id, int maxNumInOnePage, int pageNum) {
         return service.getQuestionsByUserId(author_id, maxNumInOnePage * (pageNum - 1), maxNumInOnePage);
     }

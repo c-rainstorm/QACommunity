@@ -39,10 +39,10 @@ public class ArticleManageService {
 
     public boolean addArticle(Article newArticle) {
         dao.addArticle(newArticle);
-        int article_id = dao.getNewestArticleId(newArticle.author_id);
-        for (int i = 0; i < newArticle.labels.size(); ++i) {
-            labelManageDao.addLabelToArticle(article_id, newArticle.labels.get(i).id);
-        }
+//        int article_id = dao.getNewestArticleId(newArticle.author_id);
+//        for (int i = 0; i < newArticle.labels.size(); ++i) {
+//            labelManageDao.addLabelToArticle(article_id, newArticle.labels.get(i).id);
+//        }
         return true;
     }
 

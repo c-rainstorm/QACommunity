@@ -41,7 +41,7 @@
         FROM question
         WHERE question.author_id = #{author_id}
         ORDER BY question.datetime ASC
-        LIMIT #{offset},{maxNumInOnePage};
+        LIMIT #{offset},#{maxNumInOnePage};
     </select>
 
     <!-- ************************ getQuestion ****************** -->

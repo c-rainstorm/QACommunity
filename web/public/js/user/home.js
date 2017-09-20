@@ -24,6 +24,26 @@ app.controller("appCtrl", function ($scope, $http) {
         console.log(resp);
 
         $scope.user = angular.copy(resp.data);
+
+
+        // 获取提过的问题列表by user_id
+        $http({
+            url : "../getQuestionsByUserId.action" ,
+            method : "get" ,
+            params : {
+                author_id : angular.copy($scope.user.id),
+                maxNumInOnePage : 5,
+                pageNum : 1
+            } ,
+        }).then(function(resp){
+            console.log(resp);
+
+            $scope.questionList = resp.data;
+        }, function(resp){
+            httpErr(resp);
+        });
+
+
     }, function(resp){
         httpErr(resp);
     });

@@ -169,6 +169,14 @@
             margin-right: .5rem;
             font-size: 90%;
         }
+
+        /* 控制行数 */
+        .cus-p-line-3 {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            overflow: hidden;
+        }
     </style>
 
 </head>
@@ -434,47 +442,17 @@
                             <!-- <div class="content__wrapper">
                                 <h2 class="text-color">Question</h2>
                             </div> -->
-                            <div class="cus-question-excerpt-card">
+                            <div class="cus-question-excerpt-card" ng-repeat="(key, item) in questionList">
                                 <!-- question title -->
-                                <h5>Question title</h5>
+                                <h5>{{item.title}}</h5>
                                 <!-- question content -->
-                                <p class="mb-1">
-                                    Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus.
+                                <p class="mb-1 cus-p-line-3">
+                                    {{item.content}}
                                 </p>
 
                                 <!-- another info -->
                                 <div class="cus-split-short-info">
-                                    <span class="cus-split-item">2017-9-4</span>
-                                    <span class="cus-split-item">6 Answers</span>
-                                    <span class="cus-split-item">108 Follow</span>
-                                </div>
-                            </div>
-                            <div class="cus-question-excerpt-card">
-                                <!-- question title -->
-                                <h5>Question title</h5>
-                                <!-- question content -->
-                                <p class="mb-1">
-                                    Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus.
-                                </p>
-
-                                <!-- another info -->
-                                <div class="cus-split-short-info">
-                                    <span class="cus-split-item">2017-9-4</span>
-                                    <span class="cus-split-item">6 Answers</span>
-                                    <span class="cus-split-item">108 Follow</span>
-                                </div>
-                            </div>
-                            <div class="cus-question-excerpt-card">
-                                <!-- question title -->
-                                <h5>Question title</h5>
-                                <!-- question content -->
-                                <p class="mb-1">
-                                    Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus.
-                                </p>
-
-                                <!-- another info -->
-                                <div class="cus-split-short-info">
-                                    <span class="cus-split-item">2017-9-4</span>
+                                    <span class="cus-split-item">{{item.datetime}}</span>
                                     <span class="cus-split-item">6 Answers</span>
                                     <span class="cus-split-item">108 Follow</span>
                                 </div>

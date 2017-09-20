@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add Article</title>
+
+    <link rel="stylesheet" href="../public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/css/simplemde.min.css">
+    <link href="../public/font/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
+
+    <script src="../public/js/jquery-3.1.1.min.js"></script>
+    <script src="../public/js/umd/popper.min.js"></script>
+    <script src="../public/js/bootstrap.min.js"></script>
+    <script src="../public/js/simplemde.min.js"></script>
+
+    <script src="../public/js/angular.min.js"></script> 
+    
+    <script src="../public/js/user/add_article.js"></script>
+
+    <style>
+        /* body {
+                background-color: #f3f3f3;
+            } */
+
+        .debug {
+            border: 1px dotted red;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .bg-white {
+            background-color: #fff;
+        }
+
+        .cus-border-bottom-shadow {
+            border-bottom: 1px solid rgba(30, 35, 42, .06);
+            box-shadow: 0 1px 3px 0 rgba(0, 34, 77, .05);
+        }
+
+        .cus-data-value {
+            display: inline-block;
+            text-align: center;
+        }
+
+        .cus-data-value .title {
+            color: #8590a6;
+        }
+
+        .cus-data-value .content {
+            font-size: 110%;
+            font-weight: 400;
+        }
+
+        .cus-operations {
+            color: rgba(0, 0, 0, .5);
+        }
+
+        .cus-operations a.cus-operation-item {
+            text-decoration-line: none;
+            color: rgba(0, 0, 0, .5);
+
+            display: inline;
+            cursor: pointer;
+            margin-right: 15px;
+            font-size: 95%;
+        }
+
+        .cus-operations a.cus-operation-item:hover {
+            color: #495057;
+        }
+
+        a.cus-a {
+            color: rgba(0, 0, 0, .5);
+            text-decoration-line: none;
+        }
+
+        a.cus-a:hover {
+            color: #495057;
+        }
+    </style>
+
+</head>
+
+<body ng-app="app" ng-controller="appCtrl">
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white cus-border-bottom-shadow">
+            <div class="container">
+                <a class="navbar-brand" href="#">Q&A CMNTY</a>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav mr-sm-4">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../add_article.html">Add Article</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Pricing</a>
+                        </li>
+                    </ul>
+                    <form class="form-inline">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#">Info</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Hugohoo
+                                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="#">Porfile</a>
+                                <a class="dropdown-item" href="#">Setting</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Logout</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Article area -->
+    <div class="bg-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <!-- Article title -->
+                            <div class="form-group mt-4">
+                                <label for="title">Article Title</label>
+                                <input id="title" ng-model="article.title" type="text" class="form-control" aria-describedby="title_help" placeholder="Article title">
+                                <small id="title_help" class="form-text text-danger">{{articleAlert.titleHelp}}</small>
+                            </div>
+
+                            <!-- label input -->
+                            <div class="form-group">
+                                <label for="label">Labels</label>
+                                <input id="label" type="text" class="form-control" aria-describedby="label_generate_help" placeholder="Labels">
+                                <small id="label_generate_help" class="form-text text-danger"></small>
+                            </div>
+
+                            <!-- labels line -->
+                            <div class="mt-3 mb-3">
+                                <span class="badge badge-pill badge-primary">Primary</span>
+                                <span class="badge badge-pill badge-secondary">Secondary</span>
+                                <span class="badge badge-pill badge-success">Success</span>
+                                <span class="badge badge-pill badge-danger">Danger</span>
+                                <span class="badge badge-pill badge-warning">Warning</span>
+                                <span class="badge badge-pill badge-info">Info</span>
+                                <span class="badge badge-pill badge-light">Light</span>
+                                <span class="badge badge-pill badge-dark">Dark</span>
+                            </div>
+
+                            <!-- author info -->
+                            <!-- avatar & short info -->
+                            <div class="mt-4 mb-3">
+                                <div class="d-inline-block align-middle">
+                                    <img ng-src="../public/img/avatars/{{user.avatar}}" alt="" style="height: 40px; width: 40px; border-radius: 2px;">
+                                </div>
+                                <div class="d-inline-block ml-2 align-middle">
+                                    <div>{{user.name}}</div>
+                                    <div class="text-muted" style="font-size: 95%;">{{user.short_intro}}</div>
+                                </div>
+                            </div>
+
+                            <!-- content area -->
+                            <div class="mt-4">
+                                <textarea name="" id="content" ng-model="article.content" cols="30" rows="10"></textarea>
+                            </div>
+
+                            <div class="text-right mt-2">
+                                <button class="btn btn-outline-success mr-2" style="padding: .3rem .75rem;" ng-click="articleSubmit()">Submit</button>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-4">
+                            <!-- <div class="mt-4 mb-3">
+                                <div class="cus-data-value float-right mr-sm-4">
+                                    <div class="title">Views</div>
+                                    <div class="content">128</div>
+                                </div>
+                                <div class="cus-data-value float-right mr-sm-3">
+                                    <div class="title">Collect</div>
+                                    <div class="content">16</div>
+                                </div>
+                            </div> -->
+                        </div>
+                
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    
+    $(document).ready(function(){
+
+        
+
+    });
+
+    </script>
+
+</body>
+
+</html>
