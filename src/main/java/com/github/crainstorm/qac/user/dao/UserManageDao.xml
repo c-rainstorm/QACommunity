@@ -25,7 +25,7 @@
 
     <select id="getUserBriefInfo" parameterType="com.github.crainstorm.qac.pub.entity.UserLogin"
             resultType="com.github.crainstorm.qac.pub.entity.User">
-        SELECT id, name, avatar
+        SELECT id, name, avatar, short_intro
         FROM user
         WHERE id = #{id};
     </select>
