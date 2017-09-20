@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>User Login</title>
+
+    <link rel="stylesheet" href="../public/css/bootstrap.min.css">
+
+    <script src="../public/js/jquery-3.1.1.min.js"></script>
+    <script src="../public/js/umd/popper.min.js"></script>    
+    <script src="../public/js/bootstrap.min.js"></script>
+
+    <script src="../public/js/angular.min.js"></script>
+
+    <script src="../public/js/user/login.js"></script>
+
+    <style>
+        .debug {
+            border: 1px dotted red;
+        }
+
+        button {
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+
+<body ng-app="app" ng-controller="appCtrl">
+
+    <div id="main-content" class="container">
+        <div class="row">
+            <div class="col-6">
+                <div style="margin-top: 210px;">
+                    <img src="../public/img/login.png" class="img-fluid" alt="">
+                </div>
+            </div>
+
+            <div class="col-6">
+                <div class="container" style="margin-top:195px;">
+                    <h3 class="text-center">Login your account now</h3>
+                    <p class="text-center text-muted">
+                        Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus.
+                    </p>
+                    <form class="container" style="margin-top: 30px;">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input ng-model="user.email" type="email" id="email" class="form-control" aria-describedby="emailHelp" placeholder="email">
+                            <small id="emailHelp" class="form-text text-muted">information of emailhelp</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input ng-model="user.password" type="password" id="password" class="form-control" placeholder="password">
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input">
+                                Remember me
+                            </label>
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-outline-primary" style="margin: 0 auto;" ng-click="login()">Login</button>                        
+                        </div>
+                    </form>
+                    <p class="text-center text-muted" style="margin-top: 40px;">
+                        Don't have an account? <a href="" class="text-success">Sign up</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $("document").ready(function () {
+
+            // // get height of screen
+            // var scrnHeight = window.innerHeight;
+
+            // console.log(scrnHeight);
+
+            // $("#main-content").css("height", scrnHeight);
+
+        });
+    </script>
+
+</body>
+
+</html>
