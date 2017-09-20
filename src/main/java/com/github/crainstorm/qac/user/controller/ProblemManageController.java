@@ -49,8 +49,6 @@ public class ProblemManageController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "addQuestion.action", method = RequestMethod.GET)
-    public Result addQuestion(Question newQuestion) {
     @RequestMapping(value = "addQuestion.action", method = RequestMethod.POST)
     public Result addQuestion(@RequestBody Question newQuestion) {
         if (service.addQuestion(newQuestion)) {
