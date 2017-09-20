@@ -19,6 +19,34 @@ public class Answer {
     public int collect_num;
     public int comment_num;
 
+    public String author_name;
+    public String author_avatar;
+    public String author_short_intro;
+
+    public String getAuthor_name() {
+        return author_name;
+    }
+
+    public void setAuthor_name(String author_name) {
+        this.author_name = author_name;
+    }
+
+    public String getAuthor_avatar() {
+        return author_avatar;
+    }
+
+    public void setAuthor_avatar(String author_avatar) {
+        this.author_avatar = author_avatar;
+    }
+
+    public String getAuthor_short_intro() {
+        return author_short_intro;
+    }
+
+    public void setAuthor_short_intro(String author_short_intro) {
+        this.author_short_intro = author_short_intro;
+    }
+
     public int getId() {
         return id;
     }

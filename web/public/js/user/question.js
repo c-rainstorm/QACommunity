@@ -1,4 +1,4 @@
-let app = angular.module("app", []).config(function($locationProvider) {
+let app = angular.module("app", ['ngSanitize']).config(function($locationProvider) {
     $locationProvider.html5Mode({
       enabled: true,
       requireBase: false
@@ -47,6 +47,29 @@ app.controller("appCtrl", function ($scope, $http, $location){
             console.log(resp);
 
             $scope.question.author = resp.data;
+        }, function(resp){
+            httpErr(resp);
+        });
+
+        
+        // 获取该问题下的所有答案
+        $http({
+            url : "../getAnswersByQuestionId.action" ,
+            method : "get" ,
+            params : {
+                question_id : question_id,
+                maxNumInOnePage : 5,
+                pageNum : 1
+            } ,
+        }).then(function(resp){
+            $scope.answerList = resp.data;
+
+            for(var i in $scope.answerList){
+                $scope.answerList[i].content = markdown.toHTML($scope.answerList[i].content);
+            }
+
+            console.log("answer list : ");
+            console.log(resp);
         }, function(resp){
             httpErr(resp);
         });
