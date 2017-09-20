@@ -1,6 +1,7 @@
 package com.github.crainstorm.qac.admin.dao;
 
 import com.github.crainstorm.qac.pub.entity.Admin;
+import com.github.crainstorm.qac.pub.entity.Notice;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -13,4 +14,6 @@ public interface AdminInfoManageDao {
     Admin getAdminInfo(Admin admin);
 
     int updateAdminInfo(Admin admin);
+
+    int addNotice(Notice notice);
 }

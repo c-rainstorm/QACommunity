@@ -3,5 +3,18 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.crainstorm.qac.admin.dao.AdminArticleManageDao">
-
+    <select id="getArticleReportList" resultType="com.github.crainstorm.qac.pub.entity.ArticleReport">
+        SELECT * FROM article_report;
+    </select>
+    <update id="shutdownArticle">
+        UPDATE article_report
+        SET article_report.`status` = 1
+        WHERE
+        article_report.article_id = #{article_id};
+    </update>
+    <update id="deleteArticle">
+        UPDATE article_report
+        SET article_report.`status` = 1
+        WHERE article_report.article_id = #{article_id};
+    </update>
 </mapper>

@@ -3,5 +3,24 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.crainstorm.qac.admin.dao.ReportReasonManageDao">
+    <select id="getReportReasonList" resultType="com.github.crainstorm.qac.pub.entity.ReportReason">
+        SELECT * FROM report_reason;
+    </select>
 
+    <insert id="addReportReason" parameterType="com.github.crainstorm.qac.pub.entity.ReportReason">
+        INSERT INTO report_reason ( title, content)
+        VALUES (#{title}, #{content});
+    </insert>
+
+    <update id="updateReportReason" parameterType="com.github.crainstorm.qac.pub.entity.ReportReason">
+        UPDATE report_reason
+        SET report_reason.title = #{title},
+         report_reason.content = #{content}
+        WHERE report_reason.id = #{id};
+    </update>
+
+    <delete id="deleteReportReason">
+        DELETE FROM report_reason
+        WHERE report_reason.id = #{id};
+    </delete>
 </mapper>
