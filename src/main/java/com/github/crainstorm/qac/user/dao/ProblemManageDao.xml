@@ -52,7 +52,7 @@
             question.title,
             question.datetime,
             question.up,
-            question.down,
+            question.down
         FROM question
         where question.id = #{id};
     </select>

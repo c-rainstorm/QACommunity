@@ -35,12 +35,12 @@ public class ProblemManageService {
     }
 
     public Question getQuestion(int id) {
-        Question question = dao.getQuestion(id);
-        if (question != null) {
-            question.follow_num = dao.getQuestionFollowNum(id);
-            question.answer_num = dao.getQuestionAnswerNum(id);
-            question.labels.addAll(labelManageDao.getLabelsOfQuestion(id));
-        }
+//        Question question = dao.getQuestion(id);
+//        if (question != null) {
+//            question.follow_num = dao.getQuestionFollowNum(id);
+//            question.answer_num = dao.getQuestionAnswerNum(id);
+//            question.labels.addAll(labelManageDao.getLabelsOfQuestion(id));
+//        }
         return dao.getQuestion(id);
     }
 
