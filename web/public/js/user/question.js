@@ -83,6 +83,7 @@ app.controller("appCtrl", function ($scope, $http, $location, $window, $timeout)
             });
 
 
+            $scope.alreadyAnswer = false;
             // 获取该问题下的所有答案
             $http({
                 url: "../getAnswersByQuestionId.action",
@@ -98,6 +99,10 @@ app.controller("appCtrl", function ($scope, $http, $location, $window, $timeout)
                 for (var i in $scope.answerList) {
                     $scope.answerList[i].content = markdown.toHTML($scope.answerList[i].content);
                     $scope.answerList[i].comments = [];
+
+                    if($scope.answerList[i].author_id == $scope.session.user.id){
+                        $scope.alreadyAnswer = true;
+                    }
                 }
 
                 console.log("answer list : ");

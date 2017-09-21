@@ -314,8 +314,9 @@
 
                     <!-- write new answer -->
                     <div class="col-sm-12 bg-white mt-1" style="box-shadow: 0 1px 3px rgba(0,0,0,.1); border-radius: 2px;">
+                        <div class="py-3 text-muted text-center" ng-hide="alreadyAnswer == false">该问题下已经有你的答案了</div>                            
                         <!-- answer card -->
-                        <div class="answer-card" style="padding: 15px 5px;">
+                        <div class="answer-card" ng-hide="alreadyAnswer == true" style="padding: 15px 5px;">
                             <!-- avatar & short info -->
                             <div class="">
                                 <div class="d-inline-block align-middle">
