@@ -56,7 +56,7 @@
 
     <insert id="addUser" parameterType="com.github.crainstorm.qac.pub.entity.User">
         INSERT INTO `user` (name, email, password, create_date)
-        VALUES (#{name},#{email},#{password},curdate());
+        VALUES (#{name},#{email},#{password},now());
     </insert>
 
     <select id="getNotice" resultType="com.github.crainstorm.qac.pub.entity.Notice">
