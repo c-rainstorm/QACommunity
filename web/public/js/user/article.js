@@ -112,12 +112,23 @@ app.controller("appCtrl", function ($scope, $http, $location, $window) {
                 }).then(function (resp) {
                     console.log(resp);
 
-                    if (resp.data.result == "true") {
+                    if (resp.data.result == "true" || resp.data.result == true) {
                         toastr.success("添加评论成功");
-                        $scope.newComment = "";
-                    } else {
+                        
+                        $scope.article.comments.push({
+                            content : angular.copy($scope.newComment),
+                            id : resp.data.id,
+                            user_id : angular.copy($scope.session.user.id),
+                            user_avatar : angular.copy($scope.session.user.avatar),
+                            user_name : angular.copy($scope.session.user.name),
+                            up : 0,
+                            down : 0
+                        });
+                    }else{
                         toastr.error("添加评论失败");
                     }
+
+                    $scope.newComment = "";
                 }, function (resp) {
                     httpErr(resp);
                 });

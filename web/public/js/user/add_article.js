@@ -136,18 +136,14 @@ app.controller("appCtrl", function ($scope, $http, $window, $timeout) {
                 }).then(function (resp) {
                     console.log(resp);
 
-                    if (resp.data.result == "true") {
+                    if (resp.data.result == "true" || resp.data.result == true) {
                         toastr.success("添加文章成功");
 
                         $timeout(function(){
-                            $window.location.href = "./home.html";
+                            $window.location.href = "./article.html?id=" + resp.data.id;
                         }, 1000);
                     } else {
                         toastr.error("添加文章失败");
-                        
-                        // $timeout(function(){
-                        //     $window.location.href = "./add_article.html";                        
-                        // }, 2000);
                     }
                 }, function (resp) {
                     httpErr(resp);
