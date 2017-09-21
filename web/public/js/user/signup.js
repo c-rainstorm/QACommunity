@@ -40,14 +40,14 @@ app.controller("appCtrl", function ($scope, $http, $window, $timeout) {
             let data = resp.data;
             if(data.result == "true"){
                 console.log("singup successed.");
-                toast.info("Singup successed.");
+                toastr.info("Singup successed.");
 
                 $timeout(function(){
                     $window.location.href = "./home.html";
                 }, 1000);
             }else{
                 console.log("something wrong on server. signup failed.");
-                toast.info("Something wrong on server. Signup failed.");                
+                toastr.info("Something wrong on server. Signup failed.");                
 
                 $timeout(function() {
                     $window.location.href = "./signup.html";
