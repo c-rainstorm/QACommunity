@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.crainstorm.qac.admin.dao.AdminInfoManageDao">
-    <select id="checkAdminLogin" parameterType="com.github.crainstorm.qac.pub.entity.Admin">
+    <select id="checkAdminLogin" parameterType="com.github.crainstorm.qac.pub.entity.Admin" resultType="int">
         SELECT COUNT(*)
         FROM admin
         WHERE id = #{id} AND password = #{password};
