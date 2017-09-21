@@ -13,7 +13,7 @@
         where label.id in (
             select article_label.label_id
             from article_label
-            where article_label.article_id = #{id});
+            where article_label.article_id = #{article_id});
     </select>
 
     <insert id="addLabelToArticle">

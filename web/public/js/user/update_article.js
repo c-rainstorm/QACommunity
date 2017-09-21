@@ -57,9 +57,9 @@ app.controller("appCtrl", function ($scope, $http, $window, $location, $timeout)
             $scope.article = resp.data;
             content_mde.value($scope.article.content);
 
-            // for (var i = 0; i < $scope.article.labels.length; i++) {
-            //     $scope.article.labels[i].color = angular.copy($scope.color[i % 7]);
-            // }
+            for (var i = 0; i < $scope.article.labels.length; i++) {
+                $scope.article.labels[i].color = angular.copy($scope.color[i % 7]);
+            }
 
             // 获取作者简略信息
             $http({

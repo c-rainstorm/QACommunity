@@ -7,6 +7,16 @@ let app = angular.module("app", []).config(function ($locationProvider) {
 
 app.controller("appCtrl", function ($scope, $http, $location, $window) {
 
+    $scope.color = [
+        "badge-primary",
+        "badge-secondary",
+        "badge-success",
+        "badge-danger",
+        "badge-warning",
+        "badge-info",
+        "badge-dark"
+    ]
+
     console.log("app controller loaded.");
 
     // $scope.session = {
@@ -48,6 +58,10 @@ app.controller("appCtrl", function ($scope, $http, $location, $window) {
             console.log(resp);
 
             $scope.article = resp.data;
+
+            for (var i = 0; i < $scope.article.labels.length; i++) {
+                $scope.article.labels[i].color = angular.copy($scope.color[i % 7]);
+            }
 
             $("#article_content").get(0).innerHTML = markdown.toHTML(resp.data.content);
 

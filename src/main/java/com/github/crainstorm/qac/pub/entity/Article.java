@@ -19,7 +19,7 @@ public class Article {
     public int status_remarks;
     public int collect_num;
     public int comment_num;
-    public ArrayList<Label> labels;
+    public ArrayList<Label> labels = new ArrayList<>();
 
     public int getId() {
         return id;
