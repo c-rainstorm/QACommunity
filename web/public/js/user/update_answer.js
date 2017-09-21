@@ -7,6 +7,16 @@ let app = angular.module("app", ['ngSanitize']).config(function ($locationProvid
 
 app.controller("appCtrl", function ($scope, $http, $location, $window, $timeout) {
 
+    $scope.color = [
+        "badge-primary",
+        "badge-secondary",
+        "badge-success",
+        "badge-danger",
+        "badge-warning",
+        "badge-info",
+        "badge-dark"
+    ];
+
     console.log("app controller loaded.");
 
     var update_answer_mde = new SimpleMDE({ element: $("#update_answer").get(0) });
@@ -51,6 +61,10 @@ app.controller("appCtrl", function ($scope, $http, $location, $window, $timeout)
             console.log(resp);
 
             $scope.question = resp.data;
+
+            for (var i = 0; i < $scope.question.labels.length; i++) {
+                $scope.question.labels[i].color = angular.copy($scope.color[i % 7]);
+            }
 
             $("#question_content").get(0).innerHTML = markdown.toHTML(resp.data.content);
 
