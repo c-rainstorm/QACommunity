@@ -55,7 +55,7 @@ public class ProblemManageService {
             question.answer_num = dao.getQuestionAnswerNum(id);
             question.labels.addAll(labelManageDao.getLabelsOfQuestion(id));
         }
-        return dao.getQuestion(id);
+        return question;
     }
 
     public boolean addQuestion(Question newQuestion) {

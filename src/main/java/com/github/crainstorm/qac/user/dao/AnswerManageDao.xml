@@ -11,7 +11,7 @@
     </select>
 
     <select id="getAnswerCommentNumById" resultType="int">
-        SELECT COUNT (*)
+        SELECT COUNT(*)
         FROM answer_comment
         WHERE answer_id = #{id}
     </select>

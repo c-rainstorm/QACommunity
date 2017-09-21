@@ -33,7 +33,7 @@
         where label.id in (
             select question_label.label_id
             from question_label
-            where question_label.question_id = #{id});
+            where question_label.question_id = #{question_id});
     </select>
 
     <insert id="addLabelToQuestion">
