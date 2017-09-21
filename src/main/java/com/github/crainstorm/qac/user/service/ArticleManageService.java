@@ -19,6 +19,7 @@ public class ArticleManageService {
 
     @Autowired
     private ArticleManageDao dao;
+    @Autowired
     private LabelManageDao labelManageDao;
 
     public ArrayList<Article> getArticlesByKeyword(String keyword, int maxNumInOnePage, int pageNum) {
