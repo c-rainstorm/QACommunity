@@ -20,44 +20,15 @@ public class UserManageController {
 
     //--------------------------- Login ---------------------
 
-    // todo method maybe POST
-    @RequestMapping(value = "/checkUserLogin.action", method = RequestMethod.GET)
+    @RequestMapping(value = "/checkUserLogin.action", method = RequestMethod.POST)
     public String checkUserLogin(UserLogin user, HttpServletRequest request){
         if(user.email == null || user.password == null){
-            throw new IllegalArgumentException("email or password cannot be null");
+            return "/user/login.html";
         }
         if(service.checkUserLogin(user, request)){
             return "redirect:/";
         }
-        // todo 重定向登陆页
-        return "";
-    }
-
-    //--------------------------- Register --------------------
-
-    //    @RequestMapping(value = "/checkUserName.action", method = RequestMethod.GET)
-    public Result checkUserName(@RequestParam("name") String username) {
-        // todo
-        return Result.FALSE;
-    }
-
-    //    @ResponseBody
-//    @RequestMapping(value = "/checkUserPassword.action", method = RequestMethod.GET)
-    public Result checkUserPassword(String password) {
-//        if (service.checkUserPassword(password)) {
-//            return Result.TREU;
-//        }
-        // todo
-        return Result.FALSE;
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/checkUserEmail.action", method = RequestMethod.GET)
-    public Result checkUserEmail(String email) {
-        if (service.checkUserEmail(email)) {
-            return Result.TREU;
-        }
-        return Result.FALSE;
+        return "/user/login.html";
     }
 
     @ResponseBody
@@ -66,7 +37,6 @@ public class UserManageController {
         if (service.addUser(user, request)) {
             return Result.TREU;
         } else {
-            // todo 登陆页
             return Result.FALSE;
         }
     }

@@ -45,7 +45,7 @@
             resultType="com.github.crainstorm.qac.pub.entity.User">
         SELECT id, name, avatar, short_intro
         FROM user
-        WHERE id = #{id};
+        WHERE email = #{email};
     </select>
 
 
