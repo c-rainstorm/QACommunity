@@ -262,15 +262,18 @@
                     <div class="cus-info-card bg-white cus-border-bottom-shadow" style="border-radius: 5px;">
                         <!-- avatar -->
                         <div class="text-center pt-5 pb-3">
-                            <img ng-src="/images/avatars/{{user.avatar}}" class="img-fluid" alt="" style="height: 110px; width: 110px; border-radius: 100px;">
+                            <a href="" ng-click="updateAvatar()">
+                                <img ng-src="/images/avatars/{{user.avatar}}" class="img-fluid" alt="" style="height: 110px; width: 110px; border-radius: 100px;">
+                            </a>
+                            <input type="file" style="display: none;" id="avatar_file">
                             <div class="lead mt-2" style="font-weight: normal;">{{user.name}}</div>
                             <div class="text-muted">{{user.short_intro}}</div>
                         </div>
 
                         <div class="text-center">
-                            <button class="btn btn-outline-success">
+                            <a class="btn btn-outline-success" href="./update_user_info.html">
                                 Edit profile
-                            </button>
+                            </a>
                         </div>
 
                         <div class="text-left px-4 pt-3 pb-2">

@@ -51,6 +51,60 @@ app.controller("appCtrl", function ($scope, $http, $window) {
             $scope.user = angular.copy(resp.data);
 
 
+            // 更新avatar
+            $scope.updateAvatar = function(){
+
+                $("#avatar_file").trigger('click');
+
+            }
+
+            $("#avatar_file").on("change", function(){
+                // alert("file uploaded.");
+
+                let $elem = $("#avatar_file");
+                let f = $elem[0].files[0];
+                console.log($elem[0].files[0]);
+        
+                if(f == undefined){
+                    console.log("there is no file need to be uploaded.");
+
+                }else{
+                    let fr = new FileReader();
+                    fr.onloadend = function(){
+                        let avatar_file = fr.result;
+                        console.log("reading file.");
+            
+                        $http({
+                            url : "../updateAvatars.action" ,
+                            method : "post" ,
+                            headers: {'Content-Type': undefined},
+                            transformRequest: (data, headersGetter) => {
+                                
+                                let formData = new FormData();
+                                angular.forEach(data, function (value, key) {
+                            
+                                    formData.append(key, value);
+                            
+                                });
+                            
+                                return formData;
+                            
+                            },
+                            data : {
+                                user_id : angular.copy($scope.user.id),
+                                avatar : avatar_file
+                            } ,
+                        }).then(function(resp){
+                            console.log(resp);
+                        }, function(resp){
+                            httpErr(resp);
+                        });
+                    }
+            
+                    fr.readAsBinaryString(f);
+                }
+            })
+
             // 获取问题列表by user_id
             $http({
                 url: "../getQuestionsByUserId.action",
