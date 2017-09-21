@@ -5,7 +5,7 @@
 <mapper namespace="com.github.crainstorm.qac.user.dao.AnswerManageDao">
 
     <select id="getAnswerCollectNumById" resultType="int">
-        SELECT COUNT (*)
+        SELECT count(answer_id)
         FROM answer_collect
         WHERE answer_id = #{id}
     </select>

@@ -9,7 +9,16 @@ app.controller("appCtrl", function($scope, $http, $timeout, $window){
         email : "",
         password : ""
     }
+    $scope.userAlert = {
+        emailHelp : "",
+        passwordHelp : ""
+    }
     $scope.login = function(){
+        $scope.userAlert = {
+            emailHelp : "",
+            passwordHelp : ""
+        }
+
         console.log("login btn clicked.");
 
         // console.log($scope.user);

@@ -37,5 +37,5 @@ public interface AnswerManageDao {
 
     int getAnswerCollectNumById(int id);
 
-    int getAnswerCommentNumById(int comment_num);
+    int getAnswerCommentNumById(int id);
 }
