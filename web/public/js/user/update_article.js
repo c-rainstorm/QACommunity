@@ -42,36 +42,36 @@ app.controller("appCtrl", function ($scope, $http, $window, $location, $timeout)
         $scope.session.user = resp.data;
 
         console.log($location.search().id);
-        let question_id = $location.search().id;
+        let article_id = $location.search().id;
 
         // 获取文章信息
         $http({
-            url: "../getQuestion.action",
+            url: "../getArticle.action",
             method: "get",
             params: {
-                id: question_id
+                id: article_id
             },
         }).then(function (resp) {
             console.log(resp);
 
-            $scope.question = resp.data;
-            content_mde.value($scope.question.content);
+            $scope.article = resp.data;
+            content_mde.value($scope.article.content);
 
-            for (var i = 0; i < $scope.question.labels.length; i++) {
-                $scope.question.labels[i].color = angular.copy($scope.color[i % 7]);
-            }
+            // for (var i = 0; i < $scope.article.labels.length; i++) {
+            //     $scope.article.labels[i].color = angular.copy($scope.color[i % 7]);
+            // }
 
             // 获取作者简略信息
             $http({
                 url: "../getUserBriefInfo.action",
                 method: "get",
                 params: {
-                    id: angular.copy($scope.question.author_id)
+                    id: angular.copy($scope.article.author_id)
                 },
             }).then(function (resp) {
                 console.log(resp);
 
-                $scope.question.author = resp.data;
+                $scope.article.author = resp.data;
             }, function (resp) {
                 httpErr(resp);
             });
@@ -93,29 +93,29 @@ app.controller("appCtrl", function ($scope, $http, $window, $location, $timeout)
             });
 
             // 添加标签
-            $scope.addLabelToQuestion = function (id, index) {
+            $scope.addLabelToArticle = function (id, index) {
 
-                console.log("add label to question. : " + id);
+                console.log("add label to article. : " + id);
 
-                for (var i = 0; i < $scope.question.labels.length; i++) {
-                    if ($scope.question.labels[i].id == id) {
+                for (var i = 0; i < $scope.article.labels.length; i++) {
+                    if ($scope.article.labels[i].id == id) {
                         console.log("already added.");
                         return;
                     }
                 }
 
                 $http({
-                    url: "../addLabelToQuestion.action",
+                    url: "../addLabelToArticle.action",
                     method: "get",
                     params: {
-                        question_id: angular.copy($scope.question.id),
+                        article_id: angular.copy($scope.article.id),
                         label_id: id
                     },
                 }).then(function (resp) {
                     console.log(resp);
 
                     if(resp.data.result == "true"){
-                        $scope.question.labels.push(angular.copy($scope.labels[index]));
+                        $scope.article.labels.push(angular.copy($scope.labels[index]));
                     }else{
                         toastr.error("添加标签失败");                        
                     }
@@ -138,13 +138,13 @@ app.controller("appCtrl", function ($scope, $http, $window, $location, $timeout)
             }
 
             // 删除标签
-            $scope.deleteLabelFromQuestion = function(){
+            $scope.deleteLabelFromArticle = function(){
 
                 $http({
-                    url : "../deleteLabelFromQuestion.action" ,
+                    url : "../deleteLabelFromArticle.action" ,
                     method : "get" ,
                     params : {
-                        question_id : angular.copy($scope.question.id),
+                        article_id : angular.copy($scope.article.id),
                         label_id: angular.copy($scope.deleteLabel.label_id)
                     } ,
                 }).then(function(resp){
@@ -153,7 +153,7 @@ app.controller("appCtrl", function ($scope, $http, $window, $location, $timeout)
                     if(resp.data.result == "true"){
                         toastr.success("删除标签 " + $scope.deleteLabel.title + " 成功");
 
-                        $scope.question.labels.splice($scope.deleteLabel.label_index, 1);
+                        $scope.article.labels.splice($scope.deleteLabel.label_index, 1);
                     }else{
                         toastr.error("删除标签 " + $scope.deleteLabel.title + " 失败");
                     }
@@ -165,18 +165,18 @@ app.controller("appCtrl", function ($scope, $http, $window, $location, $timeout)
 
             }
 
-            // update question
-            $scope.questionUpdate = function(){
+            // update article
+            $scope.articleUpdate = function(){
 
-                $scope.question.content = content_mde.value();
+                $scope.article.content = content_mde.value();
                 
                 $http({
-                    url : "../updateQuestion.action" ,
+                    url : "../updateArticle.action" ,
                     method : "post" ,
                     data : {
-                        id : angular.copy($scope.question.id),
-                        title : angular.copy($scope.question.title),
-                        content : angular.copy($scope.question.content)
+                        id : angular.copy($scope.article.id),
+                        title : angular.copy($scope.article.title),
+                        content : angular.copy($scope.article.content)
                     } ,
                 }).then(function(resp){
                     console.log(resp);
@@ -185,7 +185,7 @@ app.controller("appCtrl", function ($scope, $http, $window, $location, $timeout)
                         toastr.success("修改问题成功");
 
                         $timeout(function(){
-                            $window.location.href = "./question.html?id=" + $scope.question.id;
+                            $window.location.href = "./article.html?id=" + $scope.article.id;
                         }, 1000);
                     }else{
                         toastr.error("修改问题失败");

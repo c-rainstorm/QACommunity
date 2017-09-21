@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Update Question</title>
+    <title>Update Article</title>
 
     <link rel="stylesheet" href="../public/css/bootstrap.min.css">
     <link rel="stylesheet" href="../public/css/simplemde.min.css">
@@ -19,7 +19,7 @@
 
     <script src="../public/js/angular.min.js"></script>
 
-    <script src="../public/js/user/update_question.js"></script>
+    <script src="../public/js/user/update_article.js"></script>
     
     <script src="../public/js/toastr.min.js"></script>        
 
@@ -101,7 +101,7 @@
                             <a class="nav-link" href="#">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="../add_question.html">Add Question</a>
+                            <a class="nav-link" href="../add_article.html">Add Article</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Pricing</a>
@@ -142,18 +142,18 @@
                         <div class="col-sm-8">
                             <!-- Article title -->
                             <div class="form-group mt-4">
-                                <label for="title">Question Title</label>
-                                <input ng-model="question.title" id="title" ng-model="question.title" type="text" class="form-control" aria-describedby="title_help"
-                                    placeholder="Question title">
-                                <small id="title_help" class="form-text text-danger">{{questionAlert.titleHelp}}</small>
+                                <label for="title">Article Title</label>
+                                <input ng-model="article.title" id="title" ng-model="article.title" type="text" class="form-control" aria-describedby="title_help"
+                                    placeholder="Article title">
+                                <small id="title_help" class="form-text text-danger">{{articleAlert.titleHelp}}</small>
                             </div>
 
                             <!-- label input -->
                             <div class="form-group">
                                 <label for="label">Labels</label>
-                                <!-- question labels line -->
+                                <!-- article labels line -->
                                 <div class="mb-2">
-                                    <a href="" ng-click="showDeleteLabelModal(item.id, item.title, $index)" class="badge mr-2 mb-2" ng-class="item.color" ng-repeat="(key, item) in question.labels">{{item.title}}</a>
+                                    <a href="" ng-click="showDeleteLabelModal(item.id, item.title, $index)" class="badge mr-2 mb-2" ng-class="item.color" ng-repeat="(key, item) in article.labels">{{item.title}}</a>
                                 </div>
                                 <input id="label" ng-model="labelInputSearch" type="text" class="form-control" aria-describedby="label_generate_help" placeholder="Labels">
                                 <small id="label_generate_help" class="form-text text-danger"></small>
@@ -162,28 +162,28 @@
                             <!-- labels line -->
                             <!-- all labels line -->
                             <div class="mt-2 mb-3">
-                                <a href="" ng-click="addLabelToQuestion(item.id, $index)" class="badge mr-2 mb-2" ng-class="item.color" ng-repeat="(key, item) in labels | filter: labelInputSearch">{{item.title}}</a>
+                                <a href="" ng-click="addLabelToArticle(item.id, $index)" class="badge mr-2 mb-2" ng-class="item.color" ng-repeat="(key, item) in labels | filter: labelInputSearch">{{item.title}}</a>
                             </div>
 
                             <!-- author info -->
                             <!-- avatar & short info -->
                             <div class="mt-4 mb-3">
                                 <div class="d-inline-block align-middle">
-                                    <img ng-src="../public/img/avatars/{{question.author.avatar}}" alt="" style="height: 40px; width: 40px; border-radius: 2px;">
+                                    <img ng-src="../public/img/avatars/{{article.author.avatar}}" alt="" style="height: 40px; width: 40px; border-radius: 2px;">
                                 </div>
                                 <div class="d-inline-block ml-2 align-middle">
-                                    <div>{{question.author.name}}</div>
-                                    <div class="text-muted" style="font-size: 95%;">{{question.author.short_intro}}</div>
+                                    <div>{{article.author.name}}</div>
+                                    <div class="text-muted" style="font-size: 95%;">{{article.author.short_intro}}</div>
                                 </div>
                             </div>
 
                             <!-- content area -->
                             <div class="mt-4">
-                                <textarea name="" id="content" ng-model="question.content" cols="30" rows="10"></textarea>
+                                <textarea name="" id="content" ng-model="article.content" cols="30" rows="10"></textarea>
                             </div>
 
                             <div class="text-right mt-2">
-                                <button class="btn btn-outline-success mr-2" style="padding: .3rem .75rem;" ng-click="questionUpdate()">Submit</button>
+                                <button class="btn btn-outline-success mr-2" style="padding: .3rem .75rem;" ng-click="articleUpdate()">Submit</button>
                             </div>
 
                         </div>
@@ -221,7 +221,7 @@
                     <p>确定要删除标签 <span class="text-primary">{{deleteLabel.title}}</span> 吗？</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" ng-click="deleteLabelFromQuestion()" data-dismiss="modal">确定</button>
+                    <button type="button" class="btn btn-danger" ng-click="deleteLabelFromArticle()" data-dismiss="modal">确定</button>
                 </div>
             </div>
         </div>
