@@ -83,10 +83,51 @@ app.controller("appCtrl", function ($scope, $http, $location, $window) {
 
                 $scope.answer = resp.data;
                 $scope.answer.content = markdown.toHTML($scope.answer.content);
+
+                // 获取问题comments
+                $http({
+                    url: "../getAnswerComments.action",
+                    method: "get",
+                    params: {
+                        answer_id: angular.copy($scope.answer.id)
+                    },
+                }).then(function (resp) {
+                    console.log(resp);
+
+                    $scope.answer.comments = resp.data;
+                }, function (resp) {
+                    httpErr(resp);
+                });
+
+                // 提交回复
+                $scope.commentSubmit = function (answer_id) {
+
+                    let newComment = $("#newComment").val();
+                    console.log("comment : " + newComment);
+
+                    $http({
+                        url: "../addAnswerComment.action",
+                        method: "post",
+                        data: {
+                            user_id: angular.copy($scope.session.user.id),
+                            answer_id: answer_id,
+                            content: newComment
+                        },
+                    }).then(function (resp) {
+                        console.log(resp);
+
+                        toastr.success("添加评论成功");
+
+                        $("#newComment_" + answer_id).val("");
+                    }, function (resp) {
+                        httpErr(resp);
+                    });
+
+                }
+
             }, function (resp) {
                 httpErr(resp);
             });
-
 
             // 提交答案
             $scope.answerSubmit = function () {
