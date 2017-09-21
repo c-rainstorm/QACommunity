@@ -1,6 +1,6 @@
 let app = angular.module("app", []);
 
-app.controller("appCtrl", function ($scope, $http, $window) {
+app.controller("appCtrl", function ($scope, $http, $window, $timeout) {
 
     $scope.color = [
         "badge-primary",
@@ -124,9 +124,15 @@ app.controller("appCtrl", function ($scope, $http, $window) {
                 console.log(resp);
 
                 if(resp.data.result == "true"){
-                    $window.location.href = "./home.html";
+                    toastr.success("添加问题成功");
+                    
+                    $timeout(function(){
+                        $window.location.href = "./home.html";
+                    }, 1000);
                 }else{
-                    $window.location.href = "./add_question.html";
+                    toastr.error("添加问题失败");
+                    
+                    // $window.location.href = "./add_question.html";
                 }
             }, function (resp) {
                 httpErr(resp);

@@ -1,6 +1,6 @@
 let app = angular.module("app", []);
 
-app.controller("appCtrl", function ($scope, $http, $window) {
+app.controller("appCtrl", function ($scope, $http, $window, $timeout) {
 
     $scope.color = [
         "badge-primary",
@@ -135,9 +135,17 @@ app.controller("appCtrl", function ($scope, $http, $window) {
                     console.log(resp);
 
                     if (resp.data.result == "true") {
-                        $window.location.href = "./home.html";
+                        toastr.success("添加文章成功");
+
+                        $timeout(function(){
+                            $window.location.href = "./home.html";
+                        }, 1000);
                     } else {
-                        $window.location.href = "./add_article.html";
+                        toastr.error("添加文章失败");
+                        
+                        // $timeout(function(){
+                        //     $window.location.href = "./add_article.html";                        
+                        // }, 2000);
                     }
                 }, function (resp) {
                     httpErr(resp);
