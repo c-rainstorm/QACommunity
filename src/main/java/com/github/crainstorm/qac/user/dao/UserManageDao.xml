@@ -48,6 +48,11 @@
         WHERE email = #{email};
     </select>
 
+    <select id="getUserBriefInfo" parameterType="int" resultType="com.github.crainstorm.qac.pub.entity.User">
+        SELECT id, name, avatar, short_intro
+        FROM user
+        WHERE id = #{id};
+    </select>
 
     <insert id="addUser" parameterType="com.github.crainstorm.qac.pub.entity.User">
         INSERT INTO `user` (name, email, password, create_date)

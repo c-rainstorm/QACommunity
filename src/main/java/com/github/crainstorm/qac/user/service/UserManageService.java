@@ -5,7 +5,6 @@ import com.github.crainstorm.qac.pub.entity.User;
 import com.github.crainstorm.qac.pub.entity.UserLogin;
 import com.github.crainstorm.qac.pub.entity.UserSession;
 import com.github.crainstorm.qac.user.dao.UserManageDao;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -57,8 +56,6 @@ public class UserManageService {
             UserSession usersession = dao.getUserBriefInfo(user);
             usersession.userLoginStatus = true;
             session.setAttribute("userSession", usersession);
-            System.out.println((UserSession)session.getAttribute("userSession"));
-
             return true;
         } else {
             UserSession userSession = new UserSession();
@@ -91,10 +88,5 @@ public class UserManageService {
 
     public UserSession getUserSession(HttpServletRequest request) {
         return (UserSession) request.getSession().getAttribute("userSession");
-    }
-
-    @Test
-    public void test(){
-
     }
 }
