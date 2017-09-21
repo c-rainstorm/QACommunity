@@ -66,11 +66,14 @@
           sex = #{sex},
           intro = #{intro},
           college = #{college},
-          major = #{major},
-          avatar = #{avator}
+          major = #{major}
         WHERE id = #{id};
     </update>
-
+    <update id="setUserAvatar" parameterType="com.github.crainstorm.qac.pub.entity.User">
+        UPDATE user
+        set avatar = #{avatar}
+        WHERE id = #{id}
+    </update>
     <select id="getNotice" resultType="com.github.crainstorm.qac.pub.entity.Notice">
         SELECT id,user_id,content,datetime
         FROM notice WHERE id = #{id};

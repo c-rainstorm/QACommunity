@@ -33,4 +33,6 @@ public interface UserManageDao {
     int getUserFollowerNum(int id);
 
     int updateUser(User user);
+
+    void setUserAvatar(User avatar);
 }

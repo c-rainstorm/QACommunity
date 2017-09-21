@@ -1,14 +1,10 @@
 package com.github.crainstorm.qac.user.service;
 
-import com.github.crainstorm.qac.pub.entity.Notice;
-import com.github.crainstorm.qac.pub.entity.User;
-import com.github.crainstorm.qac.pub.entity.UserLogin;
-import com.github.crainstorm.qac.pub.entity.UserSession;
+import com.github.crainstorm.qac.pub.entity.*;
 import com.github.crainstorm.qac.user.dao.UserManageDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -73,33 +69,11 @@ public class UserManageService {
         }
     }
 
-    public boolean updateUser(User user, MultipartFile avatar) {
+    public boolean updateUser(User user) {
         if (user.name.length() > 32 || user.name.length() < 2) {
             return false;
         }
 
-        if (avatar != null) {
-            User temp = dao.getUserBriefInfoById(user.id);
-            if (temp.avatar == null) {
-
-                // 图片名格式：20161123204206613375.jpg。
-                // 代表 2016-11-23 20:42:06.613 + 3 位 0 - 9 间随机数字
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-                StringBuilder imageName = new StringBuilder(dateFormat.format(new Date()));
-                Random random = new Random();
-                for (int i = 0; i < 3; ++i) {
-                    imageName.append(random.nextInt(10));
-                }
-                imageName.append(".png");
-                temp.avatar = imageName.toString();
-            }
-            try {
-                avatar.transferTo(new File(imageDir + File.separator + "avatars" + File.separator + temp.avatar));
-            } catch (IOException e) {
-                return false;
-            }
-            user.avatar = temp.avatar;
-        }
         return dao.updateUser(user) == 1;
     }
 
@@ -133,4 +107,34 @@ public class UserManageService {
         return session;
     }
 
+    public boolean updateAvatars(AvatarUpdater avatarUpdater, HttpServletRequest request) {
+        User user = dao.getUserBriefInfoById(avatarUpdater.user_id);
+        if (user.avatar == null) {
+            // 图片名格式：20161123204206613375.jpg。
+            // 代表 2016-11-23 20:42:06.613 + 3 位 0 - 9 间随机数字
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+            StringBuilder imageName = new StringBuilder(dateFormat.format(new Date()));
+            Random random = new Random();
+            for (int i = 0; i < 3; ++i) {
+                imageName.append(random.nextInt(10));
+            }
+            imageName.append(".png");
+            user.avatar = imageName.toString();
+            dao.setUserAvatar(user);
+
+
+            HttpSession session = request.getSession();
+            UserSession userSession = (UserSession) session.getAttribute("userSession");
+            userSession.avatar = user.avatar;
+            session.setAttribute("userSession", userSession);
+
+        }
+        try {
+            avatarUpdater.avater.transferTo(new File(
+                    imageDir + File.separator + "avatars" + File.separator + user.avatar));
+        } catch (IOException e) {
+            return false;
+        }
+        return true;
+    }
 }
