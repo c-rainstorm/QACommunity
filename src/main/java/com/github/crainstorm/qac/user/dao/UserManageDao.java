@@ -3,6 +3,7 @@ package com.github.crainstorm.qac.user.dao;
 import com.github.crainstorm.qac.pub.entity.Notice;
 import com.github.crainstorm.qac.pub.entity.User;
 import com.github.crainstorm.qac.pub.entity.UserLogin;
+import com.github.crainstorm.qac.pub.entity.UserSession;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -15,9 +16,9 @@ public interface UserManageDao {
 
     int checkUserEmail(String email);
 
-    User getUserBriefInfo(UserLogin user);
+    UserSession getUserBriefInfoByEmail(UserLogin user);
 
-    User getUserBriefInfo(int id);
+    User getUserBriefInfoById(int id);
 
     int addUser(User user);
 
