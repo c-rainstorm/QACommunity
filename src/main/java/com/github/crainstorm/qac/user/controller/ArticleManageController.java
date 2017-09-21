@@ -56,8 +56,8 @@ public class ArticleManageController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "updateArticle.action", method = RequestMethod.GET)
-    public Result updateArticle(Article article) {
+    @RequestMapping(value = "updateArticle.action", method = RequestMethod.POST)
+    public Result updateArticle(@RequestBody Article article) {
         if (service.updateArticle(article)) {
             return Result.TREU;
         }

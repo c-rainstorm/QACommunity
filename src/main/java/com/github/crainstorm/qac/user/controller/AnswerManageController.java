@@ -59,8 +59,8 @@ public class AnswerManageController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "updateAnswer.action", method = RequestMethod.GET)
-    public Result updateAnswer(Answer answer) {
+    @RequestMapping(value = "updateAnswer.action", method = RequestMethod.POST)
+    public Result updateAnswer(@RequestBody Answer answer) {
         if (service.updateAnswer(answer)) {
             return Result.TREU;
         }

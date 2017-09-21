@@ -80,7 +80,7 @@
     <update id="updateAnswer" parameterType="com.github.crainstorm.qac.pub.entity.Answer">
         UPDATE answer
         SET answer.content = #{content}
-        WHERE answer.author_id = #{author_id};
+        WHERE answer.id = #{id};
     </update>
 
     <update id="deleteAnswer">

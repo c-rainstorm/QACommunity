@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>User details</title>
+    <title>Home</title>
 
     <link rel="stylesheet" href="../public/css/bootstrap.min.css">
     <!-- <link rel="stylesheet" href="../public/css/simplemde.min.css"> -->
@@ -366,6 +366,9 @@
                                 <!-- datetime -->
                                 <div class="cus-split-short-info cus-px">
                                     <span class="cus-split-item">{{item.datetime}}</span>
+                                    <span class="cus-split-item">
+                                        <a class="cus-a" ng-href="./update_answer.html?question_id={{item.question_id}}&answer_id={{item.id}}">Edit</a>
+                                    </span>
                                 </div>
                             </div>
                         </li>
