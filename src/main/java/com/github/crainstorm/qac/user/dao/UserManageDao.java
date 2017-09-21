@@ -31,4 +31,6 @@ public interface UserManageDao {
     int getUserFollowNum(int id);
 
     int getUserFollowerNum(int id);
+
+    int updateUser(User user);
 }

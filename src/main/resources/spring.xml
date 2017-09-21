@@ -50,4 +50,8 @@
 
     <bean id="string" class="java.lang.String">
     </bean>
+
+    <bean id="imageDir" class="java.lang.String">
+        <constructor-arg name="value" value="/home/chen/Desktop/images"/>
+    </bean>
 </beans>

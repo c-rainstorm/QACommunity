@@ -2,12 +2,12 @@ package com.github.crainstorm.qac.user.controller;
 
 import com.github.crainstorm.qac.pub.entity.*;
 import com.github.crainstorm.qac.user.service.UserManageService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,8 +17,11 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class UserManageController {
 
+    private static final Logger LOGGER = LogManager.getLogger();
+
     @Autowired
     private UserManageService service;
+
 
     //--------------------------- Login ---------------------
 
@@ -39,9 +42,17 @@ public class UserManageController {
     public Result addUser(@RequestBody User user, HttpServletRequest request) {
         if (service.addUser(user, request)) {
             return Result.TREU;
-        } else {
-            return Result.FALSE;
         }
+        return Result.FALSE;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "updateUser.action", method = RequestMethod.POST)
+    public Result updateUser(@RequestParam("avatar") MultipartFile avatar, @RequestBody User user) {
+        if (service.updateUser(user, avatar)) {
+            return Result.TREU;
+        }
+        return Result.FALSE;
     }
 
 
