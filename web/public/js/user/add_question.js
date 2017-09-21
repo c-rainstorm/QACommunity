@@ -17,7 +17,7 @@ app.controller("appCtrl", function ($scope, $http, $window) {
 
     // 获取用户简略信息
     $http({
-        url: "../getUserBriefInfo.action",
+        url: "../getUserBriefInfoById.action",
         method: "get",
         params: {
             id: angular.copy($scope.session.user.id)

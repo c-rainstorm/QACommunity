@@ -31,7 +31,7 @@ app.controller("appCtrl", function ($scope, $http, $location){
 
         // 获取作者简略信息
         $http({
-            url : "../getUserBriefInfo.action" ,
+            url : "../getUserBriefInfoById.action" ,
             method : "get" ,
             params : {
                 id : angular.copy($scope.article.author_id)
