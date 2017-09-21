@@ -101,6 +101,15 @@
             margin-right: .5rem;
             font-size: 90%;
         }
+
+        a.cus-a {
+            color: rgba(0, 0, 0, .5);
+            text-decoration-line: none;
+        }
+
+        a.cus-a:hover {
+            color: #495057;
+        }
     </style>
 
 </head>
@@ -178,7 +187,9 @@
                     <div class="tab-pane fade show active" id="article" role="tabpanel" aria-labelledby="article-tab">
                         <div class="cus-article-excerpt-card" ng-repeat="(key, item) in articleList">
                             <!-- Article title -->
-                            <h5>{{item.title}}</h5>
+                            <h5>
+                                <a ng-href="./article.html?id={{item.id}}" target="_blank" class="cus-a">{{item.title}}</a>
+                            </h5>
                             <!-- avatar info -->
                             <div>
                                 <div class="d-inline-block align-middle">
@@ -204,7 +215,9 @@
                     <div class="tab-pane fade" id="question" role="tabpanel" aria-labelledby="question-tab">
                         <div class="cus-question-excerpt-card" ng-repeat="(key, item) in questionList">
                             <!-- question title -->
-                            <h5>{{item.title}}</h5>
+                            <h5>
+                                <a ng-href="./question.html?id={{item.id}}" target="_blank" class="cus-a">{{item.title}}</a>
+                            </h5>
                             <!-- question content -->
                             <p class="mb-1" ng-bind-html="item.content"></p>
 
