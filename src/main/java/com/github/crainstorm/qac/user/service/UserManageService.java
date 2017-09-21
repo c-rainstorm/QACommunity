@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 /**
@@ -74,21 +77,29 @@ public class UserManageService {
         if (user.name.length() > 32 || user.name.length() < 2) {
             return false;
         }
-        File target = new File(imageDir + File.separator + "avatars" + File.separator + user.id + ".png");
-        File targetCopy = new File(target.getAbsolutePath() + ".copy");
-        try {
-            if (target.exists()) {
-                target.renameTo(targetCopy);
+
+        if (avatar != null) {
+            User temp = dao.getUserBriefInfoById(user.id);
+            if (temp.avatar == null) {
+
+                // 图片名格式：20161123204206613375.jpg。
+                // 代表 2016-11-23 20:42:06.613 + 3 位 0 - 9 间随机数字
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+                StringBuilder imageName = new StringBuilder(dateFormat.format(new Date()));
+                Random random = new Random();
+                for (int i = 0; i < 3; ++i) {
+                    imageName.append(random.nextInt(10));
+                }
+                imageName.append(".png");
+                temp.avatar = imageName.toString();
             }
-            avatar.transferTo(target);
-        } catch (IOException e) {
-            target.deleteOnExit();
-            if (targetCopy.exists()) {
-                targetCopy.renameTo(target);
+            try {
+                avatar.transferTo(new File(imageDir + File.separator + "avatars" + File.separator + temp.avatar));
+            } catch (IOException e) {
+                return false;
             }
-            return false;
+            user.avatar = temp.avatar;
         }
-        user.avatar = user.id + ".png";
         return dao.updateUser(user) == 1;
     }
 
