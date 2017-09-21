@@ -3,6 +3,7 @@ package com.github.crainstorm.qac.user.controller;
 import com.github.crainstorm.qac.pub.entity.Question;
 import com.github.crainstorm.qac.pub.entity.QuestionReport;
 import com.github.crainstorm.qac.pub.entity.Result;
+import com.github.crainstorm.qac.pub.entity.ResultWithId;
 import com.github.crainstorm.qac.user.service.ProblemManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,11 +51,12 @@ public class ProblemManageController {
 
     @ResponseBody
     @RequestMapping(value = "addQuestion.action", method = RequestMethod.POST)
-    public Result addQuestion(@RequestBody Question newQuestion) {
-        if (service.addQuestion(newQuestion)) {
-            return Result.TREU;
+    public ResultWithId addQuestion(@RequestBody Question newQuestion) {
+        int questionId = service.addQuestion(newQuestion);
+        if(questionId > 0){
+            return new ResultWithId(questionId);
         }
-        return Result.FALSE;
+        return new ResultWithId();
     }
 
     @ResponseBody

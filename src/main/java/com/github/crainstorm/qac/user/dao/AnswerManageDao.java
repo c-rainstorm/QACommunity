@@ -38,4 +38,6 @@ public interface AnswerManageDao {
     int getAnswerCollectNumById(int id);
 
     int getAnswerCommentNumById(int id);
+
+    int getLatestAnswerId(@Param("author_id") int author_id);
 }

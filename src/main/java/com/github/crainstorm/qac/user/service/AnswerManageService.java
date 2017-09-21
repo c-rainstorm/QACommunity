@@ -49,8 +49,9 @@ public class AnswerManageService {
         return answer;
     }
 
-    public boolean addAnswer(Answer newAnswer) {
-        return dao.addAnswer(newAnswer) == 1;
+    public int addAnswer(Answer newAnswer) {
+        dao.addAnswer(newAnswer);
+        return dao.getLatestAnswerId(newAnswer.author_id);
     }
 
     public boolean deleteAnswer(int id) {

@@ -58,13 +58,13 @@ public class ProblemManageService {
         return question;
     }
 
-    public boolean addQuestion(Question newQuestion) {
+    public int addQuestion(Question newQuestion) {
         dao.addQuestion(newQuestion);
         int question_id = dao.getNewestQuestionId(newQuestion.author_id);
         for (int i = 0; i < newQuestion.labels.size(); ++i) {
             labelManageDao.addLabelToQuestion(question_id, newQuestion.labels.get(i).id);
         }
-        return true;
+        return question_id;
     }
 
     public boolean updateQuestion(Question question) {

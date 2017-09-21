@@ -3,6 +3,7 @@ package com.github.crainstorm.qac.user.controller;
 import com.github.crainstorm.qac.pub.entity.Article;
 import com.github.crainstorm.qac.pub.entity.ArticleReport;
 import com.github.crainstorm.qac.pub.entity.Result;
+import com.github.crainstorm.qac.pub.entity.ResultWithId;
 import com.github.crainstorm.qac.user.service.ArticleManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -48,11 +49,12 @@ public class ArticleManageController {
 
     @ResponseBody
     @RequestMapping(value = "addArticle.action", method = RequestMethod.POST)
-    public Result addArticle(@RequestBody Article newArticle) {
-        if (service.addArticle(newArticle)) {
-            return Result.TREU;
+    public ResultWithId addArticle(@RequestBody Article newArticle) {
+        int articleId = service.addArticle(newArticle);
+        if (articleId > 0) {
+            return new ResultWithId(articleId);
         }
-        return Result.FALSE;
+        return new ResultWithId();
     }
 
     @ResponseBody

@@ -27,8 +27,9 @@ public class CommentManageService {
         return dao.getAnswerComments(answer_id);
     }
 
-    public boolean addAnswerComment(AnswerComment comment) {
-        return dao.addAnswerComment(comment) == 1;
+    public int addAnswerComment(AnswerComment comment) {
+        dao.addAnswerComment(comment);
+        return dao.getLatestAnswerCommentId(comment.user_id);
     }
 
     public boolean deleteAnswerComment(int id) {
@@ -43,8 +44,9 @@ public class CommentManageService {
         return dao.getArticleComments(article_id);
     }
 
-    public boolean addArticleComment(ArticleComment comment) {
-        return dao.addArticleComment(comment) == 1;
+    public int addArticleComment(ArticleComment comment) {
+        dao.addArticleComment(comment);
+        return dao.getLatestArticleCommentId(comment.user_id);
     }
 
     public boolean deleteArticleComment(int id) {

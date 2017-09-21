@@ -2,6 +2,7 @@ package com.github.crainstorm.qac.user.dao;
 
 import com.github.crainstorm.qac.pub.entity.AnswerComment;
 import com.github.crainstorm.qac.pub.entity.ArticleComment;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -26,4 +27,8 @@ public interface CommentManageDao {
     int deleteArticleComment(int id);
 
     int reportArticleComment(int id);
+
+    int getLatestAnswerCommentId(@Param("user_id") int user_id);
+
+    int getLatestArticleCommentId(@Param("user_id") int user_id);
 }
