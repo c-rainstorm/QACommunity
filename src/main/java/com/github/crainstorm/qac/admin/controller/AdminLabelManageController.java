@@ -5,6 +5,7 @@ import com.github.crainstorm.qac.pub.entity.Label;
 import com.github.crainstorm.qac.pub.entity.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,8 +28,8 @@ public class AdminLabelManageController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "addLabel.action", method = RequestMethod.GET)
-    public Result addLabel(Label label) {
+    @RequestMapping(value = "addLabel.action", method = RequestMethod.POST)
+    public Result addLabel(@RequestBody  Label label) {
         if (service.addLabel(label)) {
             return Result.TREU;
         }

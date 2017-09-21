@@ -15,6 +15,11 @@ app.controller("appCtrl", function ($scope, $http, $window) {
         console.log("session : ");
         console.log(resp);
 
+        if(resp.data = ""){
+            console.log("no session.");
+            return;
+        }
+
         $scope.session.user = resp.data;
 
         // 获取用户简略信息

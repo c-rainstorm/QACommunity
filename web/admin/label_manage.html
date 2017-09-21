@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admin Labels Manage</title>
+
+    <link rel="stylesheet" href="../public/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="../public/css/simplemde.min.css"> -->
+    <link href="../public/font/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
+
+    <!-- custom css style: tabs -->
+    <link rel="stylesheet" href="../public/css/cus-style/cus-style.css">
+
+    <script src="../public/js/jquery-3.1.1.min.js"></script>
+    <script src="../public/js/umd/popper.min.js"></script>
+    <script src="../public/js/bootstrap.min.js"></script>
+    <!-- <script src="../public/js/simplemde.min.js"></script> -->
+
+    <!-- custom js: tabs -->
+    <script src="../public/js/angular.min.js"></script>
+
+    <script src="../public/js/admin/label_manage.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .debug {
+            border: 1px dotted red;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .bg-white {
+            background-color: #fff;
+        }
+
+        .cus-border-bottom-shadow {
+            border-bottom: 1px solid rgba(30, 35, 42, .06);
+            box-shadow: 0 1px 3px 0 rgba(0, 34, 77, .05);
+        }
+
+        .cus-data-value {
+            display: inline-block;
+        }
+
+        .cus-data-value .title {
+            color: #8590a6;
+        }
+
+        .cus-data-value .content {
+            font-size: 110%;
+            font-weight: 400;
+        }
+
+        .cus-operations {
+            color: rgba(0, 0, 0, .5);
+        }
+
+        .cus-operations a.cus-operation-item {
+            text-decoration-line: none;
+            color: rgba(0, 0, 0, .5);
+
+            display: inline;
+            cursor: pointer;
+            margin-right: 15px;
+            font-size: 95%;
+        }
+
+        .cus-operations a.cus-operation-item:hover {
+            color: #495057;
+        }
+
+        a.cus-a {
+            color: rgba(0, 0, 0, .5);
+            text-decoration-line: none;
+        }
+
+        a.cus-a:hover {
+            color: #495057;
+        }
+    </style>
+
+</head>
+
+<body ng-app="app" ng-controller="appCtrl">
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark cus-border-bottom-shadow ">
+            <div class="container">
+                <a class="navbar-brand" href="#">Q&A Dashboard</a>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav mr-sm-4">
+                        <li class="nav-item active">
+                            <a class="nav-link" target="_blank" href="./home.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" target="_blank" href="./label_manage.html">Labels</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" target="_blank" href="./report_manage.html">Reports</a>
+                        </li>
+                        <!-- <li class="nav-item">
+                            <a class="nav-link" target="_blank" href="./search.html">Search</a>
+                        </li> -->
+                    </ul>
+                    <!-- <form class="form-inline">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form> -->
+
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#">Info</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Admin
+                                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="#">
+                                    Profile
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    Setting
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Article area -->
+    <div class="bg-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-8" class="pb-4">
+                            <!-- labels line -->
+                            <div class="mt-4 mb-3">
+                                <span class="badge badge-pill badge-primary">Primary</span>
+                                <span class="badge badge-pill badge-secondary">Secondary</span>
+                                <span class="badge badge-pill badge-success">Success</span>
+                                <span class="badge badge-pill badge-danger">Danger</span>
+                                <span class="badge badge-pill badge-warning">Warning</span>
+                                <span class="badge badge-pill badge-info">Info</span>
+                                <span class="badge badge-pill badge-light">Light</span>
+                                <span class="badge badge-pill badge-dark">Dark</span>
+                            </div>
+
+                            <button class="btn btn-outline-primary">New Label</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

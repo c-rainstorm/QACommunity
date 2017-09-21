@@ -5,25 +5,25 @@ app.controller("appCtrl", function($scope, $http, $timeout, $window){
     console.log("app ctroller loaded.");
 
 
-    $scope.user = {
-        email : "",
+    $scope.admin = {
+        id : "",
         password : ""
     }
     $scope.login = function(){
         console.log("login btn clicked.");
 
-        // console.log($scope.user);
-        let result = checkUser($scope.user);
+        // console.log($scope.admin);
+        let result = checkAdmin($scope.admin);
         if(result.status == false){
             console.log(result.alert);
-            $scope.userAlert = angular.copy(result.alert);
+            $scope.adminAlert = angular.copy(result.alert);
             return;
         }
 
         $http({
-            url : "../checkUserLogin.action" ,
+            url : "../checkAdminLogin.action" ,
             method : "post" ,
-            data : angular.copy($scope.user) ,
+            data : angular.copy($scope.admin) ,
         }).then(function(resp){
             console.log(resp);
 
@@ -55,25 +55,25 @@ function httpErr(msg) {
     console.log("http statusText : " + msg.statusText);
 }
 
-function checkUser(user){
+function checkAdmin(admin){
     result = {
         status : false,
         alert : {
-            emailHelp : "",
+            idHelp : "",
             passwordHelp : ""
         }
     };
 
-    // check email
-    let emailExgex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    // console.log(emailExgex.test(user.email));
-    if(!emailExgex.test(user.email)){
-        result.alert.emailHelp = "email格式错误";
+    // check id
+    // let idExgex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    // console.log(idExgex.test(admin.id));
+    if(admin.id.length < 6 || admin.id.length > 32){
+        result.alert.idHelp = "id长度在6~32之间";
         return result;
     }
 
     // check password
-    if(user.password.length < 6 || user.password.length > 64){
+    if(admin.password.length < 6 || admin.password.length > 64){
         result.alert.passwordHelp = "密码长度在6~64之间";
         return result;
     }
