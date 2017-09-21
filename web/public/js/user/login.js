@@ -1,6 +1,6 @@
 let app = angular.module("app", []);
 
-app.controller("appCtrl", function($scope){
+app.controller("appCtrl", function($scope, $http, $timeout, $window){
 
     console.log("app ctroller loaded.");
 
@@ -29,7 +29,7 @@ app.controller("appCtrl", function($scope){
 
             if(resp.data.result == "true"){
                 console.log("Login successed.");
-                toastr.info("Login successed.");
+                toastr.success("登录成功.");
 
                 $timeout(function(){
                     $window.location.href = "./home.html";

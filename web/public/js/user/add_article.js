@@ -6,78 +6,84 @@ app.controller("appCtrl", function ($scope, $http, $window) {
 
     console.log("app controller loaded.");
 
-    $scope.session = {
-        user: {
-            id: 1
-        }
-    }
+    $scope.session = {};
     // 获取 session
-    // TODO 获取 session
-
-
-    // 获取用户简略信息
     $http({
-        url: "../getUserBriefInfo.action",
-        method: "get",
-        params: {
-            id: angular.copy($scope.session.user.id)
-        },
+        url: "../getUserSession.action",
+        method: "get"
     }).then(function (resp) {
+        console.log("session : ");
         console.log(resp);
 
-        $scope.user = resp.data;
+        $scope.session.user = resp.data;
 
-        // 提交文章
-        $scope.article = {
-            title: "",
-            content: "",
-            author_id: angular.copy($scope.user.id)
-        }
-        $scope.articleAlert = {
-            titleHelp: "",
-            contentHelp: ""
-        }
-        $scope.articleSubmit = function () {
+        // 获取用户简略信息
+        $http({
+            url: "../getUserBriefInfo.action",
+            method: "get",
+            params: {
+                id: angular.copy($scope.session.user.id)
+            },
+        }).then(function (resp) {
+            console.log(resp);
 
+            $scope.user = resp.data;
+
+            // 提交文章
+            $scope.article = {
+                title: "",
+                content: "",
+                author_id: angular.copy($scope.user.id)
+            }
             $scope.articleAlert = {
                 titleHelp: "",
                 contentHelp: ""
             }
+            $scope.articleSubmit = function () {
 
-            console.log("article submit clicked.");
+                $scope.articleAlert = {
+                    titleHelp: "",
+                    contentHelp: ""
+                }
 
-            $scope.article.content = content_mde.value();
-            console.log($scope.article);
+                console.log("article submit clicked.");
 
-            // 标题，文章内容校验
-            titleRslt = checkTitle($scope.article.title);
-            console.log(titleRslt);
-            if (!titleRslt.status) {
-                $scope.articleAlert.titleHelp = titleRslt.alert;
-                return;
+                $scope.article.content = content_mde.value();
+                console.log($scope.article);
+
+                // 标题，文章内容校验
+                titleRslt = checkTitle($scope.article.title);
+                console.log(titleRslt);
+                if (!titleRslt.status) {
+                    $scope.articleAlert.titleHelp = titleRslt.alert;
+                    return;
+                }
+
+                // 向服务器发送添加文章请求
+                $http({
+                    url: "../addArticle.action",
+                    method: "post",
+                    data: angular.copy($scope.article)
+                }).then(function (resp) {
+                    console.log(resp);
+
+                    if (resp.data.result == "true") {
+                        $window.location.href = "./home.html";
+                    } else {
+                        $window.location.href = "./add_article.html";
+                    }
+                }, function (resp) {
+                    httpErr(resp);
+                });
+
             }
 
-            // 向服务器发送添加文章请求
-            $http({
-                url: "../addArticle.action",
-                method: "post",
-                data: angular.copy($scope.article)
-            }).then(function (resp) {
-                console.log(resp);
-
-                if(resp.data.result == "true"){
-                    $window.location.href = "./home.html";
-                }else{
-                    $window.location.href = "./add_article.html";
-                }
-            }, function (resp) {
-                httpErr(resp);
-            });
-
-        }
+        }, function (resp) {
+            httpErr(resp);
+        });
 
     }, function (resp) {
-        httpErr(resp);
+        httpErr
     });
 
 
