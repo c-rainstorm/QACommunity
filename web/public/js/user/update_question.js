@@ -1,7 +1,7 @@
-let app = angular.module("app", []).config(function($locationProvider) {
+let app = angular.module("app", []).config(function ($locationProvider) {
     $locationProvider.html5Mode({
-      enabled: true,
-      requireBase: false
+        enabled: true,
+        requireBase: false
     });
 });
 
@@ -11,48 +11,65 @@ app.controller("appCtrl", function ($scope, $http, $window, $location) {
 
     console.log("app controller loaded.");
 
-    $scope.session = {
-        user: {
-            id: 1
-        }
-    }
     // 获取 session
     // TODO 获取 session
-
-    console.log($location.search().id);
-    let question_id = $location.search().id;
-
-    // 获取文章信息
+    $scope.session = {};
+    // 获取 session
     $http({
-        url : "../getQuestion.action" ,
-        method : "get" ,
-        params : {
-            id : question_id
-        } ,
-    }).then(function(resp){
+        url: "../getUserSession.action",
+        method: "get"
+    }).then(function (resp) {
+        console.log("session : ");
         console.log(resp);
 
-        $scope.question = resp.data;
-        content_mde.value($scope.question.content);
+        if (resp.data.userLoginStatus == false) {
+            console.log("no session.");
 
-        // 获取作者简略信息
+            $window.location.href = "./login.html";
+            return;
+        }
+
+        $scope.session.user = resp.data;
+
+        // 获取文章信息
         $http({
-            url : "../getUserBriefInfo.action" ,
-            method : "get" ,
-            params : {
-                id : angular.copy($scope.question.author_id)
-            } ,
-        }).then(function(resp){
+            url: "../getQuestion.action",
+            method: "get",
+            params: {
+                id: question_id
+            },
+        }).then(function (resp) {
             console.log(resp);
 
-            $scope.question.author = resp.data;
-        }, function(resp){
+            $scope.question = resp.data;
+            content_mde.value($scope.question.content);
+
+            // 获取作者简略信息
+            $http({
+                url: "../getUserBriefInfo.action",
+                method: "get",
+                params: {
+                    id: angular.copy($scope.question.author_id)
+                },
+            }).then(function (resp) {
+                console.log(resp);
+
+                $scope.question.author = resp.data;
+            }, function (resp) {
+                httpErr(resp);
+            });
+
+        }, function (resp) {
             httpErr(resp);
         });
 
-    }, function(resp){
+
+    }, function (resp) {
         httpErr(resp);
     });
+
+    console.log($location.search().id);
+    let question_id = $location.search().id;
 
 });
 
