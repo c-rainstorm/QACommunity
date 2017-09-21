@@ -26,7 +26,7 @@ public class UserManageService {
     public boolean checkUserLogin(UserLogin user, HttpServletRequest request) {
         HttpSession session = request.getSession();
         if (dao.checkUserLogin(user) == 1) {
-            UserSession usersession = dao.getUserBriefInfo(user);
+            UserSession usersession = dao.getUserBriefInfoByEmail(user);
             usersession.userLoginStatus = true;
             session.setAttribute("userSession", usersession);
             return true;
@@ -53,7 +53,7 @@ public class UserManageService {
 
         HttpSession session = request.getSession();
         if (dao.addUser(user) == 1) {
-            UserSession usersession = dao.getUserBriefInfo(user);
+            UserSession usersession = dao.getUserBriefInfoByEmail(user);
             usersession.userLoginStatus = true;
             session.setAttribute("userSession", usersession);
             return true;
@@ -75,7 +75,7 @@ public class UserManageService {
     }
 
     public User getUserBriefInfo(int id) {
-        return dao.getUserBriefInfo(id);
+        return dao.getUserBriefInfoById(id);
     }
 
     public boolean followUser(int user_id, int follow_id) {

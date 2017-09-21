@@ -41,14 +41,14 @@
         VALUES (#{user_id}, #{follow_id});
     </insert>
 
-    <select id="getUserBriefInfo" parameterType="com.github.crainstorm.qac.pub.entity.UserLogin"
+    <select id="getUserBriefInfoByEmail" parameterType="com.github.crainstorm.qac.pub.entity.UserLogin"
             resultType="com.github.crainstorm.qac.pub.entity.UserSession">
         SELECT id, name, avatar
         FROM user
         WHERE email = #{email};
     </select>
 
-    <select id="getUserBriefInfo" parameterType="int" resultType="com.github.crainstorm.qac.pub.entity.User">
+    <select id="getUserBriefInfoById" parameterType="int" resultType="com.github.crainstorm.qac.pub.entity.User">
         SELECT id, name, avatar, short_intro
         FROM user
         WHERE id = #{id};

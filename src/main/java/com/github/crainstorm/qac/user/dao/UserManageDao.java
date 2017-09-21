@@ -16,9 +16,9 @@ public interface UserManageDao {
 
     int checkUserEmail(String email);
 
-    UserSession getUserBriefInfo(UserLogin user);
+    UserSession getUserBriefInfoByEmail(UserLogin user);
 
-    User getUserBriefInfo(int id);
+    User getUserBriefInfoById(int id);
 
     int addUser(User user);
 
