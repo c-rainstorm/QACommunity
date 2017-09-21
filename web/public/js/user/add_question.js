@@ -2,6 +2,16 @@ let app = angular.module("app", []);
 
 app.controller("appCtrl", function ($scope, $http, $window) {
 
+    $scope.color = [
+        "badge-primary",
+        "badge-secondary",
+        "badge-success",
+        "badge-danger",
+        "badge-warning",
+        "badge-info",
+        "badge-dark"
+    ]
+
     var content_mde = new SimpleMDE({ element: $("#content").get(0) });
 
     console.log("app controller loaded.");
@@ -27,11 +37,59 @@ app.controller("appCtrl", function ($scope, $http, $window) {
 
         $scope.user = resp.data;
 
+
+        // 获取标签
+        $http({
+            url : "../getLabels.action" ,
+            method : "get" ,
+        }).then(function(resp){
+            console.log("labels : ");
+            console.log(resp);
+
+            $scope.labels = resp.data;
+            for(var i = 0; i < $scope.labels.length; i++){
+                $scope.labels[i].color = angular.copy($scope.color[i % 7]);
+            }
+        }, function(resp){
+            httpErr(resp);
+        });
+
+        // 添加标签
+        $scope.addLabelToQuestion = function(id){
+            console.log("add label to question. : " + id);
+
+            for(var i = 0; i < $scope.question.labels.length; i++){
+                if($scope.question.labels[i].id == id){
+                    console.log("already added.");
+                    return;
+                }
+            }
+
+            let labelTmp = {};
+            for(var i = 0; i < $scope.labels.length; i++){
+                if($scope.labels[i].id == id){
+                    labelTmp = angular.copy($scope.labels[i]);
+                    console.log(labelTmp);
+                    break;
+                }
+            }
+            $scope.question.labels.push(angular.copy(labelTmp));
+        }
+
+        //删除标签
+        $scope.deleteLabelFromQuestion = function(index){
+            console.log("delete label from question : " + index);
+
+            $scope.question.labels.splice(index, 1);
+            console.log("delete successed.");
+        }
+
         // 提交问题
         $scope.question = {
             title: "",
             content: "",
-            author_id: angular.copy($scope.user.id)
+            author_id: angular.copy($scope.user.id),
+            labels: []
         }
         $scope.questionAlert = {
             titleHelp: "",

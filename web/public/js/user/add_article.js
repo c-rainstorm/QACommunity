@@ -87,6 +87,14 @@ app.controller("appCtrl", function ($scope, $http, $window) {
                 $scope.article.labels.push(angular.copy(labelTmp));
             }
 
+            //删除标签
+            $scope.deleteLabelFromArticle = function(index){
+                console.log("delete label from article : " + index);
+
+                $scope.article.labels.splice(index, 1);
+                console.log("delete successed.");
+            }
+
             // 提交文章
             $scope.article = {
                 title: "",

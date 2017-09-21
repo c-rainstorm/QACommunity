@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Add Article</title>
+    <title>Add Question</title>
 
     <link rel="stylesheet" href="../public/css/bootstrap.min.css">
     <link rel="stylesheet" href="../public/css/simplemde.min.css">
@@ -149,7 +149,7 @@
                                 <label for="label">Labels</label>
                                 <!-- question labels line -->
                                 <div class="mb-2">
-                                    <a href="" ng-click="deleteLabelFromQuestion(item.id)" class="badge mr-2 mb-2" ng-class="item.color" ng-repeat="(key, item) in question.labels">{{item.title}}</a>
+                                    <a href="" ng-click="deleteLabelFromQuestion($index)" class="badge mr-2 mb-2" ng-class="item.color" ng-repeat="(key, item) in question.labels">{{item.title}}</a>
                                 </div>
                                 <input id="label" type="text" class="form-control" aria-describedby="label_generate_help" placeholder="Labels">
                                 <small id="label_generate_help" class="form-text text-danger"></small>
