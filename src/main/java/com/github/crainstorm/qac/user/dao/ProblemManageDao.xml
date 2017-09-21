@@ -48,6 +48,7 @@
     <select id="getQuestion" resultType="com.github.crainstorm.qac.pub.entity.Question">
         SELECT
             question.id,
+            question.author_id,
             question.content,
             question.title,
             question.datetime,

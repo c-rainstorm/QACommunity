@@ -1,4 +1,9 @@
-let app = angular.module("app", []);
+let app = angular.module("app", []).config(function($locationProvider) {
+    $locationProvider.html5Mode({
+      enabled: true,
+      requireBase: false
+    });
+});
 
 app.controller("appCtrl", function ($scope, $http, $window, $location) {
 
@@ -14,6 +19,7 @@ app.controller("appCtrl", function ($scope, $http, $window, $location) {
     // 获取 session
     // TODO 获取 session
 
+    console.log($location.search().id);
     let question_id = $location.search().id;
 
     // 获取文章信息
@@ -27,6 +33,23 @@ app.controller("appCtrl", function ($scope, $http, $window, $location) {
         console.log(resp);
 
         $scope.question = resp.data;
+        content_mde.value($scope.question.content);
+
+        // 获取作者简略信息
+        $http({
+            url : "../getUserBriefInfo.action" ,
+            method : "get" ,
+            params : {
+                id : angular.copy($scope.question.author_id)
+            } ,
+        }).then(function(resp){
+            console.log(resp);
+
+            $scope.question.author = resp.data;
+        }, function(resp){
+            httpErr(resp);
+        });
+
     }, function(resp){
         httpErr(resp);
     });
