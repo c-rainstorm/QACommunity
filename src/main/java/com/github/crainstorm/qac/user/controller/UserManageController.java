@@ -47,9 +47,18 @@ public class UserManageController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "updateAvatars.action", method = RequestMethod.POST)
+    public Result updateAvatars(@RequestBody AvatarUpdater avatarUpdater, HttpServletRequest request) {
+        if (service.updateAvatars(avatarUpdater,request)) {
+            return Result.TREU;
+        }
+        return Result.FALSE;
+    }
+
+    @ResponseBody
     @RequestMapping(value = "updateUser.action", method = RequestMethod.POST)
-    public Result updateUser(@RequestParam("avatar") MultipartFile avatar, @RequestBody User user) {
-        if (service.updateUser(user, avatar)) {
+    public Result updateUser(@RequestBody User user) {
+        if (service.updateUser(user)) {
             return Result.TREU;
         }
         return Result.FALSE;
