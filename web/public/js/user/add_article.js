@@ -2,6 +2,16 @@ let app = angular.module("app", []);
 
 app.controller("appCtrl", function ($scope, $http, $window) {
 
+    $scope.color = [
+        "badge-primary",
+        "badge-secondary",
+        "badge-success",
+        "badge-danger",
+        "badge-warning",
+        "badge-info",
+        "badge-dark"
+    ]
+
     var content_mde = new SimpleMDE({ element: $("#content").get(0) });
 
     console.log("app controller loaded.");
@@ -20,7 +30,10 @@ app.controller("appCtrl", function ($scope, $http, $window) {
             return;
         }
 
-        $scope.session.user = resp.data;
+        // $scope.session.user = resp.data;
+        $scope.session.user = {
+            id : 1
+        }
 
         // 获取用户简略信息
         $http({
@@ -34,11 +47,52 @@ app.controller("appCtrl", function ($scope, $http, $window) {
 
             $scope.user = resp.data;
 
+            $scope.labelInputSearch = ""
+
+            // 获取标签
+            $http({
+                url : "../getLabels.action" ,
+                method : "get" ,
+            }).then(function(resp){
+                console.log("labels : ");
+                console.log(resp);
+
+                $scope.labels = resp.data;
+                for(var i = 0; i < $scope.labels.length; i++){
+                    $scope.labels[i].color = angular.copy($scope.color[i % 7]);
+                }
+            }, function(resp){
+                httpErr(resp);
+            });
+
+            // 添加标签
+            $scope.addLabelToArticle = function(id){
+                console.log("add label to article. : " + id);
+
+                for(var i = 0; i < $scope.article.labels.length; i++){
+                    if($scope.article.labels[i].id == id){
+                        console.log("already added.");
+                        return;
+                    }
+                }
+
+                let labelTmp = {};
+                for(var i = 0; i < $scope.labels.length; i++){
+                    if($scope.labels[i].id == id){
+                        labelTmp = angular.copy($scope.labels[i]);
+                        console.log(labelTmp);
+                        break;
+                    }
+                }
+                $scope.article.labels.push(angular.copy(labelTmp));
+            }
+
             // 提交文章
             $scope.article = {
                 title: "",
                 content: "",
-                author_id: angular.copy($scope.user.id)
+                author_id: angular.copy($scope.user.id),
+                labels : []
             }
             $scope.articleAlert = {
                 titleHelp: "",

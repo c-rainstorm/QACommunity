@@ -145,22 +145,20 @@
                             </div>
 
                             <!-- label input -->
+
                             <div class="form-group">
                                 <label for="label">Labels</label>
-                                <input id="label" type="text" class="form-control" aria-describedby="label_generate_help" placeholder="Labels">
+                                <!-- artlce labels line -->
+                                <div class="mb-2">
+                                    <a href="" ng-click="deleteLabelFromArticle($index)" class="badge mr-2 mb-2" ng-class="item.color" ng-repeat="(key, item) in article.labels">{{item.title}}</a>
+                                </div>
+                                <input id="label" ng-model="labelInputSearch" type="text" class="form-control" aria-describedby="label_generate_help" placeholder="Labels filter">
                                 <small id="label_generate_help" class="form-text text-danger"></small>
                             </div>
 
-                            <!-- labels line -->
-                            <div class="mt-3 mb-3">
-                                <a href="" class="badge badge-primary">Primary</a>
-                                <a href="" class="badge badge-secondary">Secondary</a>
-                                <a href="" class="badge badge-success">Success</a>
-                                <a href="" class="badge badge-danger">Danger</a>
-                                <a href="" class="badge badge-warning">Warning</a>
-                                <a href="" class="badge badge-info">Info</a>
-                                <a href="" class="badge badge-light">Light</a>
-                                <a href="" class="badge badge-dark">Dark</a>
+                            <!-- all labels line -->
+                            <div class="mt-2 mb-3">
+                                <a href="" ng-click="addLabelToArticle(item.id)" class="badge mr-2 mb-2" ng-class="item.color" ng-repeat="(key, item) in labels | filter: labelInputSearch">{{item.title}}</a>
                             </div>
 
                             <!-- author info -->
