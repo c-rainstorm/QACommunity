@@ -37,4 +37,8 @@ public interface ArticleManageDao {
     void downArticle(int article_id);
 
     int getNewestArticleId(int author_id);
+
+    int getArticleCollectNumById(int id);
+
+    int getArticleCommentNumById(int id);
 }

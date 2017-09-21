@@ -3,76 +3,51 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.crainstorm.qac.user.dao.ArticleManageDao">
+
+    <!-- ***************************** Keyword ************************************** -->
+
     <select id="getArticlesByKeyword" resultType="com.github.crainstorm.qac.pub.entity.Article">
-        select A.id, A.author_id, A.content, A.datetime, A.up, A.down, collect_num, comment_num
-        from article as A join ( select article_id, count(*) as collect_num
-                                  from article_collect
-                                  group by article_id ) as CollNum
-                          on A.id = CollNum.article_id
-                          join (  select article_id, count(*) as comment_num
-                                  from article_comment
-                                  group by article_id )
-                                  as CommNum
-                          on A.id = CommNum.article_id
-        where A.content like #{keyword} or A.title like #{keyword}
+        SELECT id, author_id, content, datetime, up, down
+        FROM article
+        WHERE content LIKE #{keyword} or title LIKE #{keyword}
         limit #{offset}, #{maxNumInOnePage};
     </select>
+    <select id="getArticleCollectNumById" resultType="int">
+        SELECT COUNT(*)
+        FROM article_collect
+        WHERE article_id = #{id};
+    </select>
+    <select id="getArticleCommentNumById" resultType="int">
+        SELECT count(*)
+        FROM article_comment
+        WHERE article_id = #{id};
+    </select>
+
+    <!-- ****************************** Label **************************************** -->
     <select id="getArticlesByLabel" resultType="com.github.crainstorm.qac.pub.entity.Article">
-        select A.id, A.author_id, A.content, A.datetime, A.up, A.down, collect_num, comment_num
-        from article as A join ( article_label as AL join label L on AL.label_id = L.id )
-                            on A.id = AL.article_id
-                          join ( select article_id, count(user_id) as collect_num
-                                 from article_collect
-                                 group by article_id )
-                                 as CollNum
-                            on A.id = CollNum.article_id
-                          join ( select article_id, count(id) as comment_num
-                                from article_comment
-                                group by article_id )
-                                as CommNum
-                            on A.id = CommNum.article_id
-        where L.title = #{label}
+        SELECT id, author_id, title, content, datetime,browse_num,up,down
+        FROM
+        article INNER JOIN
+        (SELECT * FROM article_label WHERE label_id = #{id}) as l
+        ON article.id = l.article_id
         limit #{offset}, #{maxNumInOnePage}
         ;
     </select>
+
+    <!-- ****************************** UserID ***************************************** -->
     <select id="getArticlesByUserId" resultType="com.github.crainstorm.qac.pub.entity.Article">
---         select A.id, A.author_id, A.content, A.datetime, A.up, A.down, collect_num, comment_num
---         from article as A join ( select article_id, count(user_id) as collect_num
---                                  from article_collect
---                                  group by article_id )
---                                  as CollNum
---                             on A.id = CollNum.article_id
---                           join ( select article_id, count(id) as comment_num
---                                 from article_comment
---                                 group by article_id )
---                                 as CommNum
---                             on A.id = CommNum.article_id
-        select A.id, A.title, A.author_id, A.content, A.datetime, A.up, A.down
-        from article as A
-        where A.author_id = #{author_id}
-        limit #{offset}, #{maxNumInOnePage}
-;
+        select id, title, author_id, content, datetime, up, down
+        from article
+        where author_id = #{author_id}
+        limit #{offset}, #{maxNumInOnePage};
     </select>
+
+    <!-- ****************************** getArticle by id *************************** -->
     <select id="getArticle" resultType="com.github.crainstorm.qac.pub.entity.Article">
---         select A.id, A.title, A.author_id, A.content, A.datetime, A.up, A.down, collect_num, comment_num
---         from article as A join ( article_label as AL join label L on AL.label_id = L.id )
---                             on A.id = AL.article_id
---                           join ( select article_id, count(user_id) as collect_num
---                                  from article_collect
---                                  group by article_id )
---                                  as CollNum
---                             on A.id = CollNum.article_id
---                           join ( select article_id, count(id) as comment_num
---                                 from article_comment
---                                 group by article_id )
---                                 as CommNum
---                             on A.id = CommNum.article_id
         select A.id, A.title, A.author_id, A.content, A.datetime, A.up, A.down
         from article as A
         where A.id = #{id}
         ;
-
-
     </select>
 
     <!-- ***************************************** -->

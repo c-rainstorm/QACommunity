@@ -23,19 +23,38 @@ public class ArticleManageService {
     private LabelManageDao labelManageDao;
 
     public ArrayList<Article> getArticlesByKeyword(String keyword, int maxNumInOnePage, int pageNum) {
-        return dao.getArticlesByKeyword("%" + keyword + "%", maxNumInOnePage * (pageNum - 1), maxNumInOnePage);
+        ArrayList<Article> articles = dao.getArticlesByKeyword(
+                "%" + keyword + "%", maxNumInOnePage * (pageNum - 1), maxNumInOnePage);
+        getArticleCollectAndCommentNum(articles);
+        return articles;
+    }
+
+    private void getArticleCollectAndCommentNum(ArrayList<Article> articles) {
+        for (int i = 0; i < articles.size(); ++i) {
+            Article article = articles.get(i);
+            article.collect_num = dao.getArticleCollectNumById(article.id);
+            article.comment_num = dao.getArticleCommentNumById(article.id);
+        }
     }
 
     public ArrayList<Article> getArticlesByLabel(String label, int maxNumInOnePage, int pageNum) {
-        return dao.getArticlesByLabel(label, maxNumInOnePage * (pageNum - 1), maxNumInOnePage);
+        ArrayList<Article> articles = dao.getArticlesByLabel(label, maxNumInOnePage * (pageNum - 1), maxNumInOnePage);
+        getArticleCollectAndCommentNum(articles);
+        return articles;
     }
 
     public ArrayList<Article> getArticlesByUserId(int author_id, int maxNumInOnePage, int pageNum) {
-        return dao.getArticlesByUserId(author_id, maxNumInOnePage * (pageNum - 1), maxNumInOnePage);
+        ArrayList<Article> articles = dao.getArticlesByUserId(author_id,
+                maxNumInOnePage * (pageNum - 1), maxNumInOnePage);
+        getArticleCollectAndCommentNum(articles);
+        return articles;
     }
 
     public Article getArticle(int id) {
-        return dao.getArticle(id);
+        Article article = dao.getArticle(id);
+        article.comment_num = dao.getArticleCommentNumById(id);
+        article.collect_num = dao.getArticleCollectNumById(id);
+        return article;
     }
 
     public boolean addArticle(Article newArticle) {

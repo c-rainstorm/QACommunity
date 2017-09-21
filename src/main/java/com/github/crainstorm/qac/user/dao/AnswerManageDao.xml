@@ -3,6 +3,18 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.crainstorm.qac.user.dao.AnswerManageDao">
+
+    <select id="getAnswerCollectNumById" resultType="int">
+        SELECT COUNT (*)
+        FROM answer_collect
+        WHERE answer_id = #{id}
+    </select>
+
+    <select id="getAnswerCommentNumById" resultType="int">
+        SELECT COUNT (*)
+        FROM answer_comment
+        WHERE answer_id = #{id}
+    </select>
     <select id="getAnswersByQuestionId" resultType="com.github.crainstorm.qac.pub.entity.Answer">
         SELECT
             answer.id,
@@ -15,12 +27,8 @@
             user.name as author_name,
             user.avatar as author_avatar,
             user.short_intro as author_short_intro
---             COUNT(answer_collect.user_id),
---             COUNT(answer_comment.id)
         FROM answer
         INNER JOIN user ON user.id = answer.author_id
---         INNER JOIN answer_collect ON answer_collect.answer_id = answer.id
---         INNER JOIN answer_comment ON answer_comment.answer_id = answer.id
         WHERE answer.question_id = #{question_id}
         limit #{offset}, #{maxNumInOnePage};
     </select>
