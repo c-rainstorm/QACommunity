@@ -9,6 +9,11 @@ app.controller("appCtrl", function ($scope, $http, $location){
 
     console.log("app controller loaded.");
 
+    $scope.session = {
+        user : {
+            id : 1
+        }
+    }
     // TODO get session
 
     // 获取文章id
@@ -43,6 +48,50 @@ app.controller("appCtrl", function ($scope, $http, $location){
         }, function(resp){
             httpErr(resp);
         });
+
+        // 获取文章comments
+        $http({
+            url : "../getArticleComments.action" ,
+            method : "get" ,
+            params : {
+                article_id : angular.copy($scope.article.id)
+            } ,
+        }).then(function(resp){
+            console.log(resp);
+
+            $scope.article.comments = resp.data;
+        }, function(resp){
+            httpErr(resp);
+        });
+
+        // 添加Comments
+        $scope.newComment = "";
+        $scope.commentSubmit = function(){
+
+            console.log($scope.newComment);
+
+            $http({
+                url : "../addArticleComment.action" ,
+                method : "post" ,
+                data : {
+                    user_id : angular.copy($scope.session.user.id),
+                    article_id : angular.copy($scope.article.id),
+                    content : angular.copy($scope.newComment)
+                } ,
+            }).then(function(resp){
+                console.log(resp);
+
+                if(resp.data.result == "true"){
+                    toastr.success("添加评论成功");
+                    $scope.newComment = "";
+                }else{
+                    toastr.error("添加评论失败");
+                }
+            }, function(resp){
+                httpErr(resp);
+            });
+
+        }
 
     }, function(resp){
         httpErr(resp);

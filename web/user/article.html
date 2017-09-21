@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../public/css/bootstrap.min.css">
     <!-- <link rel="stylesheet" href="../public/css/simplemde.min.css"> -->
     <link href="../public/font/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="../public/css/toastr.min.css">        
 
     <script src="../public/js/jquery-3.1.1.min.js"></script>
     <script src="../public/js/umd/popper.min.js"></script>
@@ -20,6 +21,7 @@
     <script src="../public/js/angular.min.js"></script>
     
     <script src="../public/js/user/article.js"></script>
+    <script src="../public/js/toastr.min.js"></script>        
 
     <style>
         /* body {
@@ -188,7 +190,7 @@
                                             <span class="oi oi-thumb-up"></span>
                                             64
                                         </button>
-                                        <a class="cus-operation-item">36 Comments</a>
+                                        <a class="cus-operation-item">Comments</a>
                                         <a class="cus-operation-item">
                                             <span class="oi oi-share"></span>
                                             Share
@@ -205,24 +207,24 @@
 
                                     <div class="mt-2">
                                         <div class="py-3 px-1" style="border-bottom: 1px solid #e7eaf2;">
-                                            <span>23 Comments</span>
+                                            <span>{{article.comments.length}} Comments</span>
                                         </div>
                                         <div class="cus-comments-area">
-                                            <div class="cus-comment-card pt-3 px-1 pb-2" style="border-bottom: 1px solid #e7eaf2;">
+                                            <div class="cus-comment-card pt-3 px-1 pb-2" style="border-bottom: 1px solid #e7eaf2;" ng-repeat="(key, item) in article.comments">
                                                 <!-- avatar & name -->
-                                                <img src="../public/img/avatars/37.png" alt="" style="height: 30px; width: 30px; border-radius: 2px;">
-                                                <span class="ml-2">Ooho</span>
+                                                <img ng-src="../public/img/avatars/{{item.user_avatar}}" alt="" style="height: 30px; width: 30px; border-radius: 2px;">
+                                                <span class="ml-2">{{item.user_name}}</span>
         
                                                 <!-- comment content -->
                                                 <p class="pt-2 mb-1">
-                                                    Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus.
+                                                    {{item.content}}
                                                 </p>
         
                                                 <!-- operations -->
                                                 <div class="cus-operations">
                                                     <a class="cus-operation-item">
                                                         <span class="oi oi-thumb-up"></span>
-                                                        3
+                                                        {{item.up}}
                                                     </a>
                                                     <a class="cus-operation-item">
                                                         <span class="oi oi-thumb-down"></span>
@@ -236,93 +238,9 @@
                                                     </a>
                                                 </div>
                                             </div>
-                                            <div class="cus-comment-card pt-3 px-1 pb-2" style="border-bottom: 1px solid #e7eaf2;">
-                                                <!-- avatar & name -->
-                                                <img src="../public/img/avatars/38.png" alt="" style="height: 30px; width: 30px; border-radius: 2px;">
-                                                <span class="ml-2">Ooho</span>
-        
-                                                <!-- comment content -->
-                                                <p class="pt-2 mb-1">
-                                                    Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus.
-                                                </p>
-        
-                                                <!-- operations -->
-                                                <div class="cus-operations">
-                                                    <a class="cus-operation-item">
-                                                            <span class="oi oi-thumb-up"></span>
-                                                            3
-                                                        </a>
-                                                    <a class="cus-operation-item">
-                                                            <span class="oi oi-thumb-down"></span>
-                                                            down
-                                                        </a>
-                                                    <a href="#" class="cus-operation-item">
-                                                            Reply
-                                                        </a>
-                                                    <a href="" class="cus-operation-item">
-                                                            Report
-                                                        </a>
-                                                </div>
-                                            </div>
-                                            <div class="cus-comment-card pt-3 px-1 pb-2" style="border-bottom: 1px solid #e7eaf2;">
-                                                <!-- avatar & name -->
-                                                <img src="../public/img/avatars/3.png" alt="" style="height: 30px; width: 30px; border-radius: 2px;">
-                                                <span class="ml-2">Ooho</span>
-        
-                                                <!-- comment content -->
-                                                <p class="pt-2 mb-1">
-                                                    Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus.
-                                                </p>
-        
-                                                <!-- operations -->
-                                                <div class="cus-operations">
-                                                    <a class="cus-operation-item">
-                                                                <span class="oi oi-thumb-up"></span>
-                                                                3
-                                                            </a>
-                                                    <a class="cus-operation-item">
-                                                                <span class="oi oi-thumb-down"></span>
-                                                                down
-                                                            </a>
-                                                    <a href="#" class="cus-operation-item">
-                                                                Reply
-                                                            </a>
-                                                    <a href="" class="cus-operation-item">
-                                                                Report
-                                                            </a>
-                                                </div>
-                                            </div>
-                                            <div class="cus-comment-card pt-3 px-1 pb-2" style="border-bottom: 1px solid #e7eaf2;">
-                                                <!-- avatar & name -->
-                                                <img src="../public/img/avatars/8.png" alt="" style="height: 30px; width: 30px; border-radius: 2px;">
-                                                <span class="ml-2">Ooho</span>
-        
-                                                <!-- comment content -->
-                                                <p class="pt-2 mb-1">
-                                                    Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus.
-                                                </p>
-        
-                                                <!-- operations -->
-                                                <div class="cus-operations">
-                                                    <a class="cus-operation-item">
-                                                                    <span class="oi oi-thumb-up"></span>
-                                                                    3
-                                                                </a>
-                                                    <a class="cus-operation-item">
-                                                                    <span class="oi oi-thumb-down"></span>
-                                                                    down
-                                                                </a>
-                                                    <a href="#" class="cus-operation-item">
-                                                                    Reply
-                                                                </a>
-                                                    <a href="" class="cus-operation-item">
-                                                                    Report
-                                                                </a>
-                                                </div>
-                                            </div>
                                         </div>
                                         <!-- pagination -->
-                                        <div class="pt-3">
+                                        <!-- <div class="pt-3">
                                             <nav>
                                                 <ul class="pagination pagination-sm justify-content-center">
                                                     <li class="page-item"><a class="page-link" href="#">Previous</a></li>
@@ -332,6 +250,16 @@
                                                     <li class="page-item"><a class="page-link" href="#">Next</a></li>
                                                 </ul>
                                             </nav>
+                                        </div> -->
+
+                                        <!-- add comment -->
+                                        <div class="pt-3 px-1 pb-3">
+                                            <div class="input-group">
+                                                <input ng-model="newComment" type="text" class="form-control" placeholder="new comment" aria-label="new comment">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-secondary" ng-click="commentSubmit(item.id)" type="button">Submit</button>
+                                                </span>
+                                            </div>
                                         </div>
         
                                     </div>

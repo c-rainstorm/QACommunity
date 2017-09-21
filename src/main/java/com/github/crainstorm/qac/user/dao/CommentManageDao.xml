@@ -27,16 +27,19 @@
 
     <!-- *********************** Article ************************ -->
 
-    <select id="getArticleComments" parameterType="com.github.crainstorm.qac.pub.entity.ArticleComment">
-        SELECT id,user_id,article_id,content,datetime,up,down,reply_comment_id
-        FROM article_comment
+    <select id="getArticleComments" resultType="com.github.crainstorm.qac.pub.entity.ArticleComment">
+        SELECT ac.id, ac.user_id, ac.article_id, ac.content, ac.datetime, ac.up, ac.down,
+               u.name as user_name, u.avatar as user_avatar
+        FROM article_comment as ac
+        INNER JOIN user as u
+        ON u.id = ac.user_id
         WHERE article_id = #{article_id}
         ORDER by datetime ASC ;
     </select>
 
     <insert id="addArticleComment" parameterType="com.github.crainstorm.qac.pub.entity.ArticleComment">
-        INSERT INTO article_comment(user_id, article_id, content, reply_comment_id, datetime)
-        VALUES (#{user_id},#{article_id},#{content},#{reply_comment_id}, now());
+        INSERT INTO article_comment(user_id, article_id, content, datetime)
+        VALUES (#{user_id},#{article_id},#{content}, now());
     </insert>
 
     <update id="deleteArticleComment">

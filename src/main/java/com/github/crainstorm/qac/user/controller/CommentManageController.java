@@ -67,8 +67,8 @@ public class CommentManageController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "addArticleComment.action", method = RequestMethod.GET)
-    public Result addArticleComment(ArticleComment comment) {
+    @RequestMapping(value = "addArticleComment.action", method = RequestMethod.POST)
+    public Result addArticleComment(@RequestBody ArticleComment comment) {
         if (service.addArticleComment(comment)) {
             return Result.TREU;
         }
