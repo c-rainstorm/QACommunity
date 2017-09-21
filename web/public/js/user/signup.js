@@ -161,7 +161,7 @@ function checkUser(user){
         }
     };
     // check name
-    if(user.name.length < 3 || user.name.length > 16){
+    if(user.name.length <2 || user.name.length > 32){
         result.alert.nameHelp = "名字长度在3~16之间";
         return result;
     }
@@ -175,7 +175,7 @@ function checkUser(user){
     }
 
     // check password
-    if(user.password.length < 3 || user.password.length > 16){
+    if(user.password.length < 6 || user.password.length > 64){
         result.alert.passwordHelp = "密码长度在3~16之间";
         return result;
     }
