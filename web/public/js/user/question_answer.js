@@ -130,9 +130,24 @@ app.controller("appCtrl", function ($scope, $http, $location, $window) {
                     }).then(function (resp) {
                         console.log(resp);
 
-                        toastr.success("添加评论成功");
+                        if (resp.data.result == "true" || resp.data.result == true) {
+                            toastr.success("添加评论成功");
+                            
+                            $scope.answer.comments.push({
+                                content : newComment,
+                                id : resp.data.id,
+                                user_id : angular.copy($scope.session.user.id),
+                                user_avatar : angular.copy($scope.session.user.avatar),
+                                user_name : angular.copy($scope.session.user.name),
+                                up : 0,
+                                down : 0
+                            });
+                        }else{
+                            toastr.error("添加评论失败");
+                        }
 
-                        $("#newComment_" + answer_id).val("");
+                        $("#newComment").val("");                        
+
                     }, function (resp) {
                         httpErr(resp);
                     });

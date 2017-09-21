@@ -248,7 +248,7 @@
                             <!-- comments -->
                             <div id="comments01" class="collapse show mt-3" style="border: 1px solid #e7eaf2; border-radius: 2px;">
                                 <div class="p-3" style="border-bottom: 1px solid #e7eaf2;">
-                                    <span>23 Comments</span>
+                                    <span>{{answer.comments.length}} Comments</span>
                                 </div>
                                 <div class="cus-comments-area">
                                     <div class="cus-comment-card pt-3 px-3 pb-2" style="border-bottom: 1px solid #e7eaf2;" ng-repeat="(key, item) in answer.comments">
@@ -313,10 +313,10 @@
                             <!-- avatar & short info -->
                             <div class="">
                                 <div class="d-inline-block align-middle">
-                                    <img src="/images/avatars/khalil.png" alt="" style="height: 40px; width: 40px; border-radius: 2px;">
+                                    <img ng-src="/images/avatars/{{session.user.avatar}}" alt="" style="height: 40px; width: 40px; border-radius: 2px;">
                                 </div>
                                 <div class="d-inline-block ml-2 align-middle">
-                                    <div>Hugo Hoo</div>
+                                    <div>{{session.user.name}}</div>
                                     <div class="text-muted" style="font-size: 95%;">This is my short intro.</div>
                                 </div>
                             </div>

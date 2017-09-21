@@ -140,11 +140,11 @@ app.controller("appCtrl", function ($scope, $http, $window, $timeout) {
                 }).then(function (resp) {
                     console.log(resp);
 
-                    if (resp.data.result == "true") {
+                    if (resp.data.result == "true" || resp.data.result == true) {
                         toastr.success("添加问题成功");
 
                         $timeout(function () {
-                            $window.location.href = "./home.html";
+                            $window.location.href = "./question.html?id=" + resp.data.id;
                         }, 1000);
                     } else {
                         toastr.error("添加问题失败");

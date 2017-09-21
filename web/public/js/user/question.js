@@ -5,7 +5,7 @@ let app = angular.module("app", ['ngSanitize']).config(function ($locationProvid
     });
 });
 
-app.controller("appCtrl", function ($scope, $http, $location, $window) {
+app.controller("appCtrl", function ($scope, $http, $location, $window, $timeout) {
 
     $scope.color = [
         "badge-primary",
@@ -161,8 +161,14 @@ app.controller("appCtrl", function ($scope, $http, $location, $window) {
                 }).then(function (resp) {
                     console.log(resp);
 
-                    if (resp.data.result == "true") {
-                        $window.location.href = "./home.html"
+                    if (resp.data.result == "true" || resp.data.result == true) {
+                        toastr.success("添加答案成功");
+                        
+                        $timeout(function(){
+                            $window.location.href = "./question_answer.html?question_id=" + $scope.question.id + "&answer_id=" + resp.data.id;
+                        }, 1000);
+                    }else{
+                        toastr.error("添加答案失败");
                     }
                 }, function (resp) {
                     httpErr(resp);
@@ -171,7 +177,7 @@ app.controller("appCtrl", function ($scope, $http, $location, $window) {
             }
 
             // 提交回复
-            $scope.commentSubmit = function (answer_id) {
+            $scope.commentSubmit = function (answer_id, answer_index) {
 
                 let newComment = $("#newComment_" + answer_id).val();
                 console.log("comment : " + newComment);
@@ -187,7 +193,21 @@ app.controller("appCtrl", function ($scope, $http, $location, $window) {
                 }).then(function (resp) {
                     console.log(resp);
 
-                    toastr.success("添加评论成功");
+                    if (resp.data.result == "true" || resp.data.result == true) {
+                        toastr.success("添加评论成功");
+                        
+                        $scope.answerList[answer_index].comments.push({
+                            content : newComment,
+                            id : resp.data.id,
+                            user_id : session.user.id,
+                            user_avatar : session.user.avatar,
+                            user_name : session.user.name,
+                            up : 0,
+                            down : 0
+                        });
+                    }else{
+                        toastr.error("添加评论失败");
+                    }
 
                     $("#newComment_" + answer_id).val("");
                 }, function (resp) {

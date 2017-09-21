@@ -152,7 +152,7 @@
                             <!-- question title -->
                             <h4>{{question.title}}</h4>
                             <!-- question content -->
-                            <p class="lead" id="question_content"></p>
+                            <p class="" id="question_content"></p>
                         </div>
                         <div class="col-sm-4">
                             <div class="mt-4 mb-3">
@@ -208,6 +208,9 @@
 
                     <!-- answer list -->
                     <div class="col-sm-12 bg-white mb-2" style="box-shadow: 0 1px 3px rgba(0,0,0,.1); border-radius: 2px;">
+                        <div class="py-3 text-muted text-center" ng-hide="answerList.length != 0">
+                            还没有人回答这个问题
+                        </div>
                         <!-- answer card -->
                         <div class="answer-card" style="padding: 15px 5px;" ng-repeat="(key, item) in answerList">
                             <!-- avatar & short info -->
@@ -299,7 +302,7 @@
                                     <div class="input-group">
                                         <input id="newComment_{{item.id}}" type="text" class="form-control" placeholder="new comment" aria-label="new comment">
                                         <span class="input-group-btn">
-                                            <button class="btn btn-secondary" ng-click="commentSubmit(item.id)" type="button">Submit</button>
+                                            <button class="btn btn-secondary" ng-click="commentSubmit(item.id, $index)" type="button">Submit</button>
                                         </span>
                                     </div>
                                 </div>
@@ -310,7 +313,7 @@
 
 
                     <!-- write new answer -->
-                    <div class="col-sm-12 bg-white mt-3" style="box-shadow: 0 1px 3px rgba(0,0,0,.1); border-radius: 2px;">
+                    <div class="col-sm-12 bg-white mt-1" style="box-shadow: 0 1px 3px rgba(0,0,0,.1); border-radius: 2px;">
                         <!-- answer card -->
                         <div class="answer-card" style="padding: 15px 5px;">
                             <!-- avatar & short info -->
