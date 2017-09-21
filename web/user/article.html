@@ -198,6 +198,10 @@
                                             <span class="oi oi-flag"></span>
                                             Report
                                         </a>
+                                        <a class="cus-operation-item" target="_blank" ng-href="./update_article.html?id={{article.id}}" ng-hide="session.user.id != article.author.id">
+                                            <span class="oi oi-pencil"></span>
+                                            Edit
+                                        </a>
                                     </div>
 
                                     <div class="mt-2">

@@ -247,6 +247,9 @@
                                     <span class="oi oi-flag"></span>
                                     Report
                                 </a>
+                                <a href="./update_answer.html?question_id={{question.id}}&answer_id={{item.id}}" target="_blank" ng-hide="session.user.id != item.author_id" class="cus-operation-item">
+                                    Edit
+                                </a>
                             </div>
 
                             <!-- comments -->
