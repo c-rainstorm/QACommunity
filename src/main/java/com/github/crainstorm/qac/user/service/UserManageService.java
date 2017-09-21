@@ -87,6 +87,11 @@ public class UserManageService {
     }
 
     public UserSession getUserSession(HttpServletRequest request) {
-        return (UserSession) request.getSession().getAttribute("userSession");
+        UserSession session = (UserSession) request.getSession().getAttribute("userSession");
+        if (session == null) {
+            session = new UserSession();
+            session.userLoginStatus = false;
+        }
+        return session;
     }
 }

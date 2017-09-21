@@ -1,11 +1,10 @@
 package com.github.crainstorm.qac.admin.controller;
 
 import com.github.crainstorm.qac.admin.service.AdminInfoManageService;
-import com.github.crainstorm.qac.pub.entity.Admin;
-import com.github.crainstorm.qac.pub.entity.Notice;
-import com.github.crainstorm.qac.pub.entity.Result;
+import com.github.crainstorm.qac.pub.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,19 +19,24 @@ public class AdminInfoManageControler {
     @Autowired
     private AdminInfoManageService service;
 
-    @RequestMapping(value = "checkAdminLogin.action", method = RequestMethod.GET)
-    public String checkAdminLogin(Admin admin, HttpServletRequest request) {
+    @ResponseBody
+    @RequestMapping(value = "checkAdminLogin.action", method = RequestMethod.POST)
+    public Result checkAdminLogin(@RequestBody Admin admin, HttpServletRequest request) {
         if (service.checkAdminLogin(admin, request)) {
-            //todo admin back end
-            return "redirect:/";
+            return Result.TREU;
         }
-        // todo 重定向登陆页
-        return "";
+        return Result.FALSE;
     }
 
     @ResponseBody
-    @RequestMapping(value = "updateAdminInfo.action", method = RequestMethod.GET)
-    public Result updateAdminInfo(Admin admin) {
+    @RequestMapping(value = "getAdminSession.action", method = RequestMethod.GET)
+    public AdminSession getAdminSession(HttpServletRequest request) {
+        return service.getAdminSession(request);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "updateAdminInfo.action", method = RequestMethod.POST)
+    public Result updateAdminInfo(@RequestBody Admin admin) {
         if (service.updateAdminInfo(admin)) {
             return Result.TREU;
         }

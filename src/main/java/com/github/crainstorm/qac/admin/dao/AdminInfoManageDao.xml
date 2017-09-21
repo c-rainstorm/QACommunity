@@ -8,10 +8,10 @@
         FROM admin
         WHERE id = #{id} AND password = #{password};
     </select>
-    <select id="getAdminInfo" parameterType="com.github.crainstorm.qac.pub.entity.Admin" resultType="com.github.crainstorm.qac.pub.entity.Admin">
+    <select id="getAdminInfo" parameterType="int" resultType="com.github.crainstorm.qac.pub.entity.AdminSession">
         SELECT id, name
         FROM admin
-        WHERE id = #{id} AND password = #{password};
+        WHERE id = #{id};
     </select>
     <update id="updateAdminInfo" parameterType="com.github.crainstorm.qac.pub.entity.Admin" >
         UPDATE admin
