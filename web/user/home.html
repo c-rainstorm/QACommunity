@@ -29,6 +29,10 @@
 
     <script src="../public/js/user/home.js"></script>
 
+    <!-- angular js file upload -->
+    <script src="../public/js/upld/ng-file-upload-shim.min.js"></script>
+    <script src="../public/js/upld/ng-file-upload.min.js"></script>
+
     <style>
         * {
             box-sizing: border-box;
@@ -265,7 +269,8 @@
                             <a href="" ng-click="updateAvatar()">
                                 <img ng-src="/images/avatars/{{user.avatar}}" class="img-fluid" alt="" style="height: 110px; width: 110px; border-radius: 100px;">
                             </a>
-                            <input type="file" style="display: none;" id="avatar_file">
+                            <input type="file" style="display: none;" ngf-select ngf-pattern="'image/*'"
+                            ngf-accept="'image/*'" ngf-max-size="20MB" id="avatar_file">
                             <div class="lead mt-2" style="font-weight: normal;">{{user.name}}</div>
                             <div class="text-muted">{{user.short_intro}}</div>
                         </div>

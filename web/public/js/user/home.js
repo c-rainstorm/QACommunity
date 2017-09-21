@@ -1,6 +1,6 @@
-let app = angular.module("app", ['ngSanitize']);
+let app = angular.module("app", ['ngSanitize', 'ngFileUpload']);
 
-app.controller("appCtrl", function ($scope, $http, $window) {
+app.controller("appCtrl", function ($scope, $http, $window, Upload) {
 
     $scope.color = [
         'border-left-blue',
@@ -52,58 +52,40 @@ app.controller("appCtrl", function ($scope, $http, $window) {
 
 
             // 更新avatar
-            $scope.updateAvatar = function(){
+            $scope.updateAvatar = function () {
 
                 $("#avatar_file").trigger('click');
 
             }
 
-            $("#avatar_file").on("change", function(){
+            $scope.avatar_file = {};
+            $("#avatar_file").on("change", function () {
                 // alert("file uploaded.");
 
-                let $elem = $("#avatar_file");
-                let f = $elem[0].files[0];
-                console.log($elem[0].files[0]);
-        
-                if(f == undefined){
-                    console.log("there is no file need to be uploaded.");
+                let avatarFile = $("#avatar_file").get(0).files[0];
+                console.log(avatarFile);
+                $scope.upload(avatarFile, $scope.user.id);
 
-                }else{
-                    let fr = new FileReader();
-                    fr.onloadend = function(){
-                        let avatar_file = fr.result;
-                        console.log("reading file.");
-            
-                        $http({
-                            url : "../updateAvatars.action" ,
-                            method : "post" ,
-                            headers: {'Content-Type': undefined},
-                            transformRequest: (data, headersGetter) => {
-                                
-                                let formData = new FormData();
-                                angular.forEach(data, function (value, key) {
-                            
-                                    formData.append(key, value);
-                            
-                                });
-                            
-                                return formData;
-                            
-                            },
-                            data : {
-                                user_id : angular.copy($scope.user.id),
-                                avatar : avatar_file
-                            } ,
-                        }).then(function(resp){
-                            console.log(resp);
-                        }, function(resp){
-                            httpErr(resp);
-                        });
+            });
+
+            // upload on file select or drop
+            $scope.upload = function (file, user_id) {
+                Upload.upload({
+                    url: '../updateAvatars.action',
+                    method : "post",
+                    data: { 
+                        file: file, 
+                        user_id : user_id
                     }
-            
-                    fr.readAsBinaryString(f);
-                }
-            })
+                }).then(function (resp) {
+                    console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+                }, function (resp) {
+                    console.log('Error status: ' + resp.status);
+                }, function (evt) {
+                    var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                    console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+                });
+            };
 
             // 获取问题列表by user_id
             $http({
