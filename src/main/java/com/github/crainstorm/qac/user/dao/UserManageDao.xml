@@ -55,8 +55,8 @@
     </select>
 
     <insert id="addUser" parameterType="com.github.crainstorm.qac.pub.entity.User">
-        INSERT INTO `user` (name, email, password, create_date)
-        VALUES (#{name},#{email},#{password},now());
+        INSERT INTO `user` (name, email, password, create_date, avatar)
+        VALUES (#{name},#{email},#{password},now(), #{avatar});
     </insert>
 
     <update id="updateUser" parameterType="com.github.crainstorm.qac.pub.entity.User">
