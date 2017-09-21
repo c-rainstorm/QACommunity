@@ -4,10 +4,12 @@ import com.github.crainstorm.qac.pub.entity.*;
 import com.github.crainstorm.qac.user.service.UserManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 
 /**
  * Created by chen on 9/17/17.
@@ -20,15 +22,16 @@ public class UserManageController {
 
     //--------------------------- Login ---------------------
 
+    @ResponseBody
     @RequestMapping(value = "/checkUserLogin.action", method = RequestMethod.POST)
-    public String checkUserLogin(UserLogin user, HttpServletRequest request){
-        if(user.email == null || user.password == null){
-            return "/user/login.html";
+    public Result checkUserLogin(@RequestBody UserLogin user, HttpServletRequest request) {
+        if (user.email == null || user.password == null) {
+            return Result.FALSE;
         }
-        if(service.checkUserLogin(user, request)){
-            return "redirect:/";
+        if (service.checkUserLogin(user, request)) {
+            return Result.TREU;
         }
-        return "/user/login.html";
+        return Result.FALSE;
     }
 
     @ResponseBody
@@ -39,6 +42,13 @@ public class UserManageController {
         } else {
             return Result.FALSE;
         }
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "getUserSession.action", method = RequestMethod.GET)
+    public UserSession getUserSession(HttpServletRequest request) {
+        return service.getUserSession(request);
     }
 
     //-------------------------------- User info ---------------------
@@ -69,7 +79,7 @@ public class UserManageController {
 
     @ResponseBody
     @RequestMapping(value = "getNotice.action", method = RequestMethod.GET)
-    public Notice getNotice(int user_id){
+    public Notice getNotice(int user_id) {
         return service.getNotice(user_id);
     }
 
