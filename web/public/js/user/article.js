@@ -5,7 +5,7 @@ let app = angular.module("app", []).config(function ($locationProvider) {
     });
 });
 
-app.controller("appCtrl", function ($scope, $http, $location) {
+app.controller("appCtrl", function ($scope, $http, $location, $window) {
 
     console.log("app controller loaded.");
 

@@ -5,7 +5,7 @@ let app = angular.module("app", ['ngSanitize']).config(function ($locationProvid
     });
 });
 
-app.controller("appCtrl", function ($scope, $http) {
+app.controller("appCtrl", function ($scope, $http, $window) {
 
     console.log("app controller loaded.");
 
