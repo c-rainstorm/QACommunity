@@ -1,62 +1,85 @@
-let app = angular.module("app", ['ngSanitize']).config(function($locationProvider) {
+let app = angular.module("app", ['ngSanitize']).config(function ($locationProvider) {
     $locationProvider.html5Mode({
-      enabled: true,
-      requireBase: false
+        enabled: true,
+        requireBase: false
     });
 });
 
-app.controller("appCtrl", function ($scope, $http){
-    
+app.controller("appCtrl", function ($scope, $http) {
+
     console.log("app controller loaded.");
 
-    $scope.search = function(){
+    $scope.session = {};
+    // 获取 session
+    $http({
+        url: "../getUserSession.action",
+        method: "get"
+    }).then(function (resp) {
+        console.log("session : ");
+        console.log(resp);
 
-        let val = $("#search_content").val();
-        console.log(val);
+        if (resp.data.userLoginStatus == false) {
+            console.log("no session.");
 
-        // 搜索问题
-        $http({
-            url : "../getQuestionsByKeyword.action" ,
-            method : "get" ,
-            params : {
-                keyword : val,
-                maxNumInOnePage : 5,
-                pageNum : 1
-            } ,
-        }).then(function(resp){
-            console.log(resp);
+            $window.location.href = "./login.html";
+            return;
+        }
 
-            $scope.questionList = resp.data;
+        $scope.session.user = resp.data;
 
-            for(var i in $scope.questionList){
-                $scope.questionList[i].content = markdown.toHTML($scope.questionList[i].content);
-            }
-        }, function(resp){
-            httpErr(resp);
-        });
+        $scope.search = function () {
 
-        // 搜索文章
-        $http({
-            url : "../getArticlesByKeyword.action" ,
-            method : "get" ,
-            params : {
-                keyword : val,
-                maxNumInOnePage : 5,
-                pageNum : 1
-            } ,
-        }).then(function(resp){
-            console.log(resp);
+            let val = $("#search_content").val();
+            console.log(val);
 
-            $scope.articleList = resp.data;
+            // 搜索问题
+            $http({
+                url: "../getQuestionsByKeyword.action",
+                method: "get",
+                params: {
+                    keyword: val,
+                    maxNumInOnePage: 5,
+                    pageNum: 1
+                },
+            }).then(function (resp) {
+                console.log(resp);
 
-            for(var i in $scope.articleList){
-                $scope.articleList[i].content = markdown.toHTML($scope.articleList[i].content);
-            }
-        }, function(resp){
-            httpErr(resp);
-        });
+                $scope.questionList = resp.data;
 
-    }
+                for (var i in $scope.questionList) {
+                    $scope.questionList[i].content = markdown.toHTML($scope.questionList[i].content);
+                }
+            }, function (resp) {
+                httpErr(resp);
+            });
+
+            // 搜索文章
+            $http({
+                url: "../getArticlesByKeyword.action",
+                method: "get",
+                params: {
+                    keyword: val,
+                    maxNumInOnePage: 5,
+                    pageNum: 1
+                },
+            }).then(function (resp) {
+                console.log(resp);
+
+                $scope.articleList = resp.data;
+
+                for (var i in $scope.articleList) {
+                    $scope.articleList[i].content = markdown.toHTML($scope.articleList[i].content);
+                }
+            }, function (resp) {
+                httpErr(resp);
+            });
+
+        }
+
+
+    }, function (resp) {
+        httpErr(resp);
+    });
 
 });
 

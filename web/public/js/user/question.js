@@ -1,171 +1,193 @@
-let app = angular.module("app", ['ngSanitize']).config(function($locationProvider) {
+let app = angular.module("app", ['ngSanitize']).config(function ($locationProvider) {
     $locationProvider.html5Mode({
-      enabled: true,
-      requireBase: false
+        enabled: true,
+        requireBase: false
     });
 });
 
-app.controller("appCtrl", function ($scope, $http, $location, $window){
+app.controller("appCtrl", function ($scope, $http, $location, $window) {
 
     console.log("app controller loaded.");
 
-    var new_answer_mde = new SimpleMDE({ element: $("#new_answer").get(0) });                
+    var new_answer_mde = new SimpleMDE({ element: $("#new_answer").get(0) });
 
-    $scope.session = {
-        user : {
-            id : 1
-        }
-    }
+    // $scope.session = {
+    //     user : {
+    //         id : 1
+    //     }
+    // }
     // TODO get session
-
-    // 获取问题id
-    console.log($location.search());
-
-    let question_id = $location.search().id;
-
+    $scope.session = {};
+    // 获取 session
     $http({
-        url : "../getQuestion.action" ,
-        method : "get" ,
-        params : {
-            id : question_id
-        } ,
-    }).then(function(resp){
+        url: "../getUserSession.action",
+        method: "get"
+    }).then(function (resp) {
+        console.log("session : ");
         console.log(resp);
 
-        $scope.question = resp.data;
+        if (resp.data.userLoginStatus == false) {
+            console.log("no session.");
 
-        $("#question_content").get(0).innerHTML = markdown.toHTML(resp.data.content);
+            $window.location.href = "./login.html";
+            return;
+        }
 
-        // 获取作者简略信息
+        $scope.session.user = resp.data;
+
+        // 获取问题id
+        console.log($location.search());
+
+        let question_id = $location.search().id;
+
         $http({
-            url : "../getUserBriefInfo.action" ,
-            method : "get" ,
-            params : {
-                id : angular.copy($scope.question.author_id)
-            } ,
-        }).then(function(resp){
+            url: "../getQuestion.action",
+            method: "get",
+            params: {
+                id: question_id
+            },
+        }).then(function (resp) {
             console.log(resp);
 
-            $scope.question.author = resp.data;
-        }, function(resp){
-            httpErr(resp);
-        });
+            $scope.question = resp.data;
 
-        
-        // 获取该问题下的所有答案
-        $http({
-            url : "../getAnswersByQuestionId.action" ,
-            method : "get" ,
-            params : {
-                question_id : question_id,
-                maxNumInOnePage : 5,
-                pageNum : 1
-            } ,
-        }).then(function(resp){
-            $scope.answerList = resp.data;
+            $("#question_content").get(0).innerHTML = markdown.toHTML(resp.data.content);
 
-            for(var i in $scope.answerList){
-                $scope.answerList[i].content = markdown.toHTML($scope.answerList[i].content);
-                $scope.answerList[i].comments = [];
-            }
-
-            console.log("answer list : ");
-            console.log(resp);
-        }, function(resp){
-            httpErr(resp);
-        });
-
-        
-        // 获得某答案下的所有评论
-        $scope.getComments = function(answer_id, answer_index){
-
-            if($scope.answerList[answer_index].comments.length != 0){
-                return;
-            }
-
-            console.log("get all comments");
-
+            // 获取作者简略信息
             $http({
-                url : "../getAnswerComments.action" ,
-                method : "get" ,
-                params : {
-                    answer_id : answer_id
-                } ,
-            }).then(function(resp){
-                console.log("comments: ");
+                url: "../getUserBriefInfo.action",
+                method: "get",
+                params: {
+                    id: angular.copy($scope.question.author_id)
+                },
+            }).then(function (resp) {
                 console.log(resp);
 
-                $scope.answerList[answer_index].comments = resp.data;
-            }, function(resp){
+                $scope.question.author = resp.data;
+            }, function (resp) {
                 httpErr(resp);
             });
 
-        }
 
-
-        // 提交答案
-        $scope.answerSubmit = function(){
-
-            console.log("answer submit clicked.");
-
-            // 答案内容校验
-            new_answer_content = new_answer_mde.value();
-            if(new_answer_content.length <= 0){
-                alert("答案内容不能为空");
-                return;
-            }
-
-            console.log(new_answer_content);
-
-            newAnswer = {
-                question_id : question_id,
-                author_id : angular.copy($scope.session.user.id),
-                content : new_answer_content
-            }
-
+            // 获取该问题下的所有答案
             $http({
-                url : "../addAnswer.action" ,
-                method : "post" ,
-                data : newAnswer ,
-            }).then(function(resp){
-                console.log(resp);
+                url: "../getAnswersByQuestionId.action",
+                method: "get",
+                params: {
+                    question_id: question_id,
+                    maxNumInOnePage: 5,
+                    pageNum: 1
+                },
+            }).then(function (resp) {
+                $scope.answerList = resp.data;
 
-                if(resp.data.result == "true"){
-                    $window.location.href = "./home.html"
+                for (var i in $scope.answerList) {
+                    $scope.answerList[i].content = markdown.toHTML($scope.answerList[i].content);
+                    $scope.answerList[i].comments = [];
                 }
-            }, function(resp){
-                httpErr(resp);
-            });
 
-        }
-
-        // 提交回复
-        $scope.commentSubmit = function(answer_id){
-
-            let newComment = $("#newComment_" + answer_id).val();
-            console.log("comment : " + newComment);
-
-            $http({
-                url : "../addAnswerComment.action" ,
-                method : "post" ,
-                data : {
-                    user_id : angular.copy($scope.session.user.id),
-                    answer_id : answer_id,
-                    content : newComment
-                } ,
-            }).then(function(resp){
+                console.log("answer list : ");
                 console.log(resp);
-
-                toastr.success("添加评论成功");
-
-                $("#newComment_" + answer_id).val("");
-            }, function(resp){
+            }, function (resp) {
                 httpErr(resp);
             });
 
-        }
 
-    }, function(resp){
+            // 获得某答案下的所有评论
+            $scope.getComments = function (answer_id, answer_index) {
+
+                if ($scope.answerList[answer_index].comments.length != 0) {
+                    return;
+                }
+
+                console.log("get all comments");
+
+                $http({
+                    url: "../getAnswerComments.action",
+                    method: "get",
+                    params: {
+                        answer_id: answer_id
+                    },
+                }).then(function (resp) {
+                    console.log("comments: ");
+                    console.log(resp);
+
+                    $scope.answerList[answer_index].comments = resp.data;
+                }, function (resp) {
+                    httpErr(resp);
+                });
+
+            }
+
+
+            // 提交答案
+            $scope.answerSubmit = function () {
+
+                console.log("answer submit clicked.");
+
+                // 答案内容校验
+                new_answer_content = new_answer_mde.value();
+                if (new_answer_content.length <= 0) {
+                    alert("答案内容不能为空");
+                    return;
+                }
+
+                console.log(new_answer_content);
+
+                newAnswer = {
+                    question_id: question_id,
+                    author_id: angular.copy($scope.session.user.id),
+                    content: new_answer_content
+                }
+
+                $http({
+                    url: "../addAnswer.action",
+                    method: "post",
+                    data: newAnswer,
+                }).then(function (resp) {
+                    console.log(resp);
+
+                    if (resp.data.result == "true") {
+                        $window.location.href = "./home.html"
+                    }
+                }, function (resp) {
+                    httpErr(resp);
+                });
+
+            }
+
+            // 提交回复
+            $scope.commentSubmit = function (answer_id) {
+
+                let newComment = $("#newComment_" + answer_id).val();
+                console.log("comment : " + newComment);
+
+                $http({
+                    url: "../addAnswerComment.action",
+                    method: "post",
+                    data: {
+                        user_id: angular.copy($scope.session.user.id),
+                        answer_id: answer_id,
+                        content: newComment
+                    },
+                }).then(function (resp) {
+                    console.log(resp);
+
+                    toastr.success("添加评论成功");
+
+                    $("#newComment_" + answer_id).val("");
+                }, function (resp) {
+                    httpErr(resp);
+                });
+
+            }
+
+        }, function (resp) {
+            httpErr(resp);
+        });
+
+
+    }, function (resp) {
         httpErr(resp);
     });
 
