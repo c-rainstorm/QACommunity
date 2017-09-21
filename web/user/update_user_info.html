@@ -9,6 +9,7 @@
 
     <link rel="stylesheet" href="../public/css/bootstrap.min.css">
     <!-- <link href="../public/font/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="../public/css/toastr.min.css">    
 
     <script src="../public/js/jquery-3.1.1.min.js"></script>
     <script src="../public/js/umd/popper.min.js"></script>
@@ -17,6 +18,8 @@
     <script src="../public/js/angular.min.js"></script>   
     
     <script src="../public/js/user/update_user_info.js"></script>
+
+    <script src="../public/js/toastr.min.js"></script>    
 
     <style>
         * {
@@ -103,54 +106,53 @@
                     <div class="col-lg-5 col-md-8 col-sm-12 mx-auto">
                         <h4 class="mt-4 mb-3">Edit your profile</h4>
                         <form class="mt-4 mb-5">
-                            <!-- avatar -->
+                            <!-- avatar
                             <label for="avatar">Avatar</label><br/>
                             <span class="custom-file mb-3">
                                 <input type="file" id="avatar" class="custom-file-input">
                                 <span class="custom-file-control"></span>
-                            </span>
+                            </span> -->
                             <!-- name -->
                             <div class="form-group">
                                 <label for="name">Name</label>
-                                <input type="text" id="name" class="form-control" placeholder="name">
+                                <input ng-model="user.name" type="text" id="name" class="form-control" placeholder="name">
                             </div>
                             <!-- sex -->
                             <!-- <label for="">Sex</label><br/> -->
                             <div class="form-check form-check-inline">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="radio" name="sex" id="male" value="0" checked>
+                                    <input class="form-check-input" ng-model="user.sex" type="radio" name="sex" id="male" ng-value="sex.male" checked>
                                     Male
                                 </label>
                             </div>
                             <div class="form-check form-check-inline mb-3">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="radio" name="sex" id="female" value="1">
+                                    <input class="form-check-input" ng-model="user.sex" type="radio" name="sex" id="female" ng-value="sex.female">
                                     Female
                                 </label>
                             </div>
                             <!-- short intro -->
                             <div class="form-group">
                                 <label for="short_intro">Short intro</label>
-                                <input type="text" id="short_intro" class="form-control" placeholder="short intro">
+                                <input ng-model="user.short_intro" type="text" id="short_intro" class="form-control" placeholder="short intro">
                             </div>
                             <!-- college -->
                             <div class="form-group">
                                 <label for="college">College</label>
-                                <input type="text" id="college" class="form-control" placeholder="college">
+                                <input ng-model="user.college" type="text" id="college" class="form-control" placeholder="college">
                             </div>
                             <!-- major -->
                             <div class="form-group">
                                 <label for="major">Major</label>
-                                <input type="text" id="major" class="form-control" placeholder="major">
+                                <input ng-model="user.major" type="text" id="major" class="form-control" placeholder="major">
                             </div>
                             <!-- intro -->
                             <div class="form-group">
                                 <label for="Intro">Intro</label>
-                                <textarea class="form-control" id="Intro" rows="4"></textarea>
+                                <textarea ng-model="user.intro" class="form-control" id="Intro" rows="4"></textarea>
                             </div>
                             <div class="mt-4">
-                                <button class="btn btn-outline-secondary mr-1">Reset</button>
-                                <button class="btn btn-outline-primary">Submit</button>
+                                <button class="btn btn-outline-primary" ng-click="updateUserInfoSubmit()">Submit</button>
                             </div>
                         </form>
                     </div>
