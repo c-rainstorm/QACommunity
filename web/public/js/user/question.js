@@ -66,6 +66,7 @@ app.controller("appCtrl", function ($scope, $http, $location, $window){
 
             for(var i in $scope.answerList){
                 $scope.answerList[i].content = markdown.toHTML($scope.answerList[i].content);
+                $scope.answerList[i].comments = [];
             }
 
             console.log("answer list : ");
@@ -73,6 +74,33 @@ app.controller("appCtrl", function ($scope, $http, $location, $window){
         }, function(resp){
             httpErr(resp);
         });
+
+        
+        // 获得某答案下的所有评论
+        $scope.getComments = function(answer_id, answer_index){
+
+            if($scope.answerList[answer_index].comments.length != 0){
+                return;
+            }
+
+            console.log("get all comments");
+
+            $http({
+                url : "../getAnswerComments.action" ,
+                method : "get" ,
+                params : {
+                    answer_id : answer_id
+                } ,
+            }).then(function(resp){
+                console.log("comments: ");
+                console.log(resp);
+
+                $scope.answerList[answer_index].comments = resp.data;
+            }, function(resp){
+                httpErr(resp);
+            });
+
+        }
 
 
         // 提交答案
@@ -105,6 +133,32 @@ app.controller("appCtrl", function ($scope, $http, $location, $window){
                 if(resp.data.result == "true"){
                     $window.location.href = "./home.html"
                 }
+            }, function(resp){
+                httpErr(resp);
+            });
+
+        }
+
+        // 提交回复
+        $scope.commentSubmit = function(answer_id){
+
+            let newComment = $("#newComment_" + answer_id).val();
+            console.log("comment : " + newComment);
+
+            $http({
+                url : "../addAnswerComment.action" ,
+                method : "post" ,
+                data : {
+                    user_id : angular.copy($scope.session.user.id),
+                    answer_id : answer_id,
+                    content : newComment
+                } ,
+            }).then(function(resp){
+                console.log(resp);
+
+                toastr.success("添加评论成功");
+
+                $("#newComment_" + answer_id).val("");
             }, function(resp){
                 httpErr(resp);
             });

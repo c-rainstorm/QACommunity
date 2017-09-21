@@ -6,14 +6,17 @@
 
     <!-- ***************** Answer ****************** -->
     <select id="getAnswerComments" parameterType="int" resultType="com.github.crainstorm.qac.pub.entity.AnswerComment">
-        SELECT id,user_id,answer_id,content,datetime,up,down,reply_comment_id
-        FROM answer_comment
+        SELECT ac.id, ac.user_id, ac.answer_id, ac.content, ac.datetime, ac.up, ac.down,
+               u.name as user_name, u.avatar as user_avatar
+        FROM answer_comment as ac
+        INNER JOIN user as u
+        ON u.id = ac.user_id
         WHERE answer_id = #{answer_id}
         ORDER by datetime ASC ;
     </select>
     <insert id="addAnswerComment" parameterType="com.github.crainstorm.qac.pub.entity.AnswerComment">
-        INSERT INTO answer_comment(user_id, answer_id, content, reply_comment_id, datetime)
-        VALUES (#{user_id},#{answer_id},#{content},#{reply_comment_id}, now());
+        INSERT INTO answer_comment(user_id, answer_id, content, datetime)
+        VALUES (#{user_id},#{answer_id},#{content}, now());
     </insert>
 
     <delete id="deleteAnswerComment">

@@ -6,6 +6,7 @@ import com.github.crainstorm.qac.pub.entity.Result;
 import com.github.crainstorm.qac.user.service.CommentManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,8 +31,8 @@ public class CommentManageController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "addAnswerComment.action", method = RequestMethod.GET)
-    public Result addAnswerComment(AnswerComment comment) {
+    @RequestMapping(value = "addAnswerComment.action", method = RequestMethod.POST)
+    public Result addAnswerComment(@RequestBody  AnswerComment comment) {
         if (service.addAnswerComment(comment)) {
             return Result.TREU;
         }
