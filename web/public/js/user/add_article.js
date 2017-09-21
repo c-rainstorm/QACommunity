@@ -30,10 +30,10 @@ app.controller("appCtrl", function ($scope, $http, $window, $timeout) {
             return;
         }
 
-        // $scope.session.user = resp.data;
-        $scope.session.user = {
-            id : 1
-        }
+        $scope.session.user = resp.data;
+        // $scope.session.user = {
+        //     id : 1
+        // }
 
         // 获取用户简略信息
         $http({

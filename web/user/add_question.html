@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../public/css/bootstrap.min.css">
     <link rel="stylesheet" href="../public/css/simplemde.min.css">
     <link href="../public/font/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="../public/css/toastr.min.css">    
 
     <script src="../public/js/jquery-3.1.1.min.js"></script>
     <script src="../public/js/umd/popper.min.js"></script>
@@ -19,6 +20,9 @@
     <script src="../public/js/angular.min.js"></script> 
     
     <script src="../public/js/user/add_question.js"></script>
+
+    <script src="../public/js/toastr.min.js"></script>
+    
 
     <style>
         /* body {
@@ -151,7 +155,7 @@
                                 <div class="mb-2">
                                     <a href="" ng-click="deleteLabelFromQuestion($index)" class="badge mr-2 mb-2" ng-class="item.color" ng-repeat="(key, item) in question.labels">{{item.title}}</a>
                                 </div>
-                                <input id="label" type="text" class="form-control" aria-describedby="label_generate_help" placeholder="Labels">
+                                <input ng-model="labelInputSearch" id="label"  type="text" class="form-control" aria-describedby="label_generate_help" placeholder="Labels Filter">
                                 <small id="label_generate_help" class="form-text text-danger"></small>
                             </div>
 

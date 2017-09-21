@@ -37,6 +37,7 @@ app.controller("appCtrl", function ($scope, $http, $window, $timeout) {
 
         $scope.user = resp.data;
 
+        $scope.labelInputSearch = "";
 
         // 获取标签
         $http({
