@@ -7,8 +7,11 @@
     <!-- ***************************** Keyword ************************************** -->
 
     <select id="getArticlesByKeyword" resultType="com.github.crainstorm.qac.pub.entity.Article">
-        SELECT id, author_id, content, datetime, up, down
-        FROM article
+        SELECT a.id, a.author_id, a.content, a.datetime, a.up, a.down, a.title,
+        u.name as user_name, u.avatar as user_avatar, u.short_intro as user_short_intro
+        FROM article as a
+        INNER JOIN user as u
+        ON u.id = a.author_id
         WHERE content LIKE #{keyword} or title LIKE #{keyword}
         limit #{offset}, #{maxNumInOnePage};
     </select>

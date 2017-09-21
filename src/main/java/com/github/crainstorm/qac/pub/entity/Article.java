@@ -21,6 +21,34 @@ public class Article {
     public int comment_num;
     public ArrayList<Label> labels = new ArrayList<>();
 
+    public String user_name;
+    public String user_avatar;
+    public String user_short_intro;
+
+    public String getUser_name() {
+        return user_name;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
+    }
+
+    public String getUser_avatar() {
+        return user_avatar;
+    }
+
+    public void setUser_avatar(String user_avatar) {
+        this.user_avatar = user_avatar;
+    }
+
+    public String getUser_short_intro() {
+        return user_short_intro;
+    }
+
+    public void setUser_short_intro(String user_short_intro) {
+        this.user_short_intro = user_short_intro;
+    }
+
     public int getId() {
         return id;
     }
