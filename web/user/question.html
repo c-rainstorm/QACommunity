@@ -179,13 +179,17 @@
                                             <span class="oi oi-flag"></span>
                                             Report
                                         </a>
+                                        <a ng-href="./update_question.html?id={{question.id}}" target="_blank" ng-hide="session.user.id != question.author_id" class="cus-operation-item">
+                                            <span class="oi oi-brush"></span>
+                                            Edit
+                                        </a>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
-                                    <button class="btn btn-outline-primary float-right mr-sm-3" style="padding: .3rem .75rem;">
+                                    <a href="#write_new_answer" class="btn btn-outline-primary float-right mr-sm-3" style="padding: .3rem .75rem;">
                                         <span class="oi oi-pencil"></span>
                                         Answer
-                                    </button>
+                                    </a>
                                     <button class="btn btn-primary float-right mr-sm-2" style="padding: .3rem .75rem;">Follow</button>
                                 </div>
                             </div>
@@ -316,17 +320,17 @@
 
 
                     <!-- write new answer -->
-                    <div class="col-sm-12 bg-white mt-1" style="box-shadow: 0 1px 3px rgba(0,0,0,.1); border-radius: 2px;">
+                    <div id="write_new_answer" class="col-sm-12 bg-white mt-1" style="box-shadow: 0 1px 3px rgba(0,0,0,.1); border-radius: 2px;">
                         <div class="py-3 text-muted text-center" ng-hide="alreadyAnswer == false">该问题下已经有你的答案了</div>                            
                         <!-- answer card -->
                         <div class="answer-card" ng-hide="alreadyAnswer == true" style="padding: 15px 5px;">
                             <!-- avatar & short info -->
                             <div class="">
                                 <div class="d-inline-block align-middle">
-                                    <img src="/images/avatars/khalil.png" alt="" style="height: 40px; width: 40px; border-radius: 2px;">
+                                    <img ng-src="/images/avatars/{{session.user.avatar}}" alt="" style="height: 40px; width: 40px; border-radius: 2px;">
                                 </div>
                                 <div class="d-inline-block ml-2 align-middle">
-                                    <div>Hugo Hoo</div>
+                                    <div>{{session.user.name}}</div>
                                     <div class="text-muted" style="font-size: 95%;">This is my short intro.</div>
                                 </div>
                             </div>

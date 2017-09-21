@@ -151,7 +151,7 @@
                             <!-- question title -->
                             <h4>{{question.title}}</h4>
                             <!-- question content -->
-                            <p class="lead" id="question_content"></p>
+                            <p class="" id="question_content"></p>
                         </div>
                         <div class="col-sm-4">
                             <div class="mt-4 mb-3">
@@ -178,13 +178,17 @@
                                             <span class="oi oi-flag"></span>
                                             Report
                                         </a>
+                                        <a ng-href="./update_question.html?id={{question.id}}" target="_blank" ng-hide="session.user.id != question.author_id" class="cus-operation-item">
+                                            <span class="oi oi-brush"></span>
+                                            Edit
+                                        </a>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
-                                    <button class="btn btn-outline-primary float-right mr-sm-3" style="padding: .3rem .75rem;">
+                                    <a href="#write_new_answer" class="btn btn-outline-primary float-right mr-sm-3" style="padding: .3rem .75rem;">
                                         <span class="oi oi-pencil"></span>
                                         Answer
-                                    </button>
+                                    </a>
                                     <button class="btn btn-primary float-right mr-sm-2" style="padding: .3rem .75rem;">Follow</button>
                                 </div>
                             </div>
