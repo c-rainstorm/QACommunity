@@ -35,4 +35,7 @@ public interface AnswerManageDao {
     int updateAnswer(Answer answer);
 
 
+    int getAnswerCollectNumById(int id);
+
+    int getAnswerCommentNumById(int comment_num);
 }

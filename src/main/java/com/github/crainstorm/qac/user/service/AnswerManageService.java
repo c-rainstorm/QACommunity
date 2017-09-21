@@ -22,15 +22,31 @@ public class AnswerManageService {
     private AnswerManageDao dao;
 
     public ArrayList<Answer> getAnswersByQuestionId(int question_id, int maxNumInOnePage, int pageNum) {
-        return dao.getAnswersByQuestionId(question_id, maxNumInOnePage * (pageNum - 1), maxNumInOnePage);
+        ArrayList<Answer> answers = dao.getAnswersByQuestionId(question_id,
+                maxNumInOnePage * (pageNum - 1), maxNumInOnePage);
+        getAnswersCollectAndComment(answers);
+        return answers;
+    }
+
+    private void getAnswersCollectAndComment(ArrayList<Answer> answers) {
+        for (int i = 0; i < answers.size(); ++i) {
+            Answer answer = answers.get(i);
+            answer.collect_num = dao.getAnswerCollectNumById(answer.id);
+            answer.comment_num = dao.getAnswerCommentNumById(answer.comment_num);
+        }
     }
 
     public ArrayList<Answer> getAnswersByUserId(int author_id, int maxNumInOnePage, int pageNum) {
-        return dao.getAnswersByUserId(author_id, maxNumInOnePage * (pageNum - 1), maxNumInOnePage);
+        ArrayList<Answer> answers = dao.getAnswersByUserId(author_id, maxNumInOnePage * (pageNum - 1), maxNumInOnePage);
+        getAnswersCollectAndComment(answers);
+        return answers;
     }
 
     public Answer getAnswer(int id) {
-        return dao.getAnswer(id);
+        Answer answer = dao.getAnswer(id);
+        answer.comment_num = dao.getAnswerCommentNumById(id);
+        answer.collect_num = dao.getAnswerCollectNumById(id);
+        return answer;
     }
 
     public boolean addAnswer(Answer newAnswer) {

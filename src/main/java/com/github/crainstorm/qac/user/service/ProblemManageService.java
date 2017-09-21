@@ -23,24 +23,38 @@ public class ProblemManageService {
     private LabelManageDao labelManageDao;
 
     public ArrayList<Question> getQuestionsByKeyword(String keyword, int maxNumInOnePage, int pageNum) {
-        return dao.getQuestionsByKeyword("%" + keyword + "%", maxNumInOnePage, pageNum);
+        ArrayList<Question> questions = dao.getQuestionsByKeyword("%" + keyword + "%", maxNumInOnePage, pageNum);
+        getQuestionFollowAndAnswerNum(questions);
+        return questions;
+    }
+
+    private void getQuestionFollowAndAnswerNum(ArrayList<Question> questions) {
+        for (int i = 0; i < questions.size(); ++i) {
+            Question question = questions.get(i);
+            question.answer_num = dao.getQuestionAnswerNum(question.id);
+            question.follow_num = dao.getQuestionFollowNum(question.id);
+        }
     }
 
     public ArrayList<Question> getQuestionsByLabel(int label_id, int maxNumInOnePage, int pageNum) {
-        return dao.getQuestionsByLabel(label_id, maxNumInOnePage, pageNum);
+        ArrayList<Question> questions = dao.getQuestionsByLabel(label_id, maxNumInOnePage, pageNum);
+        getQuestionFollowAndAnswerNum(questions);
+        return questions;
     }
 
     public ArrayList<Question> getQuestionsByUserId(int author_id, int maxNumInOnePage, int pageNum) {
-        return dao.getQuestionsByUserId(author_id, maxNumInOnePage, pageNum);
+        ArrayList<Question> questions = dao.getQuestionsByUserId(author_id, maxNumInOnePage, pageNum);
+        getQuestionFollowAndAnswerNum(questions);
+        return questions;
     }
 
     public Question getQuestion(int id) {
-//        Question question = dao.getQuestion(id);
-//        if (question != null) {
-//            question.follow_num = dao.getQuestionFollowNum(id);
-//            question.answer_num = dao.getQuestionAnswerNum(id);
-//            question.labels.addAll(labelManageDao.getLabelsOfQuestion(id));
-//        }
+        Question question = dao.getQuestion(id);
+        if (question != null) {
+            question.follow_num = dao.getQuestionFollowNum(id);
+            question.answer_num = dao.getQuestionAnswerNum(id);
+            question.labels.addAll(labelManageDao.getLabelsOfQuestion(id));
+        }
         return dao.getQuestion(id);
     }
 
@@ -58,9 +72,9 @@ public class ProblemManageService {
     }
 
     public boolean upDownQuestion(int question_id, int user_id, boolean up_down) {
-        if(up_down){
+        if (up_down) {
             dao.upQuestion(question_id);
-        }else {
+        } else {
             dao.downQuestion(question_id);
         }
         return dao.upDownQuestion(question_id, user_id, up_down) == 1;
