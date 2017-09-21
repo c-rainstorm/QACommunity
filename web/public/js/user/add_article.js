@@ -25,8 +25,10 @@ app.controller("appCtrl", function ($scope, $http, $window, $timeout) {
         console.log("session : ");
         console.log(resp);
 
-        if(resp.data = ""){
+        if(resp.data.userLoginStatus == false){
             console.log("no session.");
+
+            $window.location.href = "./login.html";
             return;
         }
 
