@@ -52,8 +52,11 @@ public class ArticleManageService {
 
     public Article getArticle(int id) {
         Article article = dao.getArticle(id);
-        article.comment_num = dao.getArticleCommentNumById(id);
-        article.collect_num = dao.getArticleCollectNumById(id);
+        if (article != null) {
+            article.comment_num = dao.getArticleCommentNumById(id);
+            article.collect_num = dao.getArticleCollectNumById(id);
+            article.labels.addAll(labelManageDao.getLabelsOfArticle(id));
+        }
         return article;
     }
 
