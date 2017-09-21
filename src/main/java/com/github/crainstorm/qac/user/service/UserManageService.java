@@ -6,11 +6,15 @@ import com.github.crainstorm.qac.pub.entity.UserLogin;
 import com.github.crainstorm.qac.pub.entity.UserSession;
 import com.github.crainstorm.qac.user.dao.UserManageDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 import java.util.regex.Pattern;
 
 /**
@@ -22,6 +26,9 @@ public class UserManageService {
 
     @Autowired
     private UserManageDao dao;
+    @Autowired
+    @Qualifier("imageDir")
+    private String imageDir;
 
     public boolean checkUserLogin(UserLogin user, HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -65,6 +72,28 @@ public class UserManageService {
         }
     }
 
+    public boolean updateUser(User user, MultipartFile avatar) {
+        if (user.name.length() > 32 || user.name.length() < 2) {
+            return false;
+        }
+        File target = new File(imageDir + File.separator + "avatars" + File.separator + user.id + ".png");
+        File targetCopy = new File(target.getAbsolutePath() + ".copy");
+        try {
+            if (target.exists()) {
+                target.renameTo(targetCopy);
+            }
+            avatar.transferTo(target);
+        } catch (IOException e) {
+            target.deleteOnExit();
+            if (targetCopy.exists()) {
+                targetCopy.renameTo(target);
+            }
+            return false;
+        }
+        user.avatar = user.id + ".png";
+        return dao.updateUser(user) == 1;
+    }
+
     public User getUserDetails(int id) {
         User user = dao.getUserDetails(id);
         if (user != null) {
@@ -94,4 +123,5 @@ public class UserManageService {
         }
         return session;
     }
+
 }
