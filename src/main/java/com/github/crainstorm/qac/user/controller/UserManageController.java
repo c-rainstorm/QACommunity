@@ -2,6 +2,8 @@ package com.github.crainstorm.qac.user.controller;
 
 import com.github.crainstorm.qac.pub.entity.*;
 import com.github.crainstorm.qac.user.service.UserManageService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 public class UserManageController {
+
+    private static final Logger LOGGER = LogManager.getLogger();
 
     @Autowired
     private UserManageService service;

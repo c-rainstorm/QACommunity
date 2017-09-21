@@ -6,7 +6,6 @@ import com.github.crainstorm.qac.pub.entity.UserLogin;
 import com.github.crainstorm.qac.pub.entity.UserSession;
 import com.github.crainstorm.qac.user.dao.UserManageDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,7 +26,6 @@ public class UserManageService {
     @Autowired
     private UserManageDao dao;
     @Autowired
-    @Qualifier("imageDir")
     private String imageDir;
 
     public boolean checkUserLogin(UserLogin user, HttpServletRequest request) {

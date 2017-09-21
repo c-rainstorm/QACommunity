@@ -51,8 +51,7 @@
     <bean id="string" class="java.lang.String">
     </bean>
 
-    <context:property-placeholder location="classpath:imageDir.properties"></context:property-placeholder>
     <bean id="imageDir" class="java.lang.String">
-        <constructor-arg value="${imageDir}"/>
+        <constructor-arg name="value" value="/home/chen/Desktop/images"/>
     </bean>
 </beans>
