@@ -14,73 +14,22 @@ app.controller("appCtrl", function ($scope, $http, $window, $location) {
     // 获取 session
     // TODO 获取 session
 
+    let question_id = $location.search().id;
 
-    // 获取用户简略信息
+    // 获取文章信息
     $http({
-        url: "../getUserBriefInfo.action",
-        method: "get",
-        params: {
-            id: angular.copy($scope.session.user.id)
-        },
-    }).then(function (resp) {
+        url : "../getQuestion.action" ,
+        method : "get" ,
+        params : {
+            id : question_id
+        } ,
+    }).then(function(resp){
         console.log(resp);
 
-        $scope.user = resp.data;
-
-        // 提交问题
-        $scope.question = {
-            id : "",
-            title: "",
-            content: "",
-            author_id: angular.copy($scope.user.id)
-        }
-        $scope.questionAlert = {
-            titleHelp: "",
-            contentHelp: ""
-        }
-        $scope.questionSubmit = function () {
-
-            $scope.questionAlert = {
-                titleHelp: "",
-                contentHelp: ""
-            }
-
-            console.log("question submit clicked.");
-
-            $scope.question.content = content_mde.value();
-            console.log($scope.question);
-
-            // 标题，问题内容校验
-            titleRslt = checkTitle($scope.question.title);
-            console.log(titleRslt);
-            if (!titleRslt.status) {
-                $scope.questionAlert.titleHelp = titleRslt.alert;
-                return;
-            }
-
-            // 向服务器发送添加问题请求
-            $http({
-                url: "../addQuestion.action",
-                method: "post",
-                data: angular.copy($scope.question)
-            }).then(function (resp) {
-                console.log(resp);
-
-                if(resp.data.result == "true"){
-                    $window.location.href = "./home.html";
-                }else{
-                    $window.location.href = "./add_question.html";
-                }
-            }, function (resp) {
-                httpErr(resp);
-            });
-
-        }
-
-    }, function (resp) {
+        $scope.question = resp.data;
+    }, function(resp){
         httpErr(resp);
     });
-
 
 });
 
