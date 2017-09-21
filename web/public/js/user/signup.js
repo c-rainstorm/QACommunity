@@ -1,6 +1,6 @@
 let app = angular.module("app", []);
 
-app.controller("appCtrl", function ($scope, $http, $window) {
+app.controller("appCtrl", function ($scope, $http, $window, $timeout) {
 
     console.log("app ctronller loaded.");
 
@@ -40,10 +40,18 @@ app.controller("appCtrl", function ($scope, $http, $window) {
             let data = resp.data;
             if(data.result == "true"){
                 console.log("singup successed.");
-                $window.location.href = "./home.html";
+                toast.info("Singup successed.");
+
+                $timeout(function(){
+                    $window.location.href = "./home.html";
+                }, 1000);
             }else{
                 console.log("something wrong on server. signup failed.");
-                $window.location.href = "./signup.html";
+                toast.info("Something wrong on server. Signup failed.");                
+
+                $timeout(function() {
+                    $window.location.href = "./signup.html";
+                }, 2000);
             }
         }, function(resp){
             httpErr(resp);

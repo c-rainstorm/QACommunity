@@ -22,7 +22,10 @@
     <!-- custom js: tabs -->
     <script src="../public/js/cus-style-js/cus-style.js"></script>
 
+    <script src="../public/js/markdown.js"></script>
+
     <script src="../public/js/angular.min.js"></script>
+    <script src="../public/js/angular-sanitize.min.js"></script>
 
     <script src="../public/js/user/home.js"></script>
 
@@ -414,9 +417,7 @@
                                     <span class="cus-split-item">23 Agree with this answer</span>
                                 </div>
                                 <!-- answer excerpt -->
-                                <p class="mb-1">
-                                    {{item.content}}
-                                </p>
+                                <p class="mb-1" ng-bind-html="item.content"></p>
                                 <!-- datetime -->
                                 <div class="cus-split-short-info">
                                     <span class="cus-split-item">{{item.datetime}}</span>

@@ -1,4 +1,4 @@
-let app = angular.module("app", []);
+let app = angular.module("app", ['ngSanitize']);
 
 app.controller("appCtrl", function ($scope, $http) {
 
@@ -66,6 +66,10 @@ app.controller("appCtrl", function ($scope, $http) {
             console.log(resp);
 
             $scope.articleList = resp.data;
+
+            for(var i = 0; i < $scope.articleList.length; i++){
+                $scope.articleList[i].content = markdown.toHTML($scope.articleList[i].content);
+            }
         }, function(resp){
             httpErr(resp);
         });
