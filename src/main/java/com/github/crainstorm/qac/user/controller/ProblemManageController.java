@@ -58,8 +58,8 @@ public class ProblemManageController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "updateQuestion.action", method = RequestMethod.GET)
-    public Result updateQuestion(Question question) {
+    @RequestMapping(value = "updateQuestion.action", method = RequestMethod.POST)
+    public Result updateQuestion(@RequestBody Question question) {
         if (service.updateQuestion(question)) {
             return Result.TREU;
         }

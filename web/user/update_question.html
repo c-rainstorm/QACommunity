@@ -10,15 +10,18 @@
     <link rel="stylesheet" href="../public/css/bootstrap.min.css">
     <link rel="stylesheet" href="../public/css/simplemde.min.css">
     <link href="../public/font/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="../public/css/toastr.min.css">        
 
     <script src="../public/js/jquery-3.1.1.min.js"></script>
     <script src="../public/js/umd/popper.min.js"></script>
     <script src="../public/js/bootstrap.min.js"></script>
     <script src="../public/js/simplemde.min.js"></script>
 
-    <script src="../public/js/angular.min.js"></script> 
-    
+    <script src="../public/js/angular.min.js"></script>
+
     <script src="../public/js/user/update_question.js"></script>
+    
+    <script src="../public/js/toastr.min.js"></script>        
 
     <style>
         /* body {
@@ -140,27 +143,26 @@
                             <!-- Article title -->
                             <div class="form-group mt-4">
                                 <label for="title">Question Title</label>
-                                <input ng-model="question.title" id="title" ng-model="question.title" type="text" class="form-control" aria-describedby="title_help" placeholder="Question title">
+                                <input ng-model="question.title" id="title" ng-model="question.title" type="text" class="form-control" aria-describedby="title_help"
+                                    placeholder="Question title">
                                 <small id="title_help" class="form-text text-danger">{{questionAlert.titleHelp}}</small>
                             </div>
 
                             <!-- label input -->
                             <div class="form-group">
                                 <label for="label">Labels</label>
-                                <input id="label" type="text" class="form-control" aria-describedby="label_generate_help" placeholder="Labels">
+                                <!-- question labels line -->
+                                <div class="mb-2">
+                                    <a href="" ng-click="showDeleteLabelModal(item.id, item.title, $index)" class="badge mr-2 mb-2" ng-class="item.color" ng-repeat="(key, item) in question.labels">{{item.title}}</a>
+                                </div>
+                                <input id="label" ng-model="labelInputSearch" type="text" class="form-control" aria-describedby="label_generate_help" placeholder="Labels">
                                 <small id="label_generate_help" class="form-text text-danger"></small>
                             </div>
 
                             <!-- labels line -->
-                            <div class="mt-3 mb-3">
-                                <span class="badge badge-pill badge-primary">Primary</span>
-                                <span class="badge badge-pill badge-secondary">Secondary</span>
-                                <span class="badge badge-pill badge-success">Success</span>
-                                <span class="badge badge-pill badge-danger">Danger</span>
-                                <span class="badge badge-pill badge-warning">Warning</span>
-                                <span class="badge badge-pill badge-info">Info</span>
-                                <span class="badge badge-pill badge-light">Light</span>
-                                <span class="badge badge-pill badge-dark">Dark</span>
+                            <!-- all labels line -->
+                            <div class="mt-2 mb-3">
+                                <a href="" ng-click="addLabelToQuestion(item.id, $index)" class="badge mr-2 mb-2" ng-class="item.color" ng-repeat="(key, item) in labels | filter: labelInputSearch">{{item.title}}</a>
                             </div>
 
                             <!-- author info -->
@@ -181,7 +183,7 @@
                             </div>
 
                             <div class="text-right mt-2">
-                                <button class="btn btn-outline-success mr-2" style="padding: .3rem .75rem;" ng-click="questionSubmit()">Submit</button>
+                                <button class="btn btn-outline-success mr-2" style="padding: .3rem .75rem;" ng-click="questionUpdate()">Submit</button>
                             </div>
 
                         </div>
@@ -197,22 +199,40 @@
                                 </div>
                             </div> -->
                         </div>
-                
-                        </div>
+
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- modal space -->
+    <div class="modal fade" id="deleteLabelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-light" style="border-radius: 3px 3px 0 0;">
+                    <h5 class="modal-title">删除标签</h5>
+                    <button type="button" class="close" style="color: white;" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                </div>
+                <div class="modal-body">
+                    <p>确定要删除标签 <span class="text-primary">{{deleteLabel.title}}</span> 吗？</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" ng-click="deleteLabelFromQuestion()" data-dismiss="modal">确定</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-    
-    $(document).ready(function(){
+        $(document).ready(function () {
 
-        
 
-    });
 
+        });
     </script>
 
 </body>
