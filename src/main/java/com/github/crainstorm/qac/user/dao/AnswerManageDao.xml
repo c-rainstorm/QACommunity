@@ -77,6 +77,14 @@
         VALUES (#{question_id}, #{author_id}, #{content});
     </insert>
 
+    <select id="getLatestAnswerId" parameterType="int" resultType="int">
+        SELECT id
+        FROM answer
+        WHERE author_id = #{author_id}
+        ORDER BY datetime DESC
+        limit 0,1;
+    </select>
+
     <update id="updateAnswer" parameterType="com.github.crainstorm.qac.pub.entity.Answer">
         UPDATE answer
         SET answer.content = #{content}

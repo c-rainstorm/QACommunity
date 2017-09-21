@@ -19,6 +19,14 @@
         VALUES (#{user_id},#{answer_id},#{content}, now());
     </insert>
 
+    <select id="getLatestAnswerCommentId" resultType="int">
+        SELECT id
+        FROM qac.answer_comment
+        WHERE user_id = #{user_id}
+        ORDER BY datetime DESC
+        limit 0,1;
+    </select>
+
     <delete id="deleteAnswerComment">
         UPDATE answer_comment
         SET status = -1
@@ -41,6 +49,14 @@
         INSERT INTO article_comment(user_id, article_id, content, datetime)
         VALUES (#{user_id},#{article_id},#{content}, now());
     </insert>
+
+    <select id="getLatestArticleCommentId" resultType="int">
+        SELECT id
+        FROM article_comment
+        WHERE user_id = #{user_id}
+        ORDER BY datetime DESC
+        limit 0,1;
+    </select>
 
     <update id="deleteArticleComment">
         UPDATE article_comment

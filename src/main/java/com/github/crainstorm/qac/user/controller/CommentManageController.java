@@ -3,6 +3,7 @@ package com.github.crainstorm.qac.user.controller;
 import com.github.crainstorm.qac.pub.entity.AnswerComment;
 import com.github.crainstorm.qac.pub.entity.ArticleComment;
 import com.github.crainstorm.qac.pub.entity.Result;
+import com.github.crainstorm.qac.pub.entity.ResultWithId;
 import com.github.crainstorm.qac.user.service.CommentManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,11 +33,12 @@ public class CommentManageController {
 
     @ResponseBody
     @RequestMapping(value = "addAnswerComment.action", method = RequestMethod.POST)
-    public Result addAnswerComment(@RequestBody  AnswerComment comment) {
-        if (service.addAnswerComment(comment)) {
-            return Result.TREU;
+    public ResultWithId addAnswerComment(@RequestBody  AnswerComment comment) {
+        int commentId = service.addAnswerComment(comment);
+        if(commentId > 0) {
+            return new ResultWithId(commentId);
         }
-        return Result.FALSE;
+        return new ResultWithId();
     }
 
     @ResponseBody
@@ -68,11 +70,12 @@ public class CommentManageController {
 
     @ResponseBody
     @RequestMapping(value = "addArticleComment.action", method = RequestMethod.POST)
-    public Result addArticleComment(@RequestBody ArticleComment comment) {
-        if (service.addArticleComment(comment)) {
-            return Result.TREU;
+    public ResultWithId addArticleComment(@RequestBody ArticleComment comment) {
+        int commentId = service.addArticleComment(comment);
+        if(commentId > 0) {
+            return new ResultWithId(commentId);
         }
-        return Result.FALSE;
+        return new ResultWithId();
     }
 
     @ResponseBody
