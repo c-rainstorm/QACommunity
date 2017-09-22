@@ -119,6 +119,11 @@ app.controller("appCtrl", function ($scope, $http, $location, $window) {
                     let newComment = $("#newComment").val();
                     console.log("comment : " + newComment);
 
+                    if(newComment.length <= 0){
+                        alert("评论不能为空");
+                        return;
+                    }
+
                     $http({
                         url: "../addAnswerComment.action",
                         method: "post",

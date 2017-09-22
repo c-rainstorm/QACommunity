@@ -128,6 +128,11 @@ app.controller("appCtrl", function ($scope, $http, $window, $timeout) {
                     return;
                 }
 
+                if ($scope.article.content.length <= 0) {
+                    alert("答案内容不能为空");
+                    return;
+                }
+
                 // 向服务器发送添加文章请求
                 $http({
                     url: "../addArticle.action",

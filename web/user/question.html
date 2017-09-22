@@ -240,7 +240,7 @@
                                     <span class="oi oi-caret-bottom"></span>
                                 </button>
 
-                                <a class="cus-operation-item ml-3" ng-click="getComments(item.id, $index)" data-toggle="collapse" href="#comments01">
+                                <a class="cus-operation-item ml-3" ng-click="getComments(item.id, $index)" data-toggle="collapse" href="#comments_{{item.id}}">
                                     Comments
                                 </a>
                                 <a class="cus-operation-item">
@@ -257,7 +257,7 @@
                             </div>
 
                             <!-- comments -->
-                            <div id="comments01" class="collapse mt-3" style="border: 1px solid #e7eaf2; border-radius: 2px;">
+                            <div id="comments_{{item.id}}" class="collapse mt-3" style="border: 1px solid #e7eaf2; border-radius: 2px;">
                                 <div class="p-3" style="border-bottom: 1px solid #e7eaf2;">
                                     <span>{{item.comments.length}} Comments</span>
                                 </div>

@@ -101,6 +101,11 @@ app.controller("appCtrl", function ($scope, $http, $location, $window) {
 
                 console.log($scope.newComment);
 
+                if($scope.newComment.length <= 0){
+                    alert("评论不能为空");
+                    return;
+                }
+
                 $http({
                     url: "../addArticleComment.action",
                     method: "post",

@@ -186,6 +186,11 @@ app.controller("appCtrl", function ($scope, $http, $location, $window, $timeout)
 
                 let newComment = $("#newComment_" + answer_id).val();
                 console.log("comment : " + newComment);
+                
+                if(newComment.length <= 0){
+                    alert("评论不能为空");
+                    return;
+                }
 
                 $http({
                     url: "../addAnswerComment.action",
@@ -204,9 +209,9 @@ app.controller("appCtrl", function ($scope, $http, $location, $window, $timeout)
                         $scope.answerList[answer_index].comments.push({
                             content : newComment,
                             id : resp.data.id,
-                            user_id : session.user.id,
-                            user_avatar : session.user.avatar,
-                            user_name : session.user.name,
+                            user_id : angular.copy($scope.session.user.id),
+                            user_avatar : angular.copy($scope.session.user.avatar),
+                            user_name : angular.copy($scope.session.user.name),
                             up : 0,
                             down : 0
                         });

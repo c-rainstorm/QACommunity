@@ -132,6 +132,11 @@ app.controller("appCtrl", function ($scope, $http, $window, $timeout) {
                     return;
                 }
 
+                if ($scope.question.content.length <= 0) {
+                    alert("答案内容不能为空");
+                    return;
+                }
+
                 // 向服务器发送添加问题请求
                 $http({
                     url: "../addQuestion.action",
