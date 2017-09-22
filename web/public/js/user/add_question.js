@@ -182,7 +182,7 @@ function checkTitle(t) {
         alert: ""
     }
     if (title.length < 3 || title.length > 32) {
-        result.alert = "文章标题长度范围为3~32个字";
+        result.alert = "问题标题长度范围为3~32个字";
         return result;
     }
 
